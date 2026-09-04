@@ -1,0 +1,19 @@
+.text {
+  font-family: var(--mm-font-body);
+  margin: 0;
+}
+
+.xs { font-size: var(--mm-text-xs); }
+.sm { font-size: var(--mm-text-sm); }
+.md { font-size: var(--mm-text-md); }
+.lg { font-size: var(--mm-text-lg); }
+
+.ink { color: var(--mm-ink); }
+.muted { color: var(--mm-muted); }
+.steel { color: var(--mm-steel); }
+.red { color: var(--mm-red); }
+.panel { color: var(--mm-panel); }
+
+.regular { font-weight: 400; }
+.medium { font-weight: 500; }
+.semibold { font-weight: 600; }

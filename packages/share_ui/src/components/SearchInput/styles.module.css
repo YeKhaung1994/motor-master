@@ -1,0 +1,120 @@
+.root {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.shell {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  height: 34px;
+  padding: 0 var(--mm-space-3);
+  border-radius: var(--mm-radius);
+  border: 1px solid var(--mm-line);
+  background: var(--mm-panel);
+}
+
+.dark .shell {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.icon {
+  flex: none;
+  color: var(--mm-muted);
+}
+
+.dark .icon {
+  color: var(--mm-steel);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  color: var(--mm-ink);
+}
+
+.input::placeholder {
+  color: var(--mm-muted);
+}
+
+.dark .input {
+  color: var(--mm-panel);
+}
+
+.dark .input::placeholder {
+  color: var(--mm-steel);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.shell:focus-within {
+  outline: var(--mm-focus);
+  outline-offset: 1px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.results {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + var(--mm-space-1));
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: var(--mm-space-1);
+  list-style: none;
+  background: var(--mm-panel);
+  border: 1px solid var(--mm-line);
+  border-radius: var(--mm-radius);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: var(--mm-space-2) var(--mm-space-3);
+  cursor: pointer;
+  border-radius: var(--mm-radius);
+  color: var(--mm-ink);
+}
+
+.result[aria-selected='true'] {
+  background: var(--mm-bg);
+}
+
+.resultName {
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  font-weight: 600;
+}
+
+.resultBrand {
+  font-size: var(--mm-text-xs);
+  color: var(--mm-muted);
+}
+
+.empty {
+  padding: var(--mm-space-3);
+  font-size: var(--mm-text-sm);
+  color: var(--mm-muted);
+}

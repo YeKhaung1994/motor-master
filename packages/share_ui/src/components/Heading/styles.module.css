@@ -1,0 +1,18 @@
+.heading {
+  font-family: var(--mm-font-display);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  margin: 0;
+  color: var(--mm-ink);
+}
+
+.sm { font-size: var(--mm-display-sm); }
+.md { font-size: var(--mm-display-md); }
+.lg { font-size: var(--mm-display-lg); }
+.xl { font-size: var(--mm-display-xl); }
+
+.ink { color: var(--mm-ink); }
+.panel { color: var(--mm-panel); }
+.muted { color: var(--mm-muted); }
+.red { color: var(--mm-red); }

@@ -1,0 +1,59 @@
+/* motor-master design tokens — every component reads from these. */
+
+:root {
+  --mm-bg:      #EEF0F2;   /* page */
+  --mm-panel:   #FFFFFF;   /* cards, tables */
+  --mm-ink:     #1B1F23;   /* text, primary buttons, compare tray */
+  --mm-tyre:    #2B3036;   /* top bar, table header band */
+  --mm-steel:   #AEB5BC;   /* secondary text */
+  --mm-line:    #D5DAE0;   /* borders, rules */
+  --mm-muted:   #4B535B;   /* body-secondary text */
+  --mm-red:     #C8102E;   /* compare + winner ONLY */
+
+  --mm-font-display: "Barlow Condensed", Impact, sans-serif;
+  --mm-font-body:    "Barlow", system-ui, sans-serif;
+  --mm-text-xs: 12px; --mm-text-sm: 13px; --mm-text-md: 15px; --mm-text-lg: 17px;
+  --mm-display-sm: 22px; --mm-display-md: 34px; --mm-display-lg: 52px; --mm-display-xl: 64px;
+
+  --mm-space-1: 4px; --mm-space-2: 8px; --mm-space-3: 12px; --mm-space-4: 16px;
+  --mm-space-5: 20px; --mm-space-6: 28px; --mm-space-8: 44px;
+  --mm-radius: 3px;
+  --mm-focus: 3px solid var(--mm-red);
+  --mm-tray-shadow: 0 -8px 30px rgba(0,0,0,.25);   /* the only shadow in the system */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--mm-bg);
+  color: var(--mm-ink);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

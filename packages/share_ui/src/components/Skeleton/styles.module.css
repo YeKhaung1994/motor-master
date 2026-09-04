@@ -1,0 +1,18 @@
+.skeleton {
+  display: block;
+  background: var(--mm-line);
+  border-radius: var(--mm-radius);
+  animation: pulse 1200ms ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    opacity: 0.8;
+  }
+}

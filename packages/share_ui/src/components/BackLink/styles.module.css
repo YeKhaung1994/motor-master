@@ -1,0 +1,20 @@
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  color: var(--mm-muted);
+  text-decoration: none;
+  padding: var(--mm-space-1) 0;
+}
+
+.backLink:hover {
+  color: var(--mm-ink);
+  text-decoration: underline;
+}
+
+.backLink:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 2px;
+}

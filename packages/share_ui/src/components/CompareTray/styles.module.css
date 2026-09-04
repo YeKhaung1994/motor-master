@@ -1,0 +1,125 @@
+.tray {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: var(--mm-ink);
+  color: var(--mm-panel);
+  box-shadow: var(--mm-tray-shadow);
+  transform: translateY(100%);
+  transition: transform 250ms ease;
+}
+
+.open {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tray {
+    transition: none;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-4);
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--mm-space-3) var(--mm-space-6);
+}
+
+.slots {
+  display: flex;
+  gap: var(--mm-space-3);
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  min-width: 190px;
+  flex: 1;
+  height: 52px;
+  padding: 0 var(--mm-space-3);
+  border-radius: var(--mm-radius);
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  color: var(--mm-steel);
+  font-size: var(--mm-text-sm);
+}
+
+.filled {
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--mm-panel);
+}
+
+.slotBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.slotName {
+  font-family: var(--mm-font-display);
+  font-size: var(--mm-text-lg);
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slotMeta {
+  font-size: var(--mm-text-xs);
+  color: var(--mm-steel);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-4);
+  flex: none;
+}
+
+.clear {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  color: var(--mm-steel);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clear:hover {
+  color: var(--mm-panel);
+}
+
+.clear:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--mm-space-3) var(--mm-space-4);
+  }
+
+  .actions {
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,36 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--mm-space-4);
+  padding-bottom: var(--mm-space-3);
+  border-bottom: 1px solid var(--mm-line);
+  margin-bottom: var(--mm-space-5);
+}
+
+.headings {
+  display: flex;
+  align-items: baseline;
+  gap: var(--mm-space-3);
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--mm-font-display);
+  font-size: var(--mm-display-md);
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.count {
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  color: var(--mm-muted);
+}
+
+.sort {
+  width: 200px;
+  flex: none;
+}

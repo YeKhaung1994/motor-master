@@ -1,0 +1,16 @@
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  color: var(--mm-muted);
+}
+
+.swatch {
+  width: 11px;
+  height: 11px;
+  background: var(--mm-red);
+  border-radius: 1px;
+  flex: none;
+}

@@ -1,0 +1,16 @@
+.divider {
+  border: 0;
+  border-top: 1px solid var(--mm-line);
+  margin: 0;
+}
+
+.spaced {
+  margin: var(--mm-space-5) 0;
+}
+
+.vertical {
+  border-top: 0;
+  border-left: 1px solid var(--mm-line);
+  height: 100%;
+  align-self: stretch;
+}

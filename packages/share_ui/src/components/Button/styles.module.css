@@ -1,0 +1,84 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mm-space-2);
+  font-family: var(--mm-font-body);
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--mm-radius);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.button:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 2px;
+}
+
+.md {
+  font-size: var(--mm-text-md);
+  padding: 0 var(--mm-space-5);
+  height: 42px;
+}
+
+.sm {
+  font-size: var(--mm-text-sm);
+  padding: 0 var(--mm-space-3);
+  height: 32px;
+}
+
+.primary {
+  background: var(--mm-ink);
+  color: var(--mm-panel);
+  border-color: var(--mm-ink);
+}
+
+.primary:hover:not(:disabled):not(.disabled) {
+  background: var(--mm-tyre);
+  border-color: var(--mm-tyre);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--mm-ink);
+  border-color: var(--mm-ink);
+}
+
+.ghost:hover:not(:disabled):not(.disabled) {
+  background: var(--mm-ink);
+  color: var(--mm-panel);
+}
+
+/* Red is reserved for compare actions. `danger` is the same treatment. */
+.compare,
+.danger {
+  background: var(--mm-red);
+  color: var(--mm-panel);
+  border-color: var(--mm-red);
+}
+
+.compare:hover:not(:disabled):not(.disabled),
+.danger:hover:not(:disabled):not(.disabled) {
+  background: #A50D26;
+  border-color: #A50D26;
+}
+
+.button:disabled,
+.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

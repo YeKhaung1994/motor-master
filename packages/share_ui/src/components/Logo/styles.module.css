@@ -1,0 +1,34 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  text-decoration: none;
+  color: inherit;
+}
+
+.bar {
+  display: block;
+  width: 14px;
+  height: 26px;
+  background: var(--mm-red);
+  transform: skewX(-14deg);
+  flex: none;
+}
+
+.word {
+  font-family: var(--mm-font-display);
+  font-weight: 800;
+  font-size: var(--mm-display-sm);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--mm-ink);
+}
+
+.onDark .word {
+  color: var(--mm-panel);
+}
+
+.logo:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 3px;
+}

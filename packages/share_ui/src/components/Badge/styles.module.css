@@ -1,0 +1,19 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mm-font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 4px var(--mm-space-2);
+  border-radius: var(--mm-radius);
+  background: var(--mm-ink);
+  color: var(--mm-panel);
+}
+
+.outline {
+  background: transparent;
+  color: var(--mm-muted);
+  border: 1px solid var(--mm-line);
+}

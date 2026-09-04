@@ -1,0 +1,31 @@
+.box {
+  background: var(--mm-panel);
+  border: 1px solid var(--mm-line);
+  border-radius: var(--mm-radius);
+  padding: var(--mm-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-4);
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--mm-font-display);
+  font-size: var(--mm-display-sm);
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-3);
+}
+
+.hint {
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-xs);
+  color: var(--mm-muted);
+  margin: 0;
+}

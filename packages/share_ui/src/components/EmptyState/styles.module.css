@@ -1,0 +1,14 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--mm-space-3);
+  padding: var(--mm-space-8) var(--mm-space-6);
+  background: var(--mm-panel);
+  border: 1px solid var(--mm-line);
+  border-radius: var(--mm-radius);
+}
+
+.body {
+  max-width: 46ch;
+}

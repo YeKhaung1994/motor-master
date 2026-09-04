@@ -1,0 +1,41 @@
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.figure {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: var(--mm-font-display);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--mm-ink);
+}
+
+.sm .figure { font-size: var(--mm-display-sm); }
+.lg .figure { font-size: 28px; }
+
+.unit {
+  font-family: var(--mm-font-body);
+  font-weight: 500;
+  color: var(--mm-muted);
+}
+
+.sm .unit { font-size: var(--mm-text-xs); }
+.lg .unit { font-size: var(--mm-text-sm); }
+
+.label {
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-xs);
+  color: var(--mm-muted);
+}
+
+.winner .figure,
+.winner .unit {
+  color: var(--mm-red);
+}
+
+.winner .figure { font-weight: 700; }

@@ -1,0 +1,72 @@
+.topBar {
+  height: 60px;
+  background: var(--mm-tyre);
+  color: var(--mm-panel);
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-6);
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--mm-space-6);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--mm-space-5);
+  flex: 1;
+  min-width: 0;
+}
+
+.link {
+  position: relative;
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  font-weight: 500;
+  color: var(--mm-steel);
+  text-decoration: none;
+  padding: var(--mm-space-2) 0;
+  white-space: nowrap;
+}
+
+.link:hover {
+  color: var(--mm-panel);
+}
+
+.active {
+  color: var(--mm-panel);
+}
+
+.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--mm-red);
+}
+
+.link:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 3px;
+}
+
+.search {
+  flex: none;
+  width: min(320px, 40vw);
+}
+
+@media (max-width: 720px) {
+  .inner { gap: var(--mm-space-4); padding: 0 var(--mm-space-4); }
+  .nav { gap: var(--mm-space-3); overflow-x: auto; }
+}

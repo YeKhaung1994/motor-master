@@ -122,13 +122,18 @@ export function BrowsePage() {
         sidebar={
           <div className="sidebar-stack">
             <BrandRail
-              items={(brandsQuery.data ?? []).map((entry) => ({
-                name: entry.name,
-                countryCode: entry.countryCode,
-                count: entry.modelCount,
-                href: `/brands/${entry.slug}`,
-                active: entry.slug === brandSlug,
-              }))}
+              allHref="/"
+              allCount={brandsQuery.data?.reduce((sum, entry) => sum + entry.modelCount, 0)}
+              maxVisible={6}
+              items={[...(brandsQuery.data ?? [])]
+                .sort((a, b) => b.modelCount - a.modelCount || a.name.localeCompare(b.name))
+                .map((entry) => ({
+                  name: entry.name,
+                  countryCode: entry.countryCode,
+                  count: entry.modelCount,
+                  href: `/brands/${entry.slug}`,
+                  active: entry.slug === brandSlug,
+                }))}
             />
             <FilterGroup
               title="Class"

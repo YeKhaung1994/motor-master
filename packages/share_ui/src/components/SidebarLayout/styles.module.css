@@ -5,12 +5,18 @@
   align-items: start;
 }
 
+/*
+ * The rail never scrolls independently: a panel with its own scrollbar inside a
+ * scrolling page gives the reader two places to scroll and no way to tell which
+ * one they are in. It scrolls with the page, and only sticks when it fits.
+ */
 .rail {
+  align-self: start;
+}
+
+.sticky {
   position: sticky;
   top: calc(60px + var(--mm-space-5));
-  align-self: start;
-  max-height: calc(100vh - 60px - var(--mm-space-8));
-  overflow-y: auto;
 }
 
 .content {
@@ -22,9 +28,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .rail {
+  .sticky {
     position: static;
-    max-height: none;
-    overflow: visible;
   }
 }

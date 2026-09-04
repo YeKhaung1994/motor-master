@@ -12,6 +12,12 @@
 .lg { font-size: var(--mm-display-lg); }
 .xl { font-size: var(--mm-display-xl); }
 
+/* The display scale is set for a desktop column; on a phone it has to fit. */
+@media (max-width: 720px) {
+  .lg { font-size: var(--mm-display-md); }
+  .xl { font-size: var(--mm-display-lg); }
+}
+
 .ink { color: var(--mm-ink); }
 .panel { color: var(--mm-panel); }
 .muted { color: var(--mm-muted); }

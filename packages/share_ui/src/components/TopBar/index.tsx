@@ -35,6 +35,7 @@ export function TopBar({ navItems = [], search, homeHref = '/' }: TopBarProps) {
             </Link>
           ))}
         </nav>
+        <span className={styles.spacer} />
         {search ? <div className={styles.search}>{search}</div> : null}
       </div>
     </header>

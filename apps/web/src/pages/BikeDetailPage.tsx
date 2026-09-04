@@ -90,9 +90,16 @@ export function BikeDetailPage() {
           </div>
 
           <div className="stack-tight">
-            <Heading level={2} size="md">
-              {displayPrice(bike.price)}
-            </Heading>
+            {bike.price ? (
+              <Heading level={2} size="md">
+                {displayPrice(bike.price)}
+              </Heading>
+            ) : (
+              /* An absence is not a figure; it should not carry a figure's weight. */
+              <Text size="lg" tone="muted" weight="medium">
+                {displayPrice(bike.price)}
+              </Text>
+            )}
             <Text size="sm" tone="muted">
               {bike.price
                 ? `Manufacturer list price${bike.price.market ? ` in ${bike.price.market}` : ''}, before on-road costs`

@@ -90,7 +90,7 @@ export function BrowsePage() {
       {brandSlug ? null : (
         <section className="hero">
           <div className="hero-copy">
-            <Heading level={1} size="xl">
+            <Heading level={1} size="lg">
               Every bike, one spec sheet
             </Heading>
             <Text tone="muted" size="lg">
@@ -104,6 +104,7 @@ export function BrowsePage() {
             </div>
           </div>
           <HeroCompareBox
+            className="hero-compare"
             options={quickOptions}
             values={quick}
             onChange={(index, value) =>
@@ -119,6 +120,7 @@ export function BrowsePage() {
       )}
 
       <SidebarLayout
+        className="browse-layout"
         sidebar={
           <div className="sidebar-stack">
             <BrandRail

@@ -23,9 +23,23 @@
   min-width: 0;
 }
 
+/*
+ * Stacked, the rail would put four filter groups between the reader and the
+ * results — about 1,100px of controls before the first bike. Results lead;
+ * the filters follow them.
+ */
 @media (max-width: 860px) {
   .layout {
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    order: 1;
+  }
+
+  .rail {
+    order: 2;
   }
 
   .sticky {

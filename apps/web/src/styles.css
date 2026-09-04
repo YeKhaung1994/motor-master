@@ -19,19 +19,26 @@
   gap: var(--mm-space-2);
 }
 
+/*
+ * A catalogue index, not a landing page: the hero introduces the site in one
+ * screen-third and gets out of the way. It used to push the first bike 620px
+ * down on desktop and ~900px down on a phone.
+ */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: var(--mm-space-8);
-  align-items: start;
-  padding: var(--mm-space-6) 0 var(--mm-space-8);
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--mm-space-6) var(--mm-space-8);
+  align-items: center;
+  padding: var(--mm-space-5) 0 var(--mm-space-6);
+  border-bottom: 1px solid var(--mm-line);
+  margin-bottom: var(--mm-space-6);
 }
 
 .hero-copy {
   display: flex;
   flex-direction: column;
-  gap: var(--mm-space-4);
-  max-width: 52ch;
+  gap: var(--mm-space-3);
+  max-width: 46ch;
 }
 
 .hero-actions {
@@ -46,12 +53,14 @@
   gap: var(--mm-space-4);
 }
 
+/* 1:1 left ~200px of dead column under the buttons; the photo does not need
+   to be the tallest thing on the page. */
 .detail {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--mm-space-8);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--mm-space-6) var(--mm-space-8);
   align-items: start;
-  padding: var(--mm-space-5) 0 var(--mm-space-8);
+  padding: var(--mm-space-5) 0 var(--mm-space-6);
 }
 
 .detail-art {
@@ -130,6 +139,43 @@
   .detail {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--mm-space-5);
+  }
+}
+
+/*
+ * On a phone the quick-compare panel is three empty selects between the reader
+ * and the bikes. The catalogue comes first; the panel is still there, below it.
+ */
+/*
+ * On a phone the hero stops being a two-column band and dissolves into the page
+ * flow, so the quick-compare panel can sit *after* the results. Three empty
+ * selects are not what someone opening a catalogue on a phone came for, and
+ * they were pushing the first bike nearly 2,000px down.
+ */
+@media (max-width: 720px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero {
+    display: contents;
+  }
+
+  .hero-copy {
+    order: 1;
+    padding-bottom: var(--mm-space-5);
+    margin-bottom: var(--mm-space-5);
+    border-bottom: 1px solid var(--mm-line);
+  }
+
+  .browse-layout {
+    order: 2;
+  }
+
+  .hero-compare {
+    order: 3;
+    margin-top: var(--mm-space-8);
   }
 }
 

@@ -4,8 +4,10 @@
   gap: var(--mm-space-3);
 }
 
+/* The page is already --mm-bg, so a --mm-bg tile is no tile at all. */
 .tile {
-  background: var(--mm-bg);
+  background: var(--mm-panel);
+  border: 1px solid var(--mm-line);
   border-radius: var(--mm-radius);
   padding: var(--mm-space-4);
 }

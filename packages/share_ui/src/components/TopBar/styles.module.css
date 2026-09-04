@@ -23,6 +23,11 @@
   display: flex;
   align-items: center;
   gap: var(--mm-space-5);
+  /* Never squeezed: the nav is the spine of the site, the search can shrink. */
+  flex: 0 0 auto;
+}
+
+.spacer {
   flex: 1;
   min-width: 0;
 }
@@ -62,11 +67,45 @@
 }
 
 .search {
-  flex: none;
-  width: min(320px, 40vw);
+  flex: 0 1 320px;
+  min-width: 0;
 }
 
+/*
+ * Below the breakpoint the bar becomes two rows rather than cramming logo, nav
+ * and search onto one: at 390px that clipped the nav to "All bik" and put two
+ * of the three destinations out of reach.
+ */
 @media (max-width: 720px) {
-  .inner { gap: var(--mm-space-4); padding: 0 var(--mm-space-4); }
-  .nav { gap: var(--mm-space-3); overflow-x: auto; }
+  .topBar {
+    height: auto;
+    padding: var(--mm-space-2) 0;
+  }
+
+  .inner {
+    flex-wrap: wrap;
+    gap: var(--mm-space-2) var(--mm-space-4);
+    padding: 0 var(--mm-space-4);
+  }
+
+  .nav {
+    order: 3;
+    gap: var(--mm-space-4);
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .spacer {
+    display: none;
+  }
+
+  .search {
+    flex: 1 1 auto;
+    max-width: none;
+  }
 }

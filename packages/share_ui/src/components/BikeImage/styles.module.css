@@ -28,8 +28,8 @@
   background: repeating-linear-gradient(
     -45deg,
     var(--mm-bg),
-    var(--mm-bg) 10px,
-    #E7EAED 10px,
-    #E7EAED 20px
+    var(--mm-bg) 14px,
+    #E6E9EC 14px,
+    #E6E9EC 28px
   );
 }

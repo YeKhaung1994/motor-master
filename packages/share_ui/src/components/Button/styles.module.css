@@ -73,6 +73,21 @@
   pointer-events: none;
 }
 
+/*
+ * Red at 45% is pink, and pink is not in the palette — it also reads as a colour
+ * with its own meaning. An unavailable compare action is not a compare action,
+ * so it steps back to steel instead of fading the accent.
+ */
+.compare:disabled,
+.danger:disabled,
+.compare.disabled,
+.danger.disabled {
+  opacity: 1;
+  background: var(--mm-line);
+  border-color: var(--mm-line);
+  color: var(--mm-muted);
+}
+
 .fullWidth {
   width: 100%;
 }

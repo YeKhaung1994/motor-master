@@ -25,6 +25,7 @@ export interface BikeRow {
   Notes: string | null;
   Flags: string | null;
   SourceUrl: string | null;
+  PriceSourceUrl: string | null;
   Engine: string | null;
   DisplacementCc: number | string | null;
   BoreStrokeMm: string | null;
@@ -150,6 +151,7 @@ export function toBikeDetail(
     notes: row.Notes,
     flags: row.Flags,
     sourceUrl: row.SourceUrl,
+    priceSourceUrl: row.PriceSourceUrl,
     specs: toBikeSpecs(row),
   };
 }
@@ -158,7 +160,7 @@ export function toBikeDetail(
 export const BIKE_COLUMNS = `
   b.BikeId, b.Slug, b.Name, b.ModelYear, b.ImageUrl,
   b.PriceAmount, b.PriceCurrency, b.PriceMarket, b.PriceText, b.PriceIsApproximate,
-  b.Variants, b.Notes, b.Flags, b.SourceUrl,
+  b.Variants, b.Notes, b.Flags, b.SourceUrl, b.PriceSourceUrl,
   br.Name AS BrandName, br.Slug AS BrandSlug,
   c.Name AS ClassName,
   s.Engine, s.DisplacementCc, s.BoreStrokeMm, s.Compression, s.PowerHp, s.PowerKw,

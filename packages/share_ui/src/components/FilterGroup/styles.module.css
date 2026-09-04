@@ -19,3 +19,25 @@
   flex-direction: column;
   gap: var(--mm-space-1);
 }
+
+.toggle {
+  margin-top: var(--mm-space-2);
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  font-weight: 500;
+  color: var(--mm-ink);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  color: var(--mm-red);
+}
+
+.toggle:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 2px;
+}

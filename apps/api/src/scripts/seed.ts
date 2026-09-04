@@ -57,6 +57,8 @@ const modelSchema = z
     notes: z.string().nullish(),
     flags: z.string().nullish(),
     source: z.string().nullish(),
+    /** Where the price came from, when that differs from the spec source. */
+    price_source: z.string().nullish(),
 
     /** Optional artwork; a path under apps/web/public or an absolute URL. */
     image: z.string().nullish(),
@@ -94,6 +96,7 @@ const BRAND_COUNTRY: Record<string, string> = {
   'moto guzzi': 'IT',
   'mv agusta': 'IT',
   bmw: 'DE',
+  'bmw motorrad': 'DE',
   triumph: 'GB',
   ktm: 'AT',
   husqvarna: 'AT',
@@ -104,7 +107,9 @@ const BRAND_COUNTRY: Record<string, string> = {
   indian: 'US',
   'can-am': 'CA',
   cfmoto: 'CN',
-  'gpx': 'TH',
+  gpx: 'TH',
+  vespa: 'IT',
+  piaggio: 'IT',
   benelli: 'CN',
   'zontes': 'CN',
 };
@@ -199,6 +204,7 @@ async function upsertBike(
     .input('notes', sql.NVarChar(400), model.notes ?? null)
     .input('flags', sql.NVarChar(400), model.flags ?? null)
     .input('sourceUrl', sql.NVarChar(400), model.source ?? null)
+    .input('priceSourceUrl', sql.NVarChar(400), model.price_source ?? null)
     .query<{ BikeId: number }>(`
       MERGE Bikes AS target
       USING (SELECT @slug AS Slug) AS source
@@ -209,14 +215,14 @@ async function upsertBike(
                    PriceCurrency = @priceCurrency, PriceMarket = @priceMarket,
                    PriceText = @priceText, PriceIsApproximate = @priceApprox,
                    ImageUrl = @imageUrl, Variants = @variants, Notes = @notes,
-                   Flags = @flags, SourceUrl = @sourceUrl
+                   Flags = @flags, SourceUrl = @sourceUrl, PriceSourceUrl = @priceSourceUrl
       WHEN NOT MATCHED THEN
         INSERT (BrandId, ClassId, Name, Slug, ModelYear, PriceAmount, PriceCurrency,
                 PriceMarket, PriceText, PriceIsApproximate, ImageUrl, Variants,
-                Notes, Flags, SourceUrl)
+                Notes, Flags, SourceUrl, PriceSourceUrl)
         VALUES (@brandId, @classId, @name, @slug, @modelYear, @priceAmount, @priceCurrency,
                 @priceMarket, @priceText, @priceApprox, @imageUrl, @variants,
-                @notes, @flags, @sourceUrl);
+                @notes, @flags, @sourceUrl, @priceSourceUrl);
 
       SELECT BikeId FROM Bikes WHERE Slug = @slug;
     `);

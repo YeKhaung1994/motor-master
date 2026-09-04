@@ -95,6 +95,7 @@ export interface BikeDetail {
   notes: string | null;
   flags: string | null;
   sourceUrl: string | null;
+  priceSourceUrl: string | null;
   specs: BikeSpecs;
 }
 

@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import type { BikeFilters } from '../../lib/types';
 import { fetchBike, fetchBikes, searchBikes } from './api';
 
@@ -7,6 +7,23 @@ export function useBikes(filters: BikeFilters) {
     queryKey: ['bikes', filters],
     queryFn: () => fetchBikes(filters),
     // Keeps the current grid on screen while a filter change loads.
+    placeholderData: keepPreviousData,
+  });
+}
+
+/**
+ * The catalogue is larger than one page, and the API caps a page at 60, so the
+ * grid loads a page at a time rather than claiming a total it cannot show.
+ */
+export function useBikePages(filters: BikeFilters) {
+  return useInfiniteQuery({
+    queryKey: ['bikes', 'paged', filters],
+    queryFn: ({ pageParam }) => fetchBikes({ ...filters, page: pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const loaded = lastPage.page * lastPage.pageSize;
+      return loaded < lastPage.total ? lastPage.page + 1 : undefined;
+    },
     placeholderData: keepPreviousData,
   });
 }

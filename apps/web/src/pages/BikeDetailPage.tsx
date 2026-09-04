@@ -146,15 +146,29 @@ export function BikeDetailPage() {
         groups={buildSpecGroups([bike])}
       />
 
-      {bike.sourceUrl ? (
+      {bike.sourceUrl || bike.priceSourceUrl ? (
         <>
           <Divider spaced />
-          <Text size="xs" tone="muted">
-            Specifications published by the manufacturer.{' '}
-            <a href={bike.sourceUrl} target="_blank" rel="noreferrer noopener">
-              View the source
-            </a>
-          </Text>
+          <div className="stack-tight">
+            {bike.sourceUrl ? (
+              <Text size="xs" tone="muted">
+                Specifications from the manufacturer.{' '}
+                <a href={bike.sourceUrl} target="_blank" rel="noreferrer noopener">
+                  View the spec source
+                </a>
+              </Text>
+            ) : null}
+            {/* Thai list prices often come from a dealer or aggregator rather
+                than the manufacturer, so the two sources are credited apart. */}
+            {bike.priceSourceUrl && bike.priceSourceUrl !== bike.sourceUrl ? (
+              <Text size="xs" tone="muted">
+                Price from a third-party listing.{' '}
+                <a href={bike.priceSourceUrl} target="_blank" rel="noreferrer noopener">
+                  View the price source
+                </a>
+              </Text>
+            ) : null}
+          </div>
         </>
       ) : null}
     </PageContainer>

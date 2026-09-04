@@ -16,7 +16,7 @@ import {
   Text,
   Toolbar,
 } from '@motor-master/share_ui';
-import { useBikes } from '../features/bikes/hooks';
+import { useBikePages } from '../features/bikes/hooks';
 import { SORT_OPTIONS, useBikeFilters } from '../features/bikes/useBikeFilters';
 import { useBrands } from '../features/brands/hooks';
 import { useClasses } from '../features/bikes/classesApi';
@@ -33,7 +33,7 @@ export function BrowsePage() {
 
   const brandsQuery = useBrands();
   const classesQuery = useClasses();
-  const bikesQuery = useBikes(filters);
+  const bikesQuery = useBikePages(filters);
 
   const toggleCompare = useCompare((state) => state.toggle);
   // Select the stored array itself — a selector that builds a new array on every
@@ -45,7 +45,11 @@ export function BrowsePage() {
   const [quick, setQuick] = useState<[string, string, string]>(['', '', '']);
 
   const brand = brandsQuery.data?.find((entry) => entry.slug === brandSlug);
-  const items = useMemo(() => bikesQuery.data?.items ?? [], [bikesQuery.data]);
+  const items = useMemo(
+    () => bikesQuery.data?.pages.flatMap((page) => page.items) ?? [],
+    [bikesQuery.data],
+  );
+  const total = bikesQuery.data?.pages[0]?.total ?? 0;
 
   const quickOptions = useMemo(
     () => items.map((bike) => ({ value: String(bike.id), label: `${bike.brand} ${bike.name}` })),
@@ -108,13 +112,16 @@ export function BrowsePage() {
             />
             <FilterGroup
               title="Class"
-              options={(classesQuery.data ?? []).map((entry) => ({
-                value: entry.name,
-                label: entry.name,
-                count: entry.modelCount,
-              }))}
+              options={[...(classesQuery.data ?? [])]
+                .sort((a, b) => b.modelCount - a.modelCount || a.name.localeCompare(b.name))
+                .map((entry) => ({
+                  value: entry.name,
+                  label: entry.name,
+                  count: entry.modelCount,
+                }))}
               selected={classes}
               onChange={toggleClass}
+              maxVisible={8}
             />
             <RangeFilter
               title="Engine size"
@@ -142,7 +149,7 @@ export function BrowsePage() {
       >
         <Toolbar
           heading={heading}
-          count={bikesQuery.data?.total}
+          count={total}
           sortOptions={SORT_OPTIONS}
           sortValue={sort}
           onSortChange={setSort}
@@ -181,7 +188,8 @@ export function BrowsePage() {
         ) : null}
 
         {items.length > 0 ? (
-          <BikeGrid>
+          <>
+            <BikeGrid>
             {items.map((bike: BikeCardDto) => (
               <BikeCard
                 key={bike.id}
@@ -191,7 +199,21 @@ export function BrowsePage() {
                 onToggleCompare={() => toggleCompare(bike)}
               />
             ))}
-          </BikeGrid>
+            </BikeGrid>
+            {bikesQuery.hasNextPage ? (
+              <div className="load-more">
+                <Button
+                  variant="ghost"
+                  onClick={() => void bikesQuery.fetchNextPage()}
+                  disabled={bikesQuery.isFetchingNextPage}
+                >
+                  {bikesQuery.isFetchingNextPage
+                    ? 'Loading'
+                    : `Show more (${total - items.length} to go)`}
+                </Button>
+              </div>
+            ) : null}
+          </>
         ) : null}
       </SidebarLayout>
     </PageContainer>

@@ -32,6 +32,7 @@ function bike(
     notes: null,
     flags: null,
     sourceUrl: null,
+    priceSourceUrl: null,
     specs: {
       engine: null,
       displacementCc: null,

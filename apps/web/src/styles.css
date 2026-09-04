@@ -132,3 +132,9 @@
     gap: var(--mm-space-5);
   }
 }
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--mm-space-6);
+}

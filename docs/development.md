@@ -210,8 +210,15 @@ curl "http://localhost:4000/api/v1/search?q=CB"
 ## Importing catalogue data
 
 Catalogue files live in `apps/api/src/db/seed/`, one per brand per market:
-`{ brand, market, models[] }`. The Honda Thailand sheet
-(`honda-thailand.json`, 41 models) is the worked example.
+`{ brand, market, models[] }`. Five Thai-market sheets are imported today:
+
+| File | Brand | Models |
+|---|---|---|
+| `honda-thailand.json` | Honda | 41 |
+| `yamaha-thailand.json` | Yamaha | 29 |
+| `ducati-thailand.json` | Ducati | 26 |
+| `harley-davidson-thailand.json` | Harley-Davidson | 16 |
+| `royal-enfield-thailand.json` | Royal Enfield | 13 |
 
 ```bash
 npm run db:seed          # import or re-import, keeping existing rows
@@ -224,8 +231,8 @@ Field names follow the source sheet: `model`, `model_year`, `category`,
 `transmission`, `clutch`, `final_drive`, `frame`, `susp_f`, `susp_r`, `brake_f`,
 `brake_r`, `tyre_f`, `tyre_r`, `wheelbase_mm`, `seat_height_mm`,
 `ground_clearance_mm`, `weight_kg`, `fuel_l`, `wmtc`, `battery_kwh`, `range_km`,
-`charging`, `variants`, `notes`, `flags`, `source`, `image`, `msrp_thb`,
-`msrp_other`.
+`charging`, `variants`, `notes`, `flags`, `source`, `price_source`, `image`,
+`msrp_thb`, `msrp_other`.
 
 Everything except `model`, `model_year` and `category` is optional, and unknown
 fields are ignored — a partial sheet imports fine and a fuller one can be
@@ -234,6 +241,10 @@ updates in place instead of duplicating.
 
 The brand's country is taken from `brand_country_code` if the file states one,
 otherwise from a small table of manufacturer head offices in `seed.ts`.
+
+`source` and `price_source` are kept apart, because a Thai list price often comes
+from a dealer or aggregator page while the spec sheet is the manufacturer's. The
+detail page credits each separately.
 
 ### How prices are stored
 

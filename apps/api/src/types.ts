@@ -98,6 +98,8 @@ export interface BikeDetailDto {
   /** Source caveats worth showing rather than hiding. */
   flags: string | null;
   sourceUrl: string | null;
+  /** Where the price came from, when that is not the manufacturer's own sheet. */
+  priceSourceUrl: string | null;
   specs: BikeSpecsDto;
 }
 

@@ -26,6 +26,7 @@ export interface BikeRow {
   Flags: string | null;
   SourceUrl: string | null;
   PriceSourceUrl: string | null;
+  DataGeneratedAt: string | Date | null;
   Engine: string | null;
   DisplacementCc: number | string | null;
   BoreStrokeMm: string | null;
@@ -57,6 +58,13 @@ export interface BikeRow {
   Charging: string | null;
   RiderAids: string | null;
   Display: string | null;
+}
+
+/** DATE comes back as a Date on some drivers; the DTO carries a plain ISO day. */
+function isoDay(value: string | Date | null | undefined): string | null {
+  if (!value) return null;
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString().slice(0, 10);
 }
 
 /** mssql returns DECIMAL as a string on some drivers; normalise to number|null. */
@@ -91,6 +99,8 @@ export function toBikeCard(row: BikeRow): BikeCardDto {
     kg: num(row.KerbWeightKg),
     price: toPrice(row),
     imageUrl: row.ImageUrl,
+    flags: row.Flags,
+    dataGeneratedAt: isoDay(row.DataGeneratedAt),
   };
 }
 
@@ -152,6 +162,7 @@ export function toBikeDetail(
     flags: row.Flags,
     sourceUrl: row.SourceUrl,
     priceSourceUrl: row.PriceSourceUrl,
+    dataGeneratedAt: isoDay(row.DataGeneratedAt),
     specs: toBikeSpecs(row),
   };
 }
@@ -160,7 +171,7 @@ export function toBikeDetail(
 export const BIKE_COLUMNS = `
   b.BikeId, b.Slug, b.Name, b.ModelYear, b.ImageUrl,
   b.PriceAmount, b.PriceCurrency, b.PriceMarket, b.PriceText, b.PriceIsApproximate,
-  b.Variants, b.Notes, b.Flags, b.SourceUrl, b.PriceSourceUrl,
+  b.Variants, b.Notes, b.Flags, b.SourceUrl, b.PriceSourceUrl, b.DataGeneratedAt,
   br.Name AS BrandName, br.Slug AS BrandSlug,
   c.Name AS ClassName,
   s.Engine, s.DisplacementCc, s.BoreStrokeMm, s.Compression, s.PowerHp, s.PowerKw,

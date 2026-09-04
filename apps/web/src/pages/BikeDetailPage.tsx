@@ -18,10 +18,12 @@ import { useBike } from '../features/bikes/hooks';
 import { buildSpecGroups } from '../features/bikes/specRows';
 import { useCompare } from '../features/compare/useCompare';
 import { bikeImageSrc } from '../lib/images';
+import { useImageCredit } from '../features/credits/hooks';
 
 export function BikeDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const bikeQuery = useBike(slug);
+  const credit = useImageCredit(slug);
 
   const toggleCompare = useCompare((state) => state.toggle);
   const compareBikes = useCompare((state) => state.bikes);
@@ -71,12 +73,24 @@ export function BikeDetailPage() {
       <BackLink href={`/brands/${bike.brandSlug}`} context={bike.brand} />
 
       <div className="detail">
-        <BikeImage
-          className="detail-art"
-          src={bikeImageSrc(bike.slug, bike.imageUrl)}
-          alt={`${bike.brand} ${bike.name}`}
-          loading="eager"
-        />
+        <div className="stack-tight">
+          <BikeImage
+            className="detail-art"
+            src={bikeImageSrc(bike.slug, bike.imageUrl)}
+            alt={`${bike.brand} ${bike.name}`}
+            loading="eager"
+          />
+          {credit ? (
+            <Text size="xs" tone="muted">
+              Photo: {credit.artist ?? 'Unknown'}
+              {credit.license ? `, ${credit.license}` : null}
+              {' · '}
+              <a href={credit.source} target="_blank" rel="noreferrer noopener">
+                Wikimedia Commons
+              </a>
+            </Text>
+          ) : null}
+        </div>
 
         <div className="detail-copy">
           <Badge className="detail-badge">{bike.class}</Badge>
@@ -157,6 +171,12 @@ export function BikeDetailPage() {
         <>
           <Divider spaced />
           <div className="stack-tight">
+            {bike.dataGeneratedAt ? (
+              <Text size="xs" tone="muted">
+                Specifications as recorded on {bike.dataGeneratedAt}. Figures change
+                between model years and markets.
+              </Text>
+            ) : null}
             {bike.sourceUrl ? (
               <Text size="xs" tone="muted">
                 Specifications from the manufacturer.{' '}

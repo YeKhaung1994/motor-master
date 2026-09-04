@@ -96,6 +96,9 @@ describe('GET /api/v1/bikes', () => {
             isApproximate: false,
           },
           imageUrl: null,
+          flags: null,
+          // Cards carry the compile date so the grid can say how old a figure is.
+          dataGeneratedAt: '2026-09-04',
         },
       ],
       total: 1,

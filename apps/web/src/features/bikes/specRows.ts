@@ -119,6 +119,19 @@ const GROUPS: Array<{ title: string; rows: RowSpec[] }> = [
       },
     ],
   },
+  {
+    title: 'About this data',
+    rows: [
+      // Comparing two bikes means comparing how solid each figure is, so the
+      // caveat and the compile date belong in the table, not only on a page.
+      { field: 'Flags', label: 'Caveats', read: (b) => b.flags },
+      {
+        field: 'DataGeneratedAt',
+        label: 'Specs as of',
+        read: (b) => b.dataGeneratedAt,
+      },
+    ],
+  },
 ];
 
 /**

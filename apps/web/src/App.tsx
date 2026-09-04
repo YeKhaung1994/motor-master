@@ -4,6 +4,7 @@ import { BikeDetailPage } from './pages/BikeDetailPage';
 import { BrandsPage } from './pages/BrandsPage';
 import { BrowsePage } from './pages/BrowsePage';
 import { ComparePage } from './pages/ComparePage';
+import { CreditsPage } from './pages/CreditsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export function App() {
@@ -16,6 +17,7 @@ export function App() {
           <Route path="/brands/:slug" element={<BrowsePage />} />
           <Route path="/bikes/:slug" element={<BikeDetailPage />} />
           <Route path="/compare" element={<ComparePage />} />
+          <Route path="/credits" element={<CreditsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

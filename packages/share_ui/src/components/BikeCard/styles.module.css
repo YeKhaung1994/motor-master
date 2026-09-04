@@ -78,3 +78,13 @@
 .footer > * {
   flex: 1;
 }
+
+/* Quiet by design: it qualifies the numbers above without competing with them. */
+.caveat {
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-xs);
+  color: var(--mm-muted);
+  border-top: 1px dotted var(--mm-line);
+  padding-top: var(--mm-space-2);
+  cursor: help;
+}

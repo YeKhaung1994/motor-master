@@ -74,6 +74,8 @@ const catalogueSchema = z
     brand: z.string().min(1).max(80),
     /** Free text, e.g. "Thailand (Thai Honda Manufacturing)". */
     market: z.string().nullish(),
+    /** When the catalogue was compiled — the site shows this as "specs as of". */
+    generated: z.string().nullish(),
     brand_country_code: z.string().length(2).nullish(),
     models: z.array(modelSchema).min(1),
   })
@@ -183,6 +185,7 @@ async function upsertBike(
   brandName: string,
   brandId: number,
   classId: number,
+  generatedAt: string | null,
 ): Promise<number> {
   const slug = slugify(brandName, model.model);
   const price = parsePriceText(model.msrp_thb);
@@ -205,6 +208,7 @@ async function upsertBike(
     .input('flags', sql.NVarChar(400), model.flags ?? null)
     .input('sourceUrl', sql.NVarChar(400), model.source ?? null)
     .input('priceSourceUrl', sql.NVarChar(400), model.price_source ?? null)
+    .input('generatedAt', sql.Date, generatedAt)
     .query<{ BikeId: number }>(`
       MERGE Bikes AS target
       USING (SELECT @slug AS Slug) AS source
@@ -215,14 +219,15 @@ async function upsertBike(
                    PriceCurrency = @priceCurrency, PriceMarket = @priceMarket,
                    PriceText = @priceText, PriceIsApproximate = @priceApprox,
                    ImageUrl = @imageUrl, Variants = @variants, Notes = @notes,
-                   Flags = @flags, SourceUrl = @sourceUrl, PriceSourceUrl = @priceSourceUrl
+                   Flags = @flags, SourceUrl = @sourceUrl, PriceSourceUrl = @priceSourceUrl,
+                   DataGeneratedAt = @generatedAt
       WHEN NOT MATCHED THEN
         INSERT (BrandId, ClassId, Name, Slug, ModelYear, PriceAmount, PriceCurrency,
                 PriceMarket, PriceText, PriceIsApproximate, ImageUrl, Variants,
-                Notes, Flags, SourceUrl, PriceSourceUrl)
+                Notes, Flags, SourceUrl, PriceSourceUrl, DataGeneratedAt)
         VALUES (@brandId, @classId, @name, @slug, @modelYear, @priceAmount, @priceCurrency,
                 @priceMarket, @priceText, @priceApprox, @imageUrl, @variants,
-                @notes, @flags, @sourceUrl, @priceSourceUrl);
+                @notes, @flags, @sourceUrl, @priceSourceUrl, @generatedAt);
 
       SELECT BikeId FROM Bikes WHERE Slug = @slug;
     `);
@@ -380,7 +385,14 @@ async function run(): Promise<void> {
 
     for (const model of catalogue.models) {
       const classId = await resolveClassId(pool, model.category);
-      const bikeId = await upsertBike(pool, model, catalogue.brand, brandId, classId);
+      const bikeId = await upsertBike(
+        pool,
+        model,
+        catalogue.brand,
+        brandId,
+        classId,
+        catalogue.generated ?? null,
+      );
       await upsertSpecs(pool, bikeId, model);
       await replaceMarkets(pool, bikeId, model.markets ?? []);
       await replaceOtherPrices(pool, bikeId, model.msrp_other);

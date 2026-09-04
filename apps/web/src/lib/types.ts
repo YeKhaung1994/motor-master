@@ -43,6 +43,8 @@ export interface BikeCardDto {
   kg: number | null;
   price: Price | null;
   imageUrl: string | null;
+  flags: string | null;
+  dataGeneratedAt: string | null;
 }
 
 export interface BikeSpecs {
@@ -96,6 +98,7 @@ export interface BikeDetail {
   flags: string | null;
   sourceUrl: string | null;
   priceSourceUrl: string | null;
+  dataGeneratedAt: string | null;
   specs: BikeSpecs;
 }
 

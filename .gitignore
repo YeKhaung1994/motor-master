@@ -6,3 +6,6 @@ storybook-static/
 .DS_Store
 coverage/
 *.tsbuildinfo
+playwright-report/
+test-results/
+.playwright/

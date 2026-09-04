@@ -76,6 +76,7 @@ export function bikeRow(overrides: Record<string, unknown> = {}) {
     Flags: null,
     SourceUrl: null,
     PriceSourceUrl: null,
+    DataGeneratedAt: '2026-09-04',
     Engine: null,
     DisplacementCc: 471,
     BoreStrokeMm: null,

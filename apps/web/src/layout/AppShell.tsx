@@ -46,7 +46,14 @@ export function AppShell() {
       />
 
       <Outlet />
-      <Footer />
+      <Footer
+        links={[
+          { label: 'All bikes', href: '/' },
+          { label: 'Brands', href: '/brands' },
+          { label: 'Compare', href: '/compare' },
+          { label: 'Image credits', href: '/credits' },
+        ]}
+      />
 
       <CompareTray
         bikes={bikes}

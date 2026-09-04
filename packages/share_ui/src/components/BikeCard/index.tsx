@@ -21,6 +21,8 @@ export interface BikeCardData {
   kg: number | null;
   price: PriceLike | null;
   imageUrl?: string | null;
+  /** Source caveat; shown as a quiet marker so the figures are not read as final. */
+  flags?: string | null;
 }
 
 export interface BikeCardProps {
@@ -64,6 +66,12 @@ export function BikeCard({
         <span className={cx(styles.price, !bike.price?.text && styles.priceMissing)}>
           {displayPrice(bike.price)}
         </span>
+
+        {bike.flags ? (
+          <span className={styles.caveat} title={bike.flags}>
+            Some figures provisional
+          </span>
+        ) : null}
       </div>
 
       <div className={styles.footer}>

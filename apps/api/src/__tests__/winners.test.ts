@@ -33,6 +33,7 @@ function bike(
     flags: null,
     sourceUrl: null,
     priceSourceUrl: null,
+    dataGeneratedAt: '2026-09-04',
     specs: {
       engine: null,
       displacementCc: null,

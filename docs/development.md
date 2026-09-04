@@ -179,6 +179,7 @@ variable.
 | `npm run db:migrate` | applies unapplied files from `apps/api/src/db/migrations/` |
 | `npm run db:seed` | re-imports every catalogue; safe to re-run |
 | `npm run db:seed:fresh` | clears every brand and bike, then imports |
+| `npm run test:e2e` | Playwright browser tests (API stubbed, no database needed) |
 | `npm run storybook` | the design system on :6006 |
 
 Migrations are tracked in a `SchemaMigrations` table, so `db:migrate` only applies
@@ -255,6 +256,18 @@ takes the first number after the currency code — taking the lowest would read
 parse magnitudes like "INR ~2.1 lakh" at all, keeping the text instead. Other
 markets' prices each get a `BikePrices` row.
 
+### Data provenance
+
+Each catalogue states a `generated` date, imported to `Bikes.DataGeneratedAt` and
+shown as "Specifications as recorded on ...". Roughly half the models arrive with
+a `flags` caveat; that is shown on the card ("Some figures provisional"), as a
+row in the comparison, and in full on the detail page. `source` and
+`price_source` are credited separately because 82% of Thai prices come from a
+third-party listing rather than the manufacturer.
+
+The point is that a reader can tell how old and how solid a figure is at the
+moment they are comparing it, not only if they go looking.
+
 ### Model images
 
 Images are resolved by filename from `apps/web/public/bikes/<slug>.jpg`; the
@@ -266,9 +279,17 @@ curl -s "http://localhost:4000/api/v1/bikes?pageSize=60" \
   | python3 -c "import sys,json;[print(b['slug']+'.jpg') for b in json.load(sys.stdin)['items']]"
 ```
 
-A model with no file shows a placeholder rather than a broken image. Credits and
-licences for the images in the repo are in `apps/web/public/bikes/ATTRIBUTION.md`
-— most are CC BY-SA and require attribution wherever they are published.
+A model with no file shows a placeholder rather than a broken image.
+
+Most photography is CC BY-SA, which requires the credit to travel with the work,
+so it is shown in the product: under the photo on each detail page, and in full
+at `/credits`. `apps/web/public/bikes/credits.json` is the source for both, and
+`ATTRIBUTION.md` mirrors it for anyone reading the repository.
+`rejected.json` pins photo/model pairings judged wrong so a later run cannot
+reinstate them.
+
+Run `python3` over `credits.json` and the seed directory to reconcile the record
+against what is actually on disk after any bulk image run.
 
 ## Troubleshooting
 

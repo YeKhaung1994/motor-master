@@ -44,6 +44,10 @@ export interface BikeCardDto {
   kg: number | null;
   price: PriceDto | null;
   imageUrl: string | null;
+  /** Source caveat, e.g. "power/torque are engine-family values". */
+  flags: string | null;
+  /** When the catalogue this model came from was compiled (ISO date). */
+  dataGeneratedAt: string | null;
 }
 
 export interface BikeSpecsDto {
@@ -100,6 +104,7 @@ export interface BikeDetailDto {
   sourceUrl: string | null;
   /** Where the price came from, when that is not the manufacturer's own sheet. */
   priceSourceUrl: string | null;
+  dataGeneratedAt: string | null;
   specs: BikeSpecsDto;
 }
 

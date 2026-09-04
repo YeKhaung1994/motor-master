@@ -50,6 +50,11 @@ export const bikes = [
     flags: 'Spec sheet not itemised; price from aggregator',
   }),
   card(3, 'vespa-primavera', 'Primavera', 'Vespa', 'Scooter', { price: null }),
+  // Enough filler that the page scrolls; a page that fits the window cannot
+  // exercise sticky rails, paging or a button that parks at the footer.
+  ...Array.from({ length: 9 }, (_, i) =>
+    card(10 + i, `honda-filler-${i}`, `Filler ${i}`, 'Honda', 'Naked'),
+  ),
 ];
 
 const detail = (c: (typeof bikes)[number]) => ({

@@ -17,12 +17,22 @@
   font-weight: 600;
   cursor: pointer;
   box-shadow: var(--mm-tray-shadow);
-  transition: bottom 250ms ease, background-color 120ms ease;
+  transition: bottom 250ms ease, transform 200ms ease, opacity 200ms ease,
+    visibility 200ms ease, background-color 120ms ease;
 }
 
-/* Steps above the compare tray rather than sitting on top of it. */
+/* Steps out of the way once the footer is reached, rather than covering it. */
+.parked {
+  transform: translateY(calc(100% + var(--mm-space-6)));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Steps above the compare tray, using the tray's published height rather than
+   a guess that drifts when the tray wraps to two rows on a phone. */
 .raised {
-  bottom: calc(var(--mm-space-6) + 76px);
+  bottom: calc(var(--mm-space-6) + var(--mm-tray-height, 76px) + var(--mm-space-3));
 }
 
 .button:hover {
@@ -52,6 +62,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .button { transition: none; }
+  .parked { transform: none; }
 }
 
 @media (max-width: 720px) {
@@ -61,6 +72,6 @@
   }
 
   .raised {
-    bottom: calc(var(--mm-space-4) + 128px);
+    bottom: calc(var(--mm-space-4) + var(--mm-tray-height, 128px) + var(--mm-space-3));
   }
 }

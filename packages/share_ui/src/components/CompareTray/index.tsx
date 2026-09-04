@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Button } from '../Button';
 import { IconButton } from '../IconButton';
 import { CloseIcon } from '../../icons';
@@ -68,12 +69,37 @@ export function CompareTray({
   compareHref,
   className,
 }: CompareTrayProps) {
+  const ref = useRef<HTMLElement>(null);
   const open = bikes.length > 0;
   const ready = bikes.length >= 2;
+
+  /*
+   * Publish the tray's real height so anything else pinned to the bottom can
+   * clear it. The height changes with content and viewport, so a fixed offset
+   * elsewhere is a guess that eventually overlaps by a few pixels.
+   */
+  useEffect(() => {
+    const element = ref.current;
+    const root = document.documentElement;
+    if (!element) return;
+
+    const publish = () => {
+      root.style.setProperty('--mm-tray-height', open ? `${element.offsetHeight}px` : '0px');
+    };
+
+    publish();
+    const observer = new ResizeObserver(publish);
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      root.style.setProperty('--mm-tray-height', '0px');
+    };
+  }, [open]);
   const label = `Compare ${bikes.length} ${bikes.length === 1 ? 'bike' : 'bikes'}`;
 
   return (
     <section
+      ref={ref}
       className={cx(styles.tray, open && styles.open, className)}
       aria-label="Compare tray"
       aria-hidden={!open}

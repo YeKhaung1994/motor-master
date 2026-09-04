@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { stubApi } from './fixtures';
+import { bikes, stubApi } from './fixtures';
 
 test.beforeEach(async ({ page }) => {
   await stubApi(page);
@@ -7,7 +7,8 @@ test.beforeEach(async ({ page }) => {
 
 test('the catalogue renders and every nav link is reachable', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('article')).toHaveCount(3);
+  await expect(page.locator('article').first()).toBeVisible();
+  await expect(page.locator('article')).toHaveCount(bikes.length);
 
   const nav = page.getByRole('navigation', { name: 'Main' });
   await expect(nav.getByRole('link', { name: 'All bikes' })).toBeVisible();
@@ -55,10 +56,14 @@ test('the class filter only offers classes the brand actually has', async ({ pag
 
 test('filtering by class narrows the grid and is shareable', async ({ page }) => {
   await page.goto('/');
+  const nakedCount = bikes.filter((b) => b.class === 'Naked').length;
+
   await page.getByRole('checkbox', { name: /Naked/ }).check();
 
   await expect(page).toHaveURL(/class=Naked/);
-  await expect(page.locator('article')).toHaveCount(1);
+  await expect(page.locator('article')).toHaveCount(nakedCount);
+  // The classes that were filtered out are genuinely gone.
+  await expect(page.locator('article').filter({ hasText: 'Primavera' })).toHaveCount(0);
 });
 
 test('the sidebar never becomes a second scroll container', async ({ page }) => {
@@ -128,4 +133,20 @@ test('the launcher lifts clear of the compare tray', async ({ page }) => {
   const launcherBox = await launcher.boundingBox();
   const trayBox = await tray.boundingBox();
   expect(launcherBox!.y + launcherBox!.height).toBeLessThanOrEqual(trayBox!.y);
+});
+
+test('the launcher parks at the footer instead of covering the byline', async ({ page }) => {
+  await page.goto('/');
+  const launcher = page.locator('button', { hasText: 'Quick compare' });
+  await expect(launcher).toBeVisible();
+
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+
+  // Parked means out of the tab order too, not merely out of sight.
+  await expect(launcher).toBeHidden();
+  await expect(page.getByRole('button', { name: /Quick compare/ })).toHaveCount(0);
+  await expect(page.getByText('Built by YK')).toBeVisible();
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(launcher).toBeVisible();
 });

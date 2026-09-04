@@ -1,0 +1,129 @@
+/* Page-level scaffolding only. Everything a reader looks at is a share_ui
+   component; these rules just place them. */
+
+.page {
+  padding-top: var(--mm-space-6);
+  /* Room for the compare tray so it never covers the last row of cards. */
+  padding-bottom: 120px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-4);
+}
+
+.stack-tight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-2);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--mm-space-8);
+  align-items: start;
+  padding: var(--mm-space-6) 0 var(--mm-space-8);
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-4);
+  max-width: 52ch;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mm-space-3);
+}
+
+.sidebar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-4);
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--mm-space-8);
+  align-items: start;
+  padding: var(--mm-space-5) 0 var(--mm-space-8);
+}
+
+.detail-art {
+  aspect-ratio: 4 / 3;
+  background: var(--mm-panel);
+  border: 1px solid var(--mm-line);
+  border-radius: var(--mm-radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-4);
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mm-space-3);
+}
+
+.range-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--mm-space-3);
+}
+
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.brand-tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mm-space-1);
+  padding: var(--mm-space-5);
+  background: var(--mm-panel);
+  border: 1px solid var(--mm-line);
+  border-radius: var(--mm-radius);
+  text-decoration: none;
+  color: var(--mm-ink);
+}
+
+.brand-tile:hover {
+  border-color: var(--mm-ink);
+}
+
+.brand-tile:focus-visible {
+  outline: var(--mm-focus);
+  outline-offset: 2px;
+}
+
+.compare-note {
+  padding-top: var(--mm-space-4);
+}
+
+@media (max-width: 960px) {
+  .hero,
+  .detail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mm-space-5);
+  }
+}

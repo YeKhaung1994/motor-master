@@ -18,6 +18,7 @@ export * from './components/IconButton';
 export * from './components/Select';
 export * from './components/Checkbox';
 export * from './components/SearchInput';
+export * from './components/NumberField';
 export * from './components/Badge';
 export * from './components/Stat';
 export * from './components/Divider';
@@ -34,6 +35,7 @@ export * from './components/Footer';
 /* Domain */
 export * from './components/BrandRail';
 export * from './components/FilterGroup';
+export * from './components/RangeFilter';
 export * from './components/Toolbar';
 export * from './components/BikeCard';
 export * from './components/BikeGrid';

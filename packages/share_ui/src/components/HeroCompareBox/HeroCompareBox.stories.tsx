@@ -16,25 +16,25 @@ const options = bikes.map((bike) => ({
   label: `${bike.brand} ${bike.name}`,
 }));
 
-export const Default: Story = {
-  render: () => {
-    const [values, setValues] = useState<[string, string, string]>(['4', '6', '']);
-    return (
-      <HeroCompareBox
-        options={options}
-        values={values}
-        onChange={(index, value) =>
-          setValues((current) => {
-            const next = [...current] as [string, string, string];
-            next[index] = value;
-            return next;
-          })
-        }
-        onCompare={() => undefined}
-      />
-    );
-  },
-};
+function PickedDemo() {
+  const [values, setValues] = useState<[string, string, string]>(['4', '6', '']);
+  return (
+    <HeroCompareBox
+      options={options}
+      values={values}
+      onChange={(index, value) =>
+        setValues((current) => {
+          const next = [...current] as [string, string, string];
+          next[index] = value;
+          return next;
+        })
+      }
+      onCompare={() => undefined}
+    />
+  );
+}
+
+export const Default: Story = { render: () => <PickedDemo /> };
 
 export const Empty: Story = {
   render: () => (

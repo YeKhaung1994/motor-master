@@ -8,11 +8,15 @@
   color: var(--mm-panel);
   box-shadow: var(--mm-tray-shadow);
   transform: translateY(100%);
-  transition: transform 250ms ease;
+  /* Hidden rather than merely off-screen: the tray is aria-hidden when empty,
+     so its buttons must leave the tab order too. */
+  visibility: hidden;
+  transition: transform 250ms ease, visibility 250ms ease;
 }
 
 .open {
   transform: translateY(0);
+  visibility: visible;
 }
 
 @media (prefers-reduced-motion: reduce) {

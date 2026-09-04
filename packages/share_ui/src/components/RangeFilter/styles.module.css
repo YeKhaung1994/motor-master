@@ -1,0 +1,21 @@
+.group {
+  border: 1px solid var(--mm-line);
+  border-radius: var(--mm-radius);
+  background: var(--mm-bg);
+  padding: var(--mm-space-3) var(--mm-space-4) var(--mm-space-4);
+}
+
+.legend {
+  font-family: var(--mm-font-display);
+  font-size: var(--mm-display-sm);
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  margin: 0 0 var(--mm-space-2);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--mm-space-3);
+}

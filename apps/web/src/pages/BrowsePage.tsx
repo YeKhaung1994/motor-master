@@ -1,0 +1,192 @@
+import { useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  BikeCard,
+  BikeGrid,
+  BrandRail,
+  Button,
+  EmptyState,
+  FilterGroup,
+  Heading,
+  HeroCompareBox,
+  PageContainer,
+  RangeFilter,
+  SidebarLayout,
+  Skeleton,
+  Text,
+  Toolbar,
+} from '@motor-master/share_ui';
+import { useBikes } from '../features/bikes/hooks';
+import { SORT_OPTIONS, useBikeFilters } from '../features/bikes/useBikeFilters';
+import { useBrands } from '../features/brands/hooks';
+import { MAX_COMPARE, useCompare } from '../features/compare/useCompare';
+import type { BikeCardDto } from '../lib/types';
+
+const CLASS_OPTIONS = ['Naked', 'Sport', 'Adventure', 'Cruiser', 'Scooter'];
+
+export function BrowsePage() {
+  const { slug: brandSlug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+
+  const { filters, classes, sort, toggleClass, setSort, setRange, clearAll, hasFilters } =
+    useBikeFilters(brandSlug);
+
+  const brandsQuery = useBrands();
+  const bikesQuery = useBikes(filters);
+
+  const toggleCompare = useCompare((state) => state.toggle);
+  // Select the stored array itself — a selector that builds a new array on every
+  // render never settles against zustand's snapshot check.
+  const compareBikes = useCompare((state) => state.bikes);
+  const selectedIds = useMemo(() => compareBikes.map((bike) => bike.id), [compareBikes]);
+  const isFull = selectedIds.length >= MAX_COMPARE;
+
+  const [quick, setQuick] = useState<[string, string, string]>(['', '', '']);
+
+  const brand = brandsQuery.data?.find((entry) => entry.slug === brandSlug);
+  const items = useMemo(() => bikesQuery.data?.items ?? [], [bikesQuery.data]);
+
+  const quickOptions = useMemo(
+    () => items.map((bike) => ({ value: String(bike.id), label: `${bike.brand} ${bike.name}` })),
+    [items],
+  );
+
+  const heading = brand ? `${brand.name} bikes` : 'All bikes';
+
+  function onCompareQuickPicks() {
+    const ids = quick.filter(Boolean);
+    if (ids.length >= 2) navigate(`/compare?ids=${ids.join(',')}`);
+  }
+
+  return (
+    <PageContainer as="main" className="page">
+      {brandSlug ? null : (
+        <section className="hero">
+          <div className="hero-copy">
+            <Heading level={1} size="xl">
+              Every bike, one spec sheet
+            </Heading>
+            <Text tone="muted" size="lg">
+              Filter by brand, class, engine size and price, then put up to three bikes side by
+              side and see which one actually wins on paper.
+            </Text>
+            <div className="hero-actions">
+              <Button href="/brands" variant="ghost">
+                Browse by brand
+              </Button>
+            </div>
+          </div>
+          <HeroCompareBox
+            options={quickOptions}
+            values={quick}
+            onChange={(index, value) =>
+              setQuick((current) => {
+                const next = [...current] as [string, string, string];
+                next[index] = value;
+                return next;
+              })
+            }
+            onCompare={onCompareQuickPicks}
+          />
+        </section>
+      )}
+
+      <SidebarLayout
+        sidebar={
+          <div className="sidebar-stack">
+            <BrandRail
+              items={(brandsQuery.data ?? []).map((entry) => ({
+                name: entry.name,
+                countryCode: entry.countryCode,
+                count: entry.modelCount,
+                href: `/brands/${entry.slug}`,
+                active: entry.slug === brandSlug,
+              }))}
+            />
+            <FilterGroup
+              title="Class"
+              options={CLASS_OPTIONS.map((name) => ({ value: name, label: name }))}
+              selected={classes}
+              onChange={toggleClass}
+            />
+            <RangeFilter
+              title="Engine size"
+              suffix="cc"
+              minValue={filters.ccMin?.toString() ?? ''}
+              maxValue={filters.ccMax?.toString() ?? ''}
+              onMinChange={(value) => setRange('ccMin', value)}
+              onMaxChange={(value) => setRange('ccMax', value)}
+            />
+            <RangeFilter
+              title="Price"
+              suffix="$"
+              minValue={filters.priceMin?.toString() ?? ''}
+              maxValue={filters.priceMax?.toString() ?? ''}
+              onMinChange={(value) => setRange('priceMin', value)}
+              onMaxChange={(value) => setRange('priceMax', value)}
+            />
+            {hasFilters ? (
+              <Button variant="ghost" size="sm" onClick={clearAll}>
+                Clear filters
+              </Button>
+            ) : null}
+          </div>
+        }
+      >
+        <Toolbar
+          heading={heading}
+          count={bikesQuery.data?.total}
+          sortOptions={SORT_OPTIONS}
+          sortValue={sort}
+          onSortChange={setSort}
+        />
+
+        {bikesQuery.isPending ? (
+          <BikeGrid>
+            {Array.from({ length: 6 }, (_, index) => (
+              <Skeleton key={index} height={360} />
+            ))}
+          </BikeGrid>
+        ) : null}
+
+        {bikesQuery.isError ? (
+          <EmptyState
+            headline="Couldn't load bikes"
+            body="Check your connection and try again."
+            action={
+              <Button onClick={() => void bikesQuery.refetch()}>Try again</Button>
+            }
+          />
+        ) : null}
+
+        {bikesQuery.isSuccess && items.length === 0 ? (
+          <EmptyState
+            headline="No bikes match these filters"
+            body="Try widening the engine size or price range, or clearing a class."
+            action={
+              hasFilters ? (
+                <Button variant="ghost" onClick={clearAll}>
+                  Clear filters
+                </Button>
+              ) : undefined
+            }
+          />
+        ) : null}
+
+        {items.length > 0 ? (
+          <BikeGrid>
+            {items.map((bike: BikeCardDto) => (
+              <BikeCard
+                key={bike.id}
+                bike={bike}
+                selected={selectedIds.includes(bike.id)}
+                compareDisabled={isFull}
+                onToggleCompare={() => toggleCompare(bike)}
+              />
+            ))}
+          </BikeGrid>
+        ) : null}
+      </SidebarLayout>
+    </PageContainer>
+  );
+}

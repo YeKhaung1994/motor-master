@@ -4,15 +4,17 @@
  * The share_ui-only rule. apps/web composes screens; it never draws them.
  * Any interactive or tabular HTML element must come from @motor-master/share_ui.
  */
-const SHARE_UI_ONLY = [
-  'button',
-  'input',
-  'select',
-  'table',
-  'textarea',
-].map((tag) => ({
+const REPLACEMENTS = {
+  button: 'Button or IconButton',
+  input: 'SearchInput, NumberField or Checkbox',
+  select: 'Select',
+  table: 'SpecTable or CompareTable',
+  textarea: 'a new share_ui component',
+};
+
+const SHARE_UI_ONLY = Object.entries(REPLACEMENTS).map(([tag, replacement]) => ({
   selector: `JSXOpeningElement[name.name='${tag}']`,
-  message: `Use the share_ui <${tag === 'table' ? 'SpecTable' : tag[0].toUpperCase() + tag.slice(1)}> component instead of a raw <${tag}>. Every visual element in apps/web comes from @motor-master/share_ui.`,
+  message: `Use share_ui's ${replacement} instead of a raw <${tag}>. Every visual element in apps/web comes from @motor-master/share_ui — if the component does not exist yet, add it there first.`,
 }));
 
 module.exports = {

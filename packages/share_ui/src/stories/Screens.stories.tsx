@@ -48,8 +48,7 @@ function Shell({ children, tray }: { children: React.ReactNode; tray?: React.Rea
   );
 }
 
-export const BrowsePage: Story = {
-  render: () => {
+function BrowseScreen() {
     const [selected, setSelected] = useState<BikeCardData[]>([]);
     const [classFilter, setClassFilter] = useState<string[]>([]);
     const [quick, setQuick] = useState<[string, string, string]>(['', '', '']);
@@ -146,11 +145,9 @@ export const BrowsePage: Story = {
         </PageContainer>
       </Shell>
     );
-  },
-};
+}
 
-export const BikeDetailPage: Story = {
-  render: () => {
+function BikeDetailScreen() {
     const bike = bikes[3]!;
     return (
       <Shell>
@@ -202,11 +199,9 @@ export const BikeDetailPage: Story = {
         </PageContainer>
       </Shell>
     );
-  },
-};
+}
 
-export const ComparePage: Story = {
-  render: () => {
+function CompareScreen() {
     const picked = [bikes[3]!, bikes[5]!, bikes[9]!];
     return (
       <Shell>
@@ -263,5 +258,8 @@ export const ComparePage: Story = {
         </PageContainer>
       </Shell>
     );
-  },
-};
+}
+
+export const BrowsePage: Story = { render: () => <BrowseScreen /> };
+export const BikeDetailPage: Story = { render: () => <BikeDetailScreen /> };
+export const ComparePage: Story = { render: () => <CompareScreen /> };

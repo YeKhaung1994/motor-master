@@ -7,12 +7,14 @@ to 1920 px wide.
 Most are CC BY-SA, which requires attribution and share-alike terms — keep this
 file with the images, and surface the credit wherever the photo is published.
 
-160 images across 12 brands.
+170 images across 12 brands.
 
 | Model | File | Photographer | Licence | Source |
 |---|---|---|---|---|
 | CE 04 / CE 02 | `bmw-motorrad-ce-04-ce-02.jpg` | Wikisympathisant | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024-06_BMW_CE_04.jpg) |
 | F 450 GS | `bmw-motorrad-f-450-gs.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_F_450_GS_(1b).jpg) |
+| F 900 R / F 900 XR | `bmw-motorrad-f-900-r-f-900-xr.jpg` | BRNO1991 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_F900R_Motosalon_Brno_2026.jpg) |
+| G 310 R / G 310 GS | `bmw-motorrad-g-310-r-g-310-gs.jpg` | George E. Koronaios | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_G_motorcycle_in_Athens_on_June_25,_2023.jpg) |
 | M 1000 RR | `bmw-motorrad-m-1000-rr.jpg` | Wikisympathisant | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2022-05_BMW_M_Motorrad_S1000RR.jpg) |
 | R 1300 GS / GS Adventure | `bmw-motorrad-r-1300-gs-gs-adventure.jpg` | Franken-Guzzista | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_R1300GS_Adventure_2025.jpg) |
 | R 1300 R / RS / RT | `bmw-motorrad-r-1300-r-rs-rt.jpg` | Franken-Guzzista | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_R1300RS_2025.jpg) |
@@ -21,8 +23,6 @@ file with the images, and surface the credit wherever the photo is published.
 | S 1000 XR | `bmw-motorrad-s-1000-xr.jpg` | Unknown | CC BY-SA 3.0 de | [Commons](https://commons.wikimedia.org/wiki/File:BMW_S_1000_XR,_li._Seite_(2024-05-04_Sp).JPG) |
 | Diavel V4 | `ducati-diavel-v4.jpg` | XDVRACE | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Diavel_V4.jpg) |
 | Hypermotard 698 Mono / RVE | `ducati-hypermotard-698-mono-rve.jpg` | Earthshaker13 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Hypermotard_698_Mono_RVE_at_EICMA_2023_-_left_view.jpg) |
-| Monster / Monster+ | `ducati-monster-monster.jpg` | George E. Koronaios | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Monster_620_i.e._in_Athens_on_10-24-2023.jpg) |
-| Monster SP | `ducati-monster-sp.jpg` | George E. Koronaios | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Monster_620_i.e._in_Athens_on_10-24-2023.jpg) |
 | Multistrada V4 Rally | `ducati-multistrada-v4-rally.jpg` | MotorideSA | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_Rally_2026.jpg) |
 | Multistrada V4 RS | `ducati-multistrada-v4-rs.jpg` | Oq10pass | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_S_%2725.jpg) |
 | Multistrada V4 S | `ducati-multistrada-v4-s.jpg` | Oq10pass | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_S_%2725.jpg) |
@@ -44,8 +44,10 @@ file with the images, and surface the credit wherever the photo is published.
 | DZ3 | `gpx-dz3.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_GPX_DZ3_Sport.jpg) |
 | DZ3 Plus | `gpx-dz3-plus.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2026_GPX_DZ3_Sport_Plus.jpg) |
 | Legend 200 | `gpx-legend-200.jpg` | XDVRACE | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:GPX_Legend_200.jpg) |
+| Raptor 180 | `gpx-raptor-180.jpg` | Staff Sgt. Natasha Stannard | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Commander_takes_to_sky_for_final_Raptor_flight_170621-F-GX122-180.jpg) |
 | Breakout 117 | `harley-davidson-breakout-117.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Harley-Davidson_Breakout_117_(1).jpg) |
 | CVO Road Glide ST | `harley-davidson-cvo-road-glide-st.jpg` | 先従隗始 | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_CVO%E2%84%A2_Road_Glide_-_Harley-Davidson_Tri_Glide_Ultra_(%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B0%E3%83%A9%E3%82%A4%E3%83%89%E3%82%A6%E3%83%AB%E3%83%88%E3%83%A9FLHTCUTGSE)_(Ent_No.21502)_(24021012411).jpg) |
+| Fat Boy 117 | `harley-davidson-fat-boy-117.jpg` | Hablot Knight Browne | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Tracy_Tupman,_Rachel_Wardle,_and_the_Fat_Boy_(Charles_Dickens%27_The_Pickwick_Papers),_by_Hablot_Knight_Browne,_mid_1800s,_from_the_Hood_Museum_of_Art_-_P.965.117.jpg) |
 | Heritage Classic | `harley-davidson-heritage-classic.jpg` | Chris Woodrich | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_Heritage_Softail_Classic_parked_at_Hogs_for_Hospice,_Leamington,_Ontario,_2025-08-02_04.jpg) |
 | Low Rider S | `harley-davidson-low-rider-s.jpg` | emperornie | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_Low_Rider_(17149269014).jpg) |
 | Low Rider ST | `harley-davidson-low-rider-st.jpg` | Michael Barera | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_28_(2024_Low_Rider_ST).jpg) |
@@ -67,6 +69,7 @@ file with the images, and surface the credit wherever the photo is published.
 | CBR250RR | `honda-cbr250rr.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2023_Honda_CBR250RR_SP.jpg) |
 | CBR500R | `honda-cbr500r.jpg` | Thesupermat | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Salon_de_la_Moto_et_du_Scooter_de_Paris_2013_-_Honda_-_CBR_500R_-_003.jpg) |
 | CBR650R | `honda-cbr650r.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2023_Honda_CBR650R_E-Clutch.jpg) |
+| Click 125i | `honda-click-125i.jpg` | Corvettec6r | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Honda_SH_125i_in_Avellino.jpg) |
 | Click 160 (2026) | `honda-click-160-2026.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2022_Honda_Click_160_ABS.jpg) |
 | CRF300 Rally | `honda-crf300-rally.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Honda_CRF300_RALLY.jpg) |
 | CRF300L | `honda-crf300l.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Honda_CRF300L.jpg) |
@@ -116,9 +119,12 @@ file with the images, and surface the credit wherever the photo is published.
 | Z650 | `kawasaki-z650.jpg` | Gamemaster669 | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z650_schwarz_2020.jpg) |
 | Z650RS | `kawasaki-z650rs.jpg` | MotorideSA | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z650RS.jpg) |
 | Z900 | `kawasaki-z900.jpg` | T.doi.z900 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KawasakiZ900.jpg) |
+| 1390 Super Adventure S / R | `ktm-1390-super-adventure-s-r.jpg` | Saggittarius A | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_1390_-_EICMA_2024.jpg) |
+| 1390 Super Duke R / R EVO | `ktm-1390-super-duke-r-r-evo.jpg` | Saggittarius A | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_1390_-_EICMA_2024.jpg) |
 | 390 Duke | `ktm-390-duke.jpg` | LoiR | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_390_Duke.jpg) |
 | 790 Duke | `ktm-790-duke.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_790_Duke_(3).jpg) |
 | 890 Adventure R / 890 SMT | `ktm-890-adventure-r-890-smt.jpg` | Siechfred | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_890_Adventure.jpg) |
+| 990 Duke / 990 Duke R | `ktm-990-duke-990-duke-r.jpg` | Dbratland | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:2009_KTM_Super_Duke_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg) |
 | RC 390 | `ktm-rc-390.jpg` | LoiR | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_390_Duke.jpg) |
 | Bear 650 | `royal-enfield-bear-650.jpg` | XDVRACE | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bear_650_2026.jpg) |
 | Bullet 350 | `royal-enfield-bullet-350.jpg` | kishjar? from Moscow, Russia | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_350_(54832566003).jpg) |
@@ -145,6 +151,8 @@ file with the images, and surface the credit wherever the photo is published.
 | Scrambler 1200 X / XE | `triumph-scrambler-1200-x-xe.jpg` | Vauxford | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:1994_Triumph_Speed_Triple,_2019_Triumph_Scrambler_1200_XE_and_Triumph_TE-1_prototype.jpg) |
 | Scrambler 400 X / XC | `triumph-scrambler-400-x-xc.jpg` | Rouv1505 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Triumph-Scrambler-400X.jpg) |
 | Speed 400 | `triumph-speed-400.jpg` | Corvettec6r | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Triumph_Speed_400.jpg) |
+| Speed Twin 1200 / RS | `triumph-speed-twin-1200-rs.jpg` | Oleg Yunakov | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:1968_Triumph_Herald_1200_-_02.jpg) |
+| Tiger 1200 GT Pro / Rally Pro / Explorer | `triumph-tiger-1200-gt-pro-rally-pro-explorer.jpg` | Oleg Yunakov | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:1968_Triumph_Herald_1200_-_02.jpg) |
 | Tiger Sport 660 | `triumph-tiger-sport-660.jpg` | Lamb Chop Rides | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tiger_sport_660_22.jpg) |
 | Trident 660 | `triumph-trident-660.jpg` | Scjessey | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Triumph_Trident_660.jpg) |
 | 946 (Dragon / 10° Anniversario) | `vespa-946-dragon-10-anniversario.jpg` | DJ Wolf, vespaforum.de | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Vespa_946_Lenkstange.jpg) |
@@ -158,6 +166,7 @@ file with the images, and surface the credit wherever the photo is published.
 | MT-03 | `yamaha-mt-03.jpg` | Hunini | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:JGSDF_Police_Motorcycle_(YAMAHA_MT-03,_11-0476)_nameplate_at_Camp_Uji_September_14,_2024.jpg) |
 | MT-07 / MT-07 Y-AMT | `yamaha-mt-07-mt-07-y-amt.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2025_Yamaha_MT-07_Y-AMT.jpg) |
 | MT-09 / MT-09 SP / MT-09 Y-AMT | `yamaha-mt-09-mt-09-sp-mt-09-y-amt.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09_Y-AMT.jpg) |
+| MT-15 | `yamaha-mt-15.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2018_Yamaha_MT-15.jpg) |
 | NMAX 155 / NMAX Tech MAX | `yamaha-nmax-155-nmax-tech-max.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2025_Yamaha_NMAX_155_Tech_MAX.jpg) |
 | SR400 / SR400 Black Gold | `yamaha-sr400-sr400-black-gold.jpg` | Khaosaming | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Yamaha_SR400_2014.JPG) |
 | Ténéré 700 | `yamaha-tenere-700.jpg` | APneunzehn74 | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Tenere_700_World_Raid_GYTR_(1).jpg) |
@@ -169,77 +178,69 @@ file with the images, and surface the credit wherever the photo is published.
 | XSR900 | `yamaha-xsr900.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Yamaha_XSR_900_(2).jpg) |
 | YZF-R1 | `yamaha-yzf-r1.jpg` | Alberto-g-rovi | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Yamaha_YZF_R-1-Team_Yamalube_Folch_Endurance_(1).jpg) |
 | YZF-R1M | `yamaha-yzf-r1m.jpg` | PekePON | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:YAMAHA_YZF-R1M_at_the_Tokyo_Motor_Show_2015.jpg) |
+| YZF-R3 | `yamaha-yzf-r3.jpg` | Kuro202 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:YZF-R3_2019_v3.jpg) |
 | YZF-R7 | `yamaha-yzf-r7.jpg` | Solomon203 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Aqua_YZF-R7_itansha_left_side_and_Aqua_helmet_20240811a.jpg) |
 | YZF-R9 | `yamaha-yzf-r9.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2025_Yamaha_YZF-R9.jpg) |
 
 ## Models with no image
 
-- 1390 Super Adventure S / R (`ktm-1390-super-adventure-s-r`)
-- 1390 Super Duke R / R EVO (`ktm-1390-super-duke-r-r-evo`)
-- 250 Duke / 200 Duke / 125 Duke (`ktm-250-duke-200-duke-125-duke`)
-- 390 Adventure R / X / Enduro R / SMC R (`ktm-390-adventure-r-x-enduro-r-smc-r`)
-- 990 Duke / 990 Duke R (`ktm-990-duke-990-duke-r`)
-- Bonneville T120 / T100 (`triumph-bonneville-t120-t100`)
-- C 400 X / C 400 GT (`bmw-motorrad-c-400-x-c-400-gt`)
-- CVO Street Glide ST (`harley-davidson-cvo-street-glide-st`)
-- Classic 650 (`royal-enfield-classic-650`)
-- Demon 150 GN (`gpx-demon-150-gn`)
-- Demon 150 GR FI (`gpx-demon-150-gr-fi`)
-- Demon GR200R (`gpx-demon-gr200r`)
-- DesertX / Discovery / Rally (`ducati-desertx-discovery-rally`)
-- Exciter 155 (`yamaha-exciter-155`)
-- F 900 GS / GS Adventure / F 800 GS (`bmw-motorrad-f-900-gs-gs-adventure-f-800-gs`)
-- F 900 R / F 900 XR (`bmw-motorrad-f-900-r-f-900-xr`)
-- Fat Boy 117 (`harley-davidson-fat-boy-117`)
-- Fazzio Hybrid (`yamaha-fazzio-hybrid`)
-- G 310 R / G 310 GS (`bmw-motorrad-g-310-r-g-310-gs`)
-- GTS 300 / GTS Super / GTS Super Sport / GTS Super Tech (`vespa-gts-300-gts-super-gts-super-sport-gts-super-tech`)
-- Hypermotard 950 RVE / SP (`ducati-hypermotard-950-rve-sp`)
-- KLX110R L (`kawasaki-klx110r-l`)
-- KLX140R F (`kawasaki-klx140r-f`)
-- KLX230 / S / SE / SM / Sherpa (`kawasaki-klx230-s-se-sm-sherpa`)
-- KLX230R (`kawasaki-klx230r`)
-- LX 125 / LX 150 (`vespa-lx-125-lx-150`)
-- Legend 150s (`gpx-legend-150s`)
-- Legend 250 Twin III (`gpx-legend-250-twin-iii`)
-- Legend Gentleman 200 (`gpx-legend-gentleman-200`)
-- Legend Gentleman Racer 200 (`gpx-legend-gentleman-racer-200`)
-- MAD 300 (`gpx-mad-300`)
-- MT-15 (`yamaha-mt-15`)
-- Monster 30° Anniversario (`ducati-monster-30-anniversario`)
-- Multistrada V2 / V2 S (2025+ 890cc) (`ducati-multistrada-v2-v2-s-2025-890cc`)
-- Nightster / Nightster Special (`harley-davidson-nightster-nightster-special`)
-- Ninja 400 / SE (`kawasaki-ninja-400-se`)
-- Ninja e-1 (`kawasaki-ninja-e-1`)
-- Popz 110 (`gpx-popz-110`)
-- Popz 125 (`gpx-popz-125`)
-- Primavera 125 / Sprint 125 / S 125 (`vespa-primavera-125-sprint-125-s-125`)
-- Primavera 150 / Sprint 150 / Sprint S 150 (`vespa-primavera-150-sprint-150-sprint-s-150`)
-- QBIX (`yamaha-qbix`)
-- R 12 / R 12 nineT / R 12 S / R 12 G/S (`bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s`)
-- R 18 / Classic / B / Transcontinental / Roctane (`bmw-motorrad-r-18-classic-b-transcontinental-roctane`)
-- Raider J Crossover (`suzuki-raider-j-crossover`)
-- Raptor 180 (`gpx-raptor-180`)
-- Razer 220 (`gpx-razer-220`)
-- Road Glide Limited (`harley-davidson-road-glide-limited`)
-- Rock 110 (`gpx-rock-110`)
-- Rocket 3 Storm R / GT (`triumph-rocket-3-storm-r-gt`)
-- Scram 411 (`royal-enfield-scram-411`)
-- Scrambler Full Throttle (`ducati-scrambler-full-throttle`)
-- Scrambler Nightshift (`ducati-scrambler-nightshift`)
-- Speed Twin 1200 / RS (`triumph-speed-twin-1200-rs`)
-- Speed Twin 900 (`triumph-speed-twin-900`)
-- Street Bob 117 (`harley-davidson-street-bob-117`)
-- Street Glide Limited (`harley-davidson-street-glide-limited`)
-- Street Triple 765 R / RS (`triumph-street-triple-765-r-rs`)
-- Streetfighter V4 SP2 (`ducati-streetfighter-v4-sp2`)
-- Thruxton 400 (`triumph-thruxton-400`)
-- Tiger 1200 GT Pro / Rally Pro / Explorer (`triumph-tiger-1200-gt-pro-rally-pro-explorer`)
-- Tiger 900 GT / GT Pro / Rally Pro (`triumph-tiger-900-gt-gt-pro-rally-pro`)
-- V-Strom 1050DE (`suzuki-v-strom-1050de`)
-- WR155R (`yamaha-wr155r`)
-- YZF-R15 / R15M (`yamaha-yzf-r15-r15m`)
-- YZF-R3 (`yamaha-yzf-r3`)
+- BMW Motorrad C 400 X / C 400 GT (`bmw-motorrad-c-400-x-c-400-gt`)
+- BMW Motorrad F 900 GS / GS Adventure / F 800 GS (`bmw-motorrad-f-900-gs-gs-adventure-f-800-gs`)
+- BMW Motorrad R 12 / R 12 nineT / R 12 S / R 12 G/S (`bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s`)
+- BMW Motorrad R 18 / Classic / B / Transcontinental / Roctane (`bmw-motorrad-r-18-classic-b-transcontinental-roctane`)
+- Ducati DesertX / Discovery / Rally (`ducati-desertx-discovery-rally`)
+- Ducati Hypermotard 950 RVE / SP (`ducati-hypermotard-950-rve-sp`)
+- Ducati Monster / Monster+ (`ducati-monster-monster`)
+- Ducati Monster 30° Anniversario (`ducati-monster-30-anniversario`)
+- Ducati Monster SP (`ducati-monster-sp`)
+- Ducati Multistrada V2 / V2 S (2025+ 890cc) (`ducati-multistrada-v2-v2-s-2025-890cc`)
+- Ducati Scrambler Full Throttle (`ducati-scrambler-full-throttle`)
+- Ducati Scrambler Nightshift (`ducati-scrambler-nightshift`)
+- Ducati Streetfighter V4 SP2 (`ducati-streetfighter-v4-sp2`)
+- GPX Demon 150 GN (`gpx-demon-150-gn`)
+- GPX Demon 150 GR FI (`gpx-demon-150-gr-fi`)
+- GPX Demon GR200R (`gpx-demon-gr200r`)
+- GPX Legend 150s (`gpx-legend-150s`)
+- GPX Legend 250 Twin III (`gpx-legend-250-twin-iii`)
+- GPX Legend Gentleman 200 (`gpx-legend-gentleman-200`)
+- GPX Legend Gentleman Racer 200 (`gpx-legend-gentleman-racer-200`)
+- GPX MAD 300 (`gpx-mad-300`)
+- GPX Popz 110 (`gpx-popz-110`)
+- GPX Popz 125 (`gpx-popz-125`)
+- GPX Razer 220 (`gpx-razer-220`)
+- GPX Rock 110 (`gpx-rock-110`)
+- Harley-Davidson CVO Street Glide ST (`harley-davidson-cvo-street-glide-st`)
+- Harley-Davidson Nightster / Nightster Special (`harley-davidson-nightster-nightster-special`)
+- Harley-Davidson Road Glide Limited (`harley-davidson-road-glide-limited`)
+- Harley-Davidson Street Bob 117 (`harley-davidson-street-bob-117`)
+- Harley-Davidson Street Glide Limited (`harley-davidson-street-glide-limited`)
+- KTM 250 Duke / 200 Duke / 125 Duke (`ktm-250-duke-200-duke-125-duke`)
+- KTM 390 Adventure R / X / Enduro R / SMC R (`ktm-390-adventure-r-x-enduro-r-smc-r`)
+- Kawasaki KLX110R L (`kawasaki-klx110r-l`)
+- Kawasaki KLX140R F (`kawasaki-klx140r-f`)
+- Kawasaki KLX230 / S / SE / SM / Sherpa (`kawasaki-klx230-s-se-sm-sherpa`)
+- Kawasaki KLX230R (`kawasaki-klx230r`)
+- Kawasaki Ninja 400 / SE (`kawasaki-ninja-400-se`)
+- Kawasaki Ninja e-1 (`kawasaki-ninja-e-1`)
+- Royal Enfield Classic 650 (`royal-enfield-classic-650`)
+- Royal Enfield Scram 411 (`royal-enfield-scram-411`)
+- Suzuki Raider J Crossover (`suzuki-raider-j-crossover`)
+- Suzuki V-Strom 1050DE (`suzuki-v-strom-1050de`)
+- Triumph Bonneville T120 / T100 (`triumph-bonneville-t120-t100`)
+- Triumph Rocket 3 Storm R / GT (`triumph-rocket-3-storm-r-gt`)
+- Triumph Speed Twin 900 (`triumph-speed-twin-900`)
+- Triumph Street Triple 765 R / RS (`triumph-street-triple-765-r-rs`)
+- Triumph Thruxton 400 (`triumph-thruxton-400`)
+- Triumph Tiger 900 GT / GT Pro / Rally Pro (`triumph-tiger-900-gt-gt-pro-rally-pro`)
+- Vespa GTS 300 / GTS Super / GTS Super Sport / GTS Super Tech (`vespa-gts-300-gts-super-gts-super-sport-gts-super-tech`)
+- Vespa LX 125 / LX 150 (`vespa-lx-125-lx-150`)
+- Vespa Primavera 125 / Sprint 125 / S 125 (`vespa-primavera-125-sprint-125-s-125`)
+- Vespa Primavera 150 / Sprint 150 / Sprint S 150 (`vespa-primavera-150-sprint-150-sprint-s-150`)
+- Yamaha Exciter 155 (`yamaha-exciter-155`)
+- Yamaha Fazzio Hybrid (`yamaha-fazzio-hybrid`)
+- Yamaha QBIX (`yamaha-qbix`)
+- Yamaha WR155R (`yamaha-wr155r`)
+- Yamaha YZF-R15 / R15M (`yamaha-yzf-r15-r15m`)
 
 Drop a file named `<slug>.jpg` into this folder to fill a gap; the catalogue
 picks it up by filename, and the card falls back to a placeholder until then.

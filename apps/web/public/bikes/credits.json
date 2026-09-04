@@ -24,6 +24,30 @@
     "height": 2800
   },
   {
+    "slug": "bmw-motorrad-f-900-r-f-900-xr",
+    "model": "F 900 R / F 900 XR",
+    "file": "bmw-motorrad-f-900-r-f-900-xr.jpg",
+    "title": "BMW F900R Motosalon Brno 2026.jpg",
+    "artist": "BRNO1991",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_F900R_Motosalon_Brno_2026.jpg",
+    "width": 1776,
+    "height": 1153
+  },
+  {
+    "slug": "bmw-motorrad-g-310-r-g-310-gs",
+    "model": "G 310 R / G 310 GS",
+    "file": "bmw-motorrad-g-310-r-g-310-gs.jpg",
+    "title": "BMW G motorcycle in Athens on June 25, 2023.jpg",
+    "artist": "George E. Koronaios",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_G_motorcycle_in_Athens_on_June_25,_2023.jpg",
+    "width": 6000,
+    "height": 4000
+  },
+  {
     "slug": "bmw-motorrad-m-1000-rr",
     "model": "M 1000 RR",
     "file": "bmw-motorrad-m-1000-rr.jpg",
@@ -372,6 +396,18 @@
     "height": 1201
   },
   {
+    "slug": "gpx-raptor-180",
+    "model": "Raptor 180",
+    "file": "gpx-raptor-180.jpg",
+    "title": "Commander takes to sky for final Raptor flight 170621-F-GX122-180.jpg",
+    "artist": "Staff Sgt. Natasha Stannard",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Commander_takes_to_sky_for_final_Raptor_flight_170621-F-GX122-180.jpg",
+    "width": 5472,
+    "height": 3652
+  },
+  {
     "slug": "harley-davidson-breakout-117",
     "model": "Breakout 117",
     "file": "harley-davidson-breakout-117.jpg",
@@ -394,6 +430,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_CVO%E2%84%A2_Road_Glide_-_Harley-Davidson_Tri_Glide_Ultra_(%E3%83%88%E3%83%A9%E3%82%A4%E3%82%B0%E3%83%A9%E3%82%A4%E3%83%89%E3%82%A6%E3%83%AB%E3%83%88%E3%83%A9FLHTCUTGSE)_(Ent_No.21502)_(24021012411).jpg",
     "width": 4608,
     "height": 3072
+  },
+  {
+    "slug": "harley-davidson-fat-boy-117",
+    "model": "Fat Boy 117",
+    "file": "harley-davidson-fat-boy-117.jpg",
+    "title": "Tracy Tupman, Rachel Wardle, and the Fat Boy (Charles Dickens' The Pickwick Papers), by Hablot Knight Browne, mid 1800s, from the Hood Museum of Art - P.965.117.jpg",
+    "artist": "Hablot Knight Browne",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Tracy_Tupman,_Rachel_Wardle,_and_the_Fat_Boy_(Charles_Dickens%27_The_Pickwick_Papers),_by_Hablot_Knight_Browne,_mid_1800s,_from_the_Hood_Museum_of_Art_-_P.965.117.jpg",
+    "width": 2570,
+    "height": 3858
   },
   {
     "slug": "harley-davidson-heritage-classic",
@@ -646,6 +694,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2023_Honda_CBR650R_E-Clutch.jpg",
     "width": 4608,
     "height": 3456
+  },
+  {
+    "slug": "honda-click-125i",
+    "model": "Click 125i",
+    "file": "honda-click-125i.jpg",
+    "title": "Honda SH 125i in Avellino.jpg",
+    "artist": "Corvettec6r",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_SH_125i_in_Avellino.jpg",
+    "width": 2330,
+    "height": 2246
   },
   {
     "slug": "honda-click-160-2026",
@@ -1236,6 +1296,30 @@
     "height": 4010
   },
   {
+    "slug": "ktm-1390-super-adventure-s-r",
+    "model": "1390 Super Adventure S / R",
+    "file": "ktm-1390-super-adventure-s-r.jpg",
+    "title": "KTM 1390 - EICMA 2024.jpg",
+    "artist": "Saggittarius A",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1390_-_EICMA_2024.jpg",
+    "width": 3648,
+    "height": 2736
+  },
+  {
+    "slug": "ktm-1390-super-duke-r-r-evo",
+    "model": "1390 Super Duke R / R EVO",
+    "file": "ktm-1390-super-duke-r-r-evo.jpg",
+    "title": "KTM 1390 - EICMA 2024.jpg",
+    "artist": "Saggittarius A",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_1390_-_EICMA_2024.jpg",
+    "width": 3648,
+    "height": 2736
+  },
+  {
     "slug": "ktm-390-duke",
     "model": "390 Duke",
     "file": "ktm-390-duke.jpg",
@@ -1270,6 +1354,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:KTM_890_Adventure.jpg",
     "width": 3021,
     "height": 2265
+  },
+  {
+    "slug": "ktm-990-duke-990-duke-r",
+    "model": "990 Duke / 990 Duke R",
+    "file": "ktm-990-duke-990-duke-r.jpg",
+    "title": "2009 KTM Super Duke at the 2009 Seattle International Motorcycle Show 1.jpg",
+    "artist": "Dbratland",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2009_KTM_Super_Duke_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
+    "width": 2765,
+    "height": 2225
   },
   {
     "slug": "ktm-rc-390",
@@ -1584,6 +1680,30 @@
     "height": 1429
   },
   {
+    "slug": "triumph-speed-twin-1200-rs",
+    "model": "Speed Twin 1200 / RS",
+    "file": "triumph-speed-twin-1200-rs.jpg",
+    "title": "1968 Triumph Herald 1200 - 02.jpg",
+    "artist": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1968_Triumph_Herald_1200_-_02.jpg",
+    "width": 5712,
+    "height": 4284
+  },
+  {
+    "slug": "triumph-tiger-1200-gt-pro-rally-pro-explorer",
+    "model": "Tiger 1200 GT Pro / Rally Pro / Explorer",
+    "file": "triumph-tiger-1200-gt-pro-rally-pro-explorer.jpg",
+    "title": "1968 Triumph Herald 1200 - 02.jpg",
+    "artist": "Oleg Yunakov",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1968_Triumph_Herald_1200_-_02.jpg",
+    "width": 5712,
+    "height": 4284
+  },
+  {
     "slug": "triumph-tiger-sport-660",
     "model": "Tiger Sport 660",
     "file": "triumph-tiger-sport-660.jpg",
@@ -1740,6 +1860,18 @@
     "height": 2979
   },
   {
+    "slug": "yamaha-mt-15",
+    "model": "MT-15",
+    "file": "yamaha-mt-15.jpg",
+    "title": "2018 Yamaha MT-15.jpg",
+    "artist": "Chanokchon",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2018_Yamaha_MT-15.jpg",
+    "width": 3456,
+    "height": 3456
+  },
+  {
     "slug": "yamaha-nmax-155-nmax-tech-max",
     "model": "NMAX 155 / NMAX Tech MAX",
     "file": "yamaha-nmax-155-nmax-tech-max.jpg",
@@ -1870,6 +2002,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:YAMAHA_YZF-R1M_at_the_Tokyo_Motor_Show_2015.jpg",
     "width": 3300,
     "height": 2400
+  },
+  {
+    "slug": "yamaha-yzf-r3",
+    "model": "YZF-R3",
+    "file": "yamaha-yzf-r3.jpg",
+    "title": "YZF-R3 2019 v3.jpg",
+    "artist": "Kuro202",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:YZF-R3_2019_v3.jpg",
+    "width": 592,
+    "height": 477
   },
   {
     "slug": "yamaha-yzf-r7",

@@ -130,9 +130,15 @@ test('the launcher lifts clear of the compare tray', async ({ page }) => {
   const tray = page.getByRole('region', { name: 'Compare tray' });
   await expect(tray).toBeVisible();
 
-  const launcherBox = await launcher.boundingBox();
-  const trayBox = await tray.boundingBox();
-  expect(launcherBox!.y + launcherBox!.height).toBeLessThanOrEqual(trayBox!.y);
+  // The tray publishes its height through a ResizeObserver, so the launcher
+  // settles a frame later; poll rather than sampling one instant.
+  await expect
+    .poll(async () => {
+      const launcherBox = await launcher.boundingBox();
+      const trayBox = await tray.boundingBox();
+      return (launcherBox!.y + launcherBox!.height) - trayBox!.y;
+    })
+    .toBeLessThanOrEqual(0);
 });
 
 test('the launcher parks at the footer instead of covering the byline', async ({ page }) => {
@@ -140,13 +146,15 @@ test('the launcher parks at the footer instead of covering the byline', async ({
   const launcher = page.locator('button', { hasText: 'Quick compare' });
   await expect(launcher).toBeVisible();
 
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  // Scroll to the footer itself: the document grows as images load, so a
+  // scrollTo(scrollHeight) can land short of the end.
+  await page.locator('footer').scrollIntoViewIfNeeded();
 
   // Parked means out of the tab order too, not merely out of sight.
   await expect(launcher).toBeHidden();
   await expect(page.getByRole('button', { name: /Quick compare/ })).toHaveCount(0);
   await expect(page.getByText('Built by YK')).toBeVisible();
 
-  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.locator('article').first().scrollIntoViewIfNeeded();
   await expect(launcher).toBeVisible();
 });

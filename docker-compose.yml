@@ -6,10 +6,18 @@ services:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "MotorMaster!2024"
       MSSQL_PID: Developer
+      # SQL Server will otherwise size its buffer pool to the whole machine and
+      # get OOM-killed (exit 137) on a Docker VM this size, taking the API with it.
+      MSSQL_MEMORY_LIMIT_MB: "2048"
     ports:
       - "${DB_PORT:-1433}:1433"
     volumes:
       - mssql-data:/var/opt/mssql
+    deploy:
+      resources:
+        limits:
+          memory: 3g
+    restart: unless-stopped
     healthcheck:
       test:
         [

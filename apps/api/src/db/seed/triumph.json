@@ -1,0 +1,14 @@
+{
+  "brand": { "name": "Triumph", "countryCode": "UK", "slug": "triumph" },
+  "bikes": [
+    {
+      "name": "Trident 660",
+      "slug": "triumph-trident-660",
+      "class": "Naked",
+      "modelYear": 2024,
+      "priceUsd": 8595,
+      "imageUrl": null,
+      "specs": { "displacementCc": 660, "powerHp": 81, "torqueNm": 64, "kerbWeightKg": 190, "seatHeightMm": 805, "fuelTankL": 14 }
+    }
+  ]
+}

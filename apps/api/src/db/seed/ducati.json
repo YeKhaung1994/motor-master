@@ -1,0 +1,14 @@
+{
+  "brand": { "name": "Ducati", "countryCode": "IT", "slug": "ducati" },
+  "bikes": [
+    {
+      "name": "Monster 937",
+      "slug": "ducati-monster-937",
+      "class": "Naked",
+      "modelYear": 2024,
+      "priceUsd": 12995,
+      "imageUrl": null,
+      "specs": { "displacementCc": 937, "powerHp": 111, "torqueNm": 93, "kerbWeightKg": 188, "seatHeightMm": 820, "fuelTankL": 14 }
+    }
+  ]
+}

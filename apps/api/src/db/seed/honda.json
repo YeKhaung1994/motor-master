@@ -1,0 +1,32 @@
+{
+  "brand": { "name": "Honda", "countryCode": "JP", "slug": "honda" },
+  "bikes": [
+    {
+      "name": "CB650R",
+      "slug": "honda-cb650r",
+      "class": "Naked",
+      "modelYear": 2024,
+      "priceUsd": 9399,
+      "imageUrl": null,
+      "specs": { "displacementCc": 649, "powerHp": 94, "torqueNm": 63, "kerbWeightKg": 208, "seatHeightMm": 810, "fuelTankL": 15.4 }
+    },
+    {
+      "name": "CRF300L",
+      "slug": "honda-crf300l",
+      "class": "Adventure",
+      "modelYear": 2024,
+      "priceUsd": 5749,
+      "imageUrl": null,
+      "specs": { "displacementCc": 286, "powerHp": 27, "torqueNm": 26, "kerbWeightKg": 142, "seatHeightMm": 880, "fuelTankL": 7.8 }
+    },
+    {
+      "name": "Rebel 500",
+      "slug": "honda-rebel-500",
+      "class": "Cruiser",
+      "modelYear": 2024,
+      "priceUsd": 6499,
+      "imageUrl": null,
+      "specs": { "displacementCc": 471, "powerHp": 46, "torqueNm": 43, "kerbWeightKg": 191, "seatHeightMm": 690, "fuelTankL": 11.2 }
+    }
+  ]
+}

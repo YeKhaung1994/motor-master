@@ -1,0 +1,14 @@
+{
+  "brand": { "name": "KTM", "countryCode": "AT", "slug": "ktm" },
+  "bikes": [
+    {
+      "name": "390 Duke",
+      "slug": "ktm-390-duke",
+      "class": "Naked",
+      "modelYear": 2024,
+      "priceUsd": 5899,
+      "imageUrl": null,
+      "specs": { "displacementCc": 399, "powerHp": 45, "torqueNm": 39, "kerbWeightKg": 165, "seatHeightMm": 820, "fuelTankL": 15 }
+    }
+  ]
+}

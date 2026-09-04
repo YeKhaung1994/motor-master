@@ -32,7 +32,7 @@ export function BrowsePage() {
     useBikeFilters(brandSlug);
 
   const brandsQuery = useBrands();
-  const classesQuery = useClasses();
+  const classesQuery = useClasses(brandSlug);
   const bikesQuery = useBikePages(filters);
 
   const toggleCompare = useCompare((state) => state.toggle);
@@ -57,6 +57,26 @@ export function BrowsePage() {
   );
 
   const heading = brand ? `${brand.name} bikes` : 'All bikes';
+
+  /**
+   * Class options for this brand, most models first. A class that is still
+   * selected but has nothing under this brand is kept in the list with a count
+   * of zero — otherwise the filter is switched on with no way to switch it off.
+   */
+  const classOptions = useMemo(() => {
+    const available = [...(classesQuery.data ?? [])].sort(
+      (a, b) => b.modelCount - a.modelCount || a.name.localeCompare(b.name),
+    );
+    const orphaned = classes
+      .filter((name) => !available.some((entry) => entry.name === name))
+      .map((name) => ({ name, modelCount: 0 }));
+
+    return [...available, ...orphaned].map((entry) => ({
+      value: entry.name,
+      label: entry.name,
+      count: entry.modelCount,
+    }));
+  }, [classesQuery.data, classes]);
   // Filter in whatever currency the catalogue quotes, rather than assuming dollars.
   const priceCurrency = items.find((bike) => bike.price?.currency)?.price?.currency ?? '';
 
@@ -112,13 +132,7 @@ export function BrowsePage() {
             />
             <FilterGroup
               title="Class"
-              options={[...(classesQuery.data ?? [])]
-                .sort((a, b) => b.modelCount - a.modelCount || a.name.localeCompare(b.name))
-                .map((entry) => ({
-                  value: entry.name,
-                  label: entry.name,
-                  count: entry.modelCount,
-                }))}
+              options={classOptions}
               selected={classes}
               onChange={toggleClass}
               maxVisible={8}

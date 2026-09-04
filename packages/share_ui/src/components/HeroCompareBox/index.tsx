@@ -6,6 +6,8 @@ import styles from './styles.module.css';
 
 export interface HeroCompareBoxProps {
   title?: string;
+  /** Inside a dialog the panel already has a frame and a heading. */
+  bare?: boolean;
   options: SelectOption[];
   /** Three slots; the third is optional, so an empty string is expected. */
   values: [string, string, string];
@@ -18,6 +20,7 @@ const SLOT_LABELS = ['First bike', 'Second bike', 'Third bike (optional)'] as co
 
 export function HeroCompareBox({
   title = 'Quick compare',
+  bare = false,
   options,
   values,
   onChange,
@@ -28,8 +31,8 @@ export function HeroCompareBox({
   const ready = chosen.length >= 2;
 
   return (
-    <div className={cx(styles.box, className)}>
-      <h2 className={styles.title}>{title}</h2>
+    <div className={cx(styles.box, bare && styles.bare, className)}>
+      {bare ? null : <h2 className={styles.title}>{title}</h2>}
       <div className={styles.slots}>
         {SLOT_LABELS.map((label, index) => (
           <Select

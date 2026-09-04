@@ -5,8 +5,10 @@ import {
   BikeGrid,
   BrandRail,
   Button,
+  Dialog,
   EmptyState,
   FilterGroup,
+  FloatingButton,
   Heading,
   HeroCompareBox,
   PageContainer,
@@ -43,6 +45,7 @@ export function BrowsePage() {
   const isFull = selectedIds.length >= MAX_COMPARE;
 
   const [quick, setQuick] = useState<[string, string, string]>(['', '', '']);
+  const [quickOpen, setQuickOpen] = useState(false);
 
   const brand = brandsQuery.data?.find((entry) => entry.slug === brandSlug);
   const items = useMemo(
@@ -82,7 +85,9 @@ export function BrowsePage() {
 
   function onCompareQuickPicks() {
     const ids = quick.filter(Boolean);
-    if (ids.length >= 2) navigate(`/compare?ids=${ids.join(',')}`);
+    if (ids.length < 2) return;
+    setQuickOpen(false);
+    navigate(`/compare?ids=${ids.join(',')}`);
   }
 
   return (
@@ -103,19 +108,6 @@ export function BrowsePage() {
               </Button>
             </div>
           </div>
-          <HeroCompareBox
-            className="hero-compare"
-            options={quickOptions}
-            values={quick}
-            onChange={(index, value) =>
-              setQuick((current) => {
-                const next = [...current] as [string, string, string];
-                next[index] = value;
-                return next;
-              })
-            }
-            onCompare={onCompareQuickPicks}
-          />
         </section>
       )}
 
@@ -237,6 +229,33 @@ export function BrowsePage() {
           </>
         ) : null}
       </SidebarLayout>
+
+      {/* Quick compare is a tool, not a headline: it waits behind a launcher
+          instead of holding the top of a 227-model catalogue while empty. */}
+      <FloatingButton
+        label="Quick compare"
+        count={selectedIds.length}
+        raised={compareBikes.length > 0}
+        aria-haspopup="dialog"
+        aria-expanded={quickOpen}
+        onClick={() => setQuickOpen(true)}
+      />
+
+      <Dialog open={quickOpen} onClose={() => setQuickOpen(false)} title="Quick compare">
+        <HeroCompareBox
+          bare
+          options={quickOptions}
+          values={quick}
+          onChange={(index, value) =>
+            setQuick((current) => {
+              const next = [...current] as [string, string, string];
+              next[index] = value;
+              return next;
+            })
+          }
+          onCompare={onCompareQuickPicks}
+        />
+      </Dialog>
     </PageContainer>
   );
 }

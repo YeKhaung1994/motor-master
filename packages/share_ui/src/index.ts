@@ -21,9 +21,11 @@ export * from './components/SearchInput';
 export * from './components/NumberField';
 export * from './components/Badge';
 export * from './components/Stat';
+export * from './components/Dialog';
 export * from './components/Divider';
 export * from './components/Skeleton';
 export * from './components/EmptyState';
+export * from './components/FloatingButton';
 
 /* Layout */
 export * from './components/TopBar';

@@ -26,7 +26,7 @@
  */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--mm-space-6) var(--mm-space-8);
   align-items: center;
   padding: var(--mm-space-5) 0 var(--mm-space-6);

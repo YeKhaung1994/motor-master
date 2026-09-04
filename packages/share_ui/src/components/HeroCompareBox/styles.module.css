@@ -29,3 +29,9 @@
   color: var(--mm-muted);
   margin: 0;
 }
+
+.bare {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}

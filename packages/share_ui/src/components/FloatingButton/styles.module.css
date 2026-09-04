@@ -1,0 +1,66 @@
+.button {
+  position: fixed;
+  right: var(--mm-space-6);
+  bottom: var(--mm-space-6);
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mm-space-2);
+  height: 48px;
+  padding: 0 var(--mm-space-5);
+  border: 1px solid var(--mm-red);
+  border-radius: var(--mm-radius);
+  background: var(--mm-red);
+  color: var(--mm-panel);
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--mm-tray-shadow);
+  transition: bottom 250ms ease, background-color 120ms ease;
+}
+
+/* Steps above the compare tray rather than sitting on top of it. */
+.raised {
+  bottom: calc(var(--mm-space-6) + 76px);
+}
+
+.button:hover {
+  background: #A50D26;
+  border-color: #A50D26;
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--mm-panel);
+  outline-offset: -6px;
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: var(--mm-panel);
+  color: var(--mm-red);
+  font-size: var(--mm-text-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: none; }
+}
+
+@media (max-width: 720px) {
+  .button {
+    right: var(--mm-space-4);
+    bottom: var(--mm-space-4);
+  }
+
+  .raised {
+    bottom: calc(var(--mm-space-4) + 128px);
+  }
+}

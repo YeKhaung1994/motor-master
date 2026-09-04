@@ -76,3 +76,56 @@ test('the sidebar never becomes a second scroll container', async ({ page }) => 
   expect(railScrolls.scrolls).toBe(false);
   expect(['visible', 'clip']).toContain(railScrolls.overflow);
 });
+
+test('quick compare waits behind a launcher instead of holding the fold', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('article').first()).toBeVisible();
+
+  // The panel is not on the page until it is asked for.
+  await expect(page.getByRole('dialog')).toBeHidden();
+
+  const launcher = page.getByRole('button', { name: /Quick compare/ });
+  await expect(launcher).toHaveAttribute('aria-haspopup', 'dialog');
+  await launcher.click();
+
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole('combobox', { name: 'First bike' })).toBeVisible();
+});
+
+test('the quick compare dialog closes on escape and returns focus', async ({ page }) => {
+  await page.goto('/');
+  const launcher = page.getByRole('button', { name: /Quick compare/ });
+  await launcher.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(launcher).toBeFocused();
+});
+
+test('picking two bikes in the dialog opens the comparison', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /Quick compare/ }).click();
+
+  const dialog = page.getByRole('dialog');
+  await dialog.getByRole('combobox', { name: 'First bike' }).selectOption({ label: 'Honda CB650R' });
+  await dialog.getByRole('combobox', { name: 'Second bike' }).selectOption({ label: 'Honda UC3' });
+  await dialog.getByRole('button', { name: 'Compare these' }).click();
+
+  await expect(page).toHaveURL(/\/compare\?ids=1,2/);
+  await expect(page.getByRole('table')).toBeVisible();
+});
+
+test('the launcher lifts clear of the compare tray', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('article').first().getByRole('button', { name: 'Add to compare' }).click();
+
+  const launcher = page.getByRole('button', { name: /Quick compare/ });
+  const tray = page.getByRole('region', { name: 'Compare tray' });
+  await expect(tray).toBeVisible();
+
+  const launcherBox = await launcher.boundingBox();
+  const trayBox = await tray.boundingBox();
+  expect(launcherBox!.y + launcherBox!.height).toBeLessThanOrEqual(trayBox!.y);
+});

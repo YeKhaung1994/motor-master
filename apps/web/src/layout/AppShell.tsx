@@ -8,6 +8,7 @@ import {
   TopBar,
 } from '@motor-master/share_ui';
 import { useBikeSearch } from '../features/bikes/hooks';
+import { useBrands } from '../features/brands/hooks';
 import { useCompare } from '../features/compare/useCompare';
 import { RouterLink } from './RouterLink';
 
@@ -17,6 +18,7 @@ export function AppShell() {
   const [term, setTerm] = useState('');
   const { data: suggestions } = useBikeSearch(term);
 
+  const { data: brands } = useBrands();
   const bikes = useCompare((state) => state.bikes);
   const remove = useCompare((state) => state.remove);
   const clear = useCompare((state) => state.clear);
@@ -47,11 +49,28 @@ export function AppShell() {
 
       <Outlet />
       <Footer
-        links={[
-          { label: 'All bikes', href: '/' },
-          { label: 'Brands', href: '/brands' },
-          { label: 'Compare', href: '/compare' },
-          { label: 'Image credits', href: '/credits' },
+        byline="Built by YK"
+        columns={[
+          {
+            title: 'Browse',
+            links: [
+              { label: 'All bikes', href: '/' },
+              { label: 'Brands', href: '/brands' },
+              { label: 'Compare', href: '/compare' },
+            ],
+          },
+          {
+            title: 'Brands',
+            // The six largest catalogues, so the footer is a real way in.
+            links: [...(brands ?? [])]
+              .sort((a, b) => b.modelCount - a.modelCount || a.name.localeCompare(b.name))
+              .slice(0, 6)
+              .map((brand) => ({ label: brand.name, href: `/brands/${brand.slug}` })),
+          },
+          {
+            title: 'About the data',
+            links: [{ label: 'Image credits', href: '/credits' }],
+          },
         ]}
       />
 

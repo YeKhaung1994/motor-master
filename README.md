@@ -28,6 +28,9 @@ npm run dev                  # API on :4000, web on :5173
 Open http://localhost:5173. The web dev server proxies `/api` to the API, so no
 CORS setup is needed for local work.
 
+For ports, database credentials, environment variables and troubleshooting, see
+[docs/development.md](docs/development.md).
+
 Check the API on its own:
 
 ```bash

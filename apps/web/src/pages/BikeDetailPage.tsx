@@ -2,7 +2,9 @@ import { useParams } from 'react-router-dom';
 import {
   BackLink,
   Badge,
+  BikeImage,
   Button,
+  Divider,
   EmptyState,
   Heading,
   KeyStats,
@@ -10,11 +12,12 @@ import {
   Skeleton,
   SpecTable,
   Text,
-  formatPrice,
+  displayPrice,
 } from '@motor-master/share_ui';
 import { useBike } from '../features/bikes/hooks';
 import { buildSpecGroups } from '../features/bikes/specRows';
 import { useCompare } from '../features/compare/useCompare';
+import { bikeImageSrc } from '../lib/images';
 
 export function BikeDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -68,12 +71,15 @@ export function BikeDetailPage() {
       <BackLink href={`/brands/${bike.brandSlug}`} context={bike.brand} />
 
       <div className="detail">
-        <div className="detail-art">
-          {bike.imageUrl ? <img src={bike.imageUrl} alt={`${bike.brand} ${bike.name}`} /> : null}
-        </div>
+        <BikeImage
+          className="detail-art"
+          src={bikeImageSrc(bike.slug, bike.imageUrl)}
+          alt={`${bike.brand} ${bike.name}`}
+          loading="eager"
+        />
 
         <div className="detail-copy">
-          <Badge>{bike.class}</Badge>
+          <Badge className="detail-badge">{bike.class}</Badge>
           <div className="stack-tight">
             <Text tone="muted">
               {bike.brand} · {bike.modelYear}
@@ -85,19 +91,21 @@ export function BikeDetailPage() {
 
           <div className="stack-tight">
             <Heading level={2} size="md">
-              {formatPrice(bike.priceUsd)}
+              {displayPrice(bike.price)}
             </Heading>
             <Text size="sm" tone="muted">
-              MSRP, before on-road costs
+              {bike.price
+                ? `Manufacturer list price${bike.price.market ? ` in ${bike.price.market}` : ''}, before on-road costs`
+                : 'The manufacturer has not published a price for this market.'}
             </Text>
           </div>
 
           <KeyStats
             items={[
-              { value: specs.displacementCc ?? '—', unit: 'cc', label: 'Engine' },
-              { value: specs.powerHp ?? '—', unit: 'hp', label: 'Power' },
-              { value: specs.torqueNm ?? '—', unit: 'Nm', label: 'Torque' },
-              { value: specs.kerbWeightKg ?? '—', unit: 'kg', label: 'Kerb weight' },
+              { value: specs.displacementCc, unit: 'cc', label: 'Engine' },
+              { value: specs.powerHp, unit: 'hp', label: 'Power' },
+              { value: specs.torqueNm, unit: 'Nm', label: 'Torque' },
+              { value: specs.kerbWeightKg, unit: 'kg', label: 'Kerb weight' },
             ]}
           />
 
@@ -115,11 +123,40 @@ export function BikeDetailPage() {
         </div>
       </div>
 
+      {bike.notes || bike.flags ? (
+        <div className="stack-tight provenance">
+          {bike.notes ? (
+            <Text size="sm" tone="muted">
+              {bike.notes}
+            </Text>
+          ) : null}
+          {/* Source caveats are shown, not hidden — the reader decides how much
+              weight to give a secondary-sourced figure. */}
+          {bike.flags ? (
+            <Text size="sm" tone="muted">
+              Note on this data: {bike.flags}
+            </Text>
+          ) : null}
+        </div>
+      ) : null}
+
       <SpecTable
         caption={`${bike.brand} ${bike.name} specifications`}
         columns={[{ id: bike.id, title: bike.name, meta: `${bike.brand} · ${bike.class}` }]}
         groups={buildSpecGroups([bike])}
       />
+
+      {bike.sourceUrl ? (
+        <>
+          <Divider spaced />
+          <Text size="xs" tone="muted">
+            Specifications published by the manufacturer.{' '}
+            <a href={bike.sourceUrl} target="_blank" rel="noreferrer noopener">
+              View the source
+            </a>
+          </Text>
+        </>
+      ) : null}
     </PageContainer>
   );
 }

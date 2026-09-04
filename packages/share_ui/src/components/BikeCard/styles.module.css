@@ -13,19 +13,6 @@
 
 .art {
   position: relative;
-  aspect-ratio: 4 / 3;
-  background: var(--mm-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 .badge {
@@ -70,7 +57,15 @@
   font-family: var(--mm-font-display);
   font-size: var(--mm-display-sm);
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.15;
+}
+
+/* An unpublished price is information too, but it is not a headline. */
+.priceMissing {
+  font-family: var(--mm-font-body);
+  font-size: var(--mm-text-sm);
+  font-weight: 500;
+  color: var(--mm-muted);
 }
 
 .footer {

@@ -38,6 +38,7 @@ export * from './components/FilterGroup';
 export * from './components/RangeFilter';
 export * from './components/Toolbar';
 export * from './components/BikeCard';
+export * from './components/BikeImage';
 export * from './components/BikeGrid';
 export * from './components/HeroCompareBox';
 export * from './components/KeyStats';

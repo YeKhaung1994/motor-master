@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { BikeCardDto, BikeDetail } from '../../lib/types';
+import type { BikeCardDto, BikeDetail, Price } from '../../lib/types';
 
 export const MAX_COMPARE = 3;
 
@@ -8,7 +8,7 @@ export interface CompareEntry {
   slug: string;
   name: string;
   brand: string;
-  priceUsd: number;
+  price: Price | null;
 }
 
 interface CompareState {
@@ -30,7 +30,7 @@ function toEntry(bike: BikeCardDto | BikeDetail): CompareEntry {
     slug: bike.slug,
     name: bike.name,
     brand: bike.brand,
-    priceUsd: bike.priceUsd,
+    price: bike.price,
   };
 }
 

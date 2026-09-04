@@ -1,13 +1,14 @@
 import sql from 'mssql';
 import { getPool } from '../db/pool.js';
 import { NotFoundError } from '../middleware/errorHandler.js';
-import type { BikeDetailDto, BikeListDto, SearchHitDto } from '../types.js';
+import type { BikeDetailDto, BikeListDto, MarketPriceDto, SearchHitDto } from '../types.js';
 import { BIKE_COLUMNS, BIKE_JOINS, toBikeCard, toBikeDetail } from './rowMappers.js';
 import type { BikeRow } from './rowMappers.js';
 
 export interface ListBikesOptions {
   brand?: string;
   class?: string[];
+  market?: string;
   ccMin?: number;
   ccMax?: number;
   priceMin?: number;
@@ -17,12 +18,16 @@ export interface ListBikesOptions {
   pageSize: number;
 }
 
-/** Fixed clauses chosen by key — the sort value never reaches SQL as text. */
+/**
+ * Fixed clauses chosen by key — the sort value never reaches SQL as text.
+ * Rows with no published figure sort last in every direction: an unpublished
+ * price is not the cheapest bike in the catalogue.
+ */
 const ORDER_BY: Record<ListBikesOptions['sort'], string> = {
-  price_asc: 'b.PriceUsd ASC, b.Name ASC',
-  price_desc: 'b.PriceUsd DESC, b.Name ASC',
-  power_desc: 's.PowerHp DESC, b.Name ASC',
-  weight_asc: 's.KerbWeightKg ASC, b.Name ASC',
+  price_asc: 'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount ASC, b.Name ASC',
+  price_desc: 'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount DESC, b.Name ASC',
+  power_desc: 'CASE WHEN s.PowerHp IS NULL THEN 1 ELSE 0 END, s.PowerHp DESC, b.Name ASC',
+  weight_asc: 'CASE WHEN s.KerbWeightKg IS NULL THEN 1 ELSE 0 END, s.KerbWeightKg ASC, b.Name ASC',
 };
 
 export async function listBikes(options: ListBikesOptions): Promise<BikeListDto> {
@@ -45,24 +50,29 @@ export async function listBikes(options: ListBikesOptions): Promise<BikeListDto>
     where.push(`c.Name IN (${params.join(', ')})`);
   }
 
+  if (options.market) {
+    request.input('market', sql.NVarChar(8), options.market.toUpperCase());
+    where.push('EXISTS (SELECT 1 FROM BikeMarkets m WHERE m.BikeId = b.BikeId AND m.MarketCode = @market)');
+  }
+
   if (options.ccMin !== undefined) {
-    request.input('ccMin', sql.Int, options.ccMin);
+    request.input('ccMin', sql.Decimal(7, 1), options.ccMin);
     where.push('s.DisplacementCc >= @ccMin');
   }
 
   if (options.ccMax !== undefined) {
-    request.input('ccMax', sql.Int, options.ccMax);
+    request.input('ccMax', sql.Decimal(7, 1), options.ccMax);
     where.push('s.DisplacementCc <= @ccMax');
   }
 
   if (options.priceMin !== undefined) {
-    request.input('priceMin', sql.Decimal(10, 2), options.priceMin);
-    where.push('b.PriceUsd >= @priceMin');
+    request.input('priceMin', sql.Decimal(12, 2), options.priceMin);
+    where.push('b.PriceAmount >= @priceMin');
   }
 
   if (options.priceMax !== undefined) {
-    request.input('priceMax', sql.Decimal(10, 2), options.priceMax);
-    where.push('b.PriceUsd <= @priceMax');
+    request.input('priceMax', sql.Decimal(12, 2), options.priceMax);
+    where.push('b.PriceAmount <= @priceMax');
   }
 
   const whereClause = where.length > 0 ? `WHERE ${where.join(' AND ')}` : '';
@@ -90,6 +100,68 @@ export async function listBikes(options: ListBikesOptions): Promise<BikeListDto>
   };
 }
 
+interface MarketRow {
+  BikeId: number;
+  MarketCode: string;
+}
+
+interface PriceRow {
+  BikeId: number;
+  MarketCode: string;
+  Currency: string | null;
+  Amount: number | string | null;
+  RawText: string;
+}
+
+/** Markets and other-market prices for a set of bikes, in one round trip each. */
+async function loadRelations(bikeIds: number[]): Promise<{
+  markets: Map<number, string[]>;
+  prices: Map<number, MarketPriceDto[]>;
+}> {
+  const markets = new Map<number, string[]>();
+  const prices = new Map<number, MarketPriceDto[]>();
+  if (bikeIds.length === 0) return { markets, prices };
+
+  const pool = await getPool();
+  const request = pool.request();
+  const params = bikeIds.map((id, index) => {
+    const name = `rid${index}`;
+    request.input(name, sql.Int, id);
+    return `@${name}`;
+  });
+  const inList = params.join(', ');
+
+  const result = await request.query(`
+    SELECT BikeId, MarketCode FROM BikeMarkets WHERE BikeId IN (${inList}) ORDER BY MarketCode;
+    SELECT BikeId, MarketCode, Currency, Amount, RawText FROM BikePrices WHERE BikeId IN (${inList}) ORDER BY MarketCode;
+  `);
+
+  const [marketRows = [], priceRows = []] = result.recordsets as unknown as [
+    MarketRow[],
+    PriceRow[],
+  ];
+
+  for (const row of marketRows) {
+    const list = markets.get(row.BikeId) ?? [];
+    list.push(row.MarketCode.trim());
+    markets.set(row.BikeId, list);
+  }
+
+  for (const row of priceRows) {
+    const list = prices.get(row.BikeId) ?? [];
+    const amount = row.Amount === null ? null : Number(row.Amount);
+    list.push({
+      market: row.MarketCode.trim(),
+      currency: row.Currency?.trim() ?? null,
+      amount: amount !== null && Number.isFinite(amount) ? amount : null,
+      text: row.RawText,
+    });
+    prices.set(row.BikeId, list);
+  }
+
+  return { markets, prices };
+}
+
 export async function getBikeBySlug(slug: string): Promise<BikeDetailDto> {
   const pool = await getPool();
   const result = await pool
@@ -103,7 +175,9 @@ export async function getBikeBySlug(slug: string): Promise<BikeDetailDto> {
 
   const row = result.recordset[0];
   if (!row) throw new NotFoundError('Bike not found');
-  return toBikeDetail(row);
+
+  const { markets, prices } = await loadRelations([row.BikeId]);
+  return toBikeDetail(row, markets.get(row.BikeId) ?? [], prices.get(row.BikeId) ?? []);
 }
 
 export async function getBikesByIds(ids: number[]): Promise<BikeDetailDto[]> {
@@ -122,7 +196,15 @@ export async function getBikesByIds(ids: number[]): Promise<BikeDetailDto[]> {
     WHERE b.BikeId IN (${params.join(', ')})
   `);
 
-  const byId = new Map(result.recordset.map((row) => [row.BikeId, toBikeDetail(row)]));
+  const { markets, prices } = await loadRelations(result.recordset.map((row) => row.BikeId));
+
+  const byId = new Map(
+    result.recordset.map((row) => [
+      row.BikeId,
+      toBikeDetail(row, markets.get(row.BikeId) ?? [], prices.get(row.BikeId) ?? []),
+    ]),
+  );
+
   // Preserve the order the caller asked for, so columns match the URL.
   return ids.map((id) => byId.get(id)).filter((bike): bike is BikeDetailDto => Boolean(bike));
 }

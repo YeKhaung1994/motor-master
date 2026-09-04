@@ -1,9 +1,11 @@
 import { Badge } from '../Badge';
+import { BikeImage } from '../BikeImage';
 import { Button } from '../Button';
 import { Stat } from '../Stat';
 import { CheckIcon } from '../../icons';
 import { cx } from '../../utils/cx';
-import { formatPrice } from '../../utils/format';
+import { displayPrice } from '../../utils/format';
+import type { PriceLike } from '../../utils/format';
 import styles from './styles.module.css';
 
 export interface BikeCardData {
@@ -11,12 +13,13 @@ export interface BikeCardData {
   slug: string;
   name: string;
   brand: string;
-  /** Naked, Sport, Adventure, Cruiser, Scooter. */
+  /** The manufacturer's own category, e.g. Naked, Adventure scooter, MiniMOTO. */
   class: string;
-  cc: number;
-  hp: number;
-  kg: number;
-  priceUsd: number;
+  /** Null wherever the spec sheet publishes no figure. */
+  cc: number | null;
+  hp: number | null;
+  kg: number | null;
+  price: PriceLike | null;
   imageUrl?: string | null;
 }
 
@@ -44,9 +47,7 @@ export function BikeCard({
   return (
     <article className={cx(styles.card, selected && styles.selected, className)}>
       <div className={styles.art}>
-        {bike.imageUrl ? (
-          <img className={styles.image} src={bike.imageUrl} alt={`${bike.brand} ${bike.name}`} loading="lazy" />
-        ) : null}
+        <BikeImage src={bike.imageUrl} alt={`${bike.brand} ${bike.name}`} />
         <Badge className={styles.badge}>{bike.class}</Badge>
       </div>
 
@@ -60,7 +61,9 @@ export function BikeCard({
           <Stat value={bike.kg} unit="kg" label="Kerb weight" />
         </div>
 
-        <span className={styles.price}>{formatPrice(bike.priceUsd)}</span>
+        <span className={cx(styles.price, !bike.price?.text && styles.priceMissing)}>
+          {displayPrice(bike.price)}
+        </span>
       </div>
 
       <div className={styles.footer}>

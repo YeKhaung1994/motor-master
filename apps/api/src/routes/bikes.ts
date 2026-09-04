@@ -17,6 +17,7 @@ const classList = z
 const listQuerySchema = z
   .object({
     brand: z.string().min(1).max(80).optional(),
+    market: z.string().min(1).max(8).optional(),
     class: classList,
     ccMin: numeric.optional(),
     ccMax: numeric.optional(),

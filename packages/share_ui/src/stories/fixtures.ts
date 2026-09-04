@@ -1,39 +1,122 @@
 import type { BikeCardData } from '../components/BikeCard';
 
-/** The Section 4 catalogue — headline figures only; the full spec sheets arrive
- *  with the brand JSON import. */
+const thb = (amount: number, text: string, isApproximate = false) => ({
+  amount,
+  currency: 'THB',
+  text,
+  isApproximate,
+});
+
+/** A slice of the imported Honda Thailand catalogue. */
 export const bikes: BikeCardData[] = [
-  { id: 1, slug: 'honda-cb650r', name: 'CB650R', brand: 'Honda', class: 'Naked', cc: 649, hp: 94, kg: 208, priceUsd: 9399, imageUrl: null },
-  { id: 2, slug: 'honda-crf300l', name: 'CRF300L', brand: 'Honda', class: 'Adventure', cc: 286, hp: 27, kg: 142, priceUsd: 5749, imageUrl: null },
-  { id: 3, slug: 'honda-rebel-500', name: 'Rebel 500', brand: 'Honda', class: 'Cruiser', cc: 471, hp: 46, kg: 191, priceUsd: 6499, imageUrl: null },
-  { id: 4, slug: 'yamaha-mt-07', name: 'MT-07', brand: 'Yamaha', class: 'Naked', cc: 689, hp: 73, kg: 184, priceUsd: 8599, imageUrl: null },
-  { id: 5, slug: 'yamaha-tenere-700', name: 'Ténéré 700', brand: 'Yamaha', class: 'Adventure', cc: 689, hp: 73, kg: 205, priceUsd: 10799, imageUrl: null },
-  { id: 6, slug: 'kawasaki-z900', name: 'Z900', brand: 'Kawasaki', class: 'Naked', cc: 948, hp: 125, kg: 212, priceUsd: 9999, imageUrl: null },
-  { id: 7, slug: 'kawasaki-ninja-400', name: 'Ninja 400', brand: 'Kawasaki', class: 'Sport', cc: 399, hp: 45, kg: 168, priceUsd: 5299, imageUrl: null },
-  { id: 8, slug: 'ducati-monster-937', name: 'Monster 937', brand: 'Ducati', class: 'Naked', cc: 937, hp: 111, kg: 188, priceUsd: 12995, imageUrl: null },
-  { id: 9, slug: 'bmw-r-1300-gs', name: 'R 1300 GS', brand: 'BMW', class: 'Adventure', cc: 1300, hp: 145, kg: 237, priceUsd: 18895, imageUrl: null },
-  { id: 10, slug: 'triumph-trident-660', name: 'Trident 660', brand: 'Triumph', class: 'Naked', cc: 660, hp: 81, kg: 190, priceUsd: 8595, imageUrl: null },
-  { id: 11, slug: 'ktm-390-duke', name: '390 Duke', brand: 'KTM', class: 'Naked', cc: 399, hp: 45, kg: 165, priceUsd: 5899, imageUrl: null },
-  { id: 12, slug: 'royal-enfield-himalayan-450', name: 'Himalayan 450', brand: 'Royal Enfield', class: 'Adventure', cc: 452, hp: 40, kg: 196, priceUsd: 5799, imageUrl: null },
+  {
+    id: 1,
+    slug: 'honda-cbr1000rr-r-fireblade-sp',
+    name: 'CBR1000RR-R Fireblade SP',
+    brand: 'Honda',
+    class: 'Supersport',
+    cc: 1000,
+    hp: 215,
+    kg: 201,
+    price: null,
+    imageUrl: '/bikes/honda-cbr1000rr-r-fireblade-sp.jpg',
+  },
+  {
+    id: 2,
+    slug: 'honda-cbr500r',
+    name: 'CBR500R',
+    brand: 'Honda',
+    class: 'Sport',
+    cc: 471,
+    hp: 47,
+    kg: 192,
+    price: thb(235800, 'THB 235,800'),
+    imageUrl: '/bikes/honda-cbr500r.jpg',
+  },
+  {
+    id: 3,
+    slug: 'honda-cb650r',
+    name: 'CB650R',
+    brand: 'Honda',
+    class: 'Naked',
+    cc: 649,
+    hp: 94,
+    kg: 208,
+    price: null,
+    imageUrl: '/bikes/honda-cb650r.jpg',
+  },
+  {
+    id: 4,
+    slug: 'honda-adv350',
+    name: 'ADV350',
+    brand: 'Honda',
+    class: 'Adventure scooter',
+    cc: 330,
+    hp: 29,
+    kg: 186,
+    price: thb(181900, 'THB 181,900 / 183,900'),
+    imageUrl: '/bikes/honda-adv350.jpg',
+  },
+  {
+    id: 5,
+    slug: 'honda-cbr250rr',
+    name: 'CBR250RR',
+    brand: 'Honda',
+    class: 'Supersport',
+    cc: 250,
+    hp: 42,
+    kg: 168,
+    price: thb(249000, 'THB ~249,000 (SP)', true),
+    imageUrl: '/bikes/honda-cbr250rr.jpg',
+  },
+  {
+    id: 6,
+    slug: 'honda-scoopy',
+    name: 'Scoopy',
+    brand: 'Honda',
+    class: 'Scooter',
+    cc: 110,
+    hp: 8.5,
+    kg: 96,
+    price: thb(55000, 'THB ~55,000-65,000 by variant', true),
+    imageUrl: '/bikes/honda-scoopy.jpg',
+  },
+  {
+    id: 7,
+    slug: 'honda-uc3',
+    name: 'UC3',
+    brand: 'Honda',
+    class: 'Electric scooter',
+    // An electric scooter has no displacement, and this sheet is not itemised.
+    cc: null,
+    hp: null,
+    kg: null,
+    price: thb(132600, 'THB 132,600'),
+    imageUrl: '/bikes/honda-uc3.jpg',
+  },
+  {
+    id: 8,
+    slug: 'honda-click-125i',
+    name: 'Click 125i',
+    brand: 'Honda',
+    class: 'Scooter',
+    cc: 124.9,
+    hp: 11.1,
+    kg: 111,
+    price: thb(55700, 'THB 55,700'),
+    // No freely licensed photograph exists for this model yet.
+    imageUrl: null,
+  },
 ];
 
-export const brands = [
-  { name: 'Honda', countryCode: 'JP', count: 3, href: '/brands/honda' },
-  { name: 'Yamaha', countryCode: 'JP', count: 2, href: '/brands/yamaha' },
-  { name: 'Kawasaki', countryCode: 'JP', count: 2, href: '/brands/kawasaki' },
-  { name: 'Ducati', countryCode: 'IT', count: 1, href: '/brands/ducati' },
-  { name: 'BMW', countryCode: 'DE', count: 1, href: '/brands/bmw' },
-  { name: 'Triumph', countryCode: 'UK', count: 1, href: '/brands/triumph' },
-  { name: 'KTM', countryCode: 'AT', count: 1, href: '/brands/ktm' },
-  { name: 'Royal Enfield', countryCode: 'IN', count: 1, href: '/brands/royal-enfield' },
-];
+export const brands = [{ name: 'Honda', countryCode: 'JP', count: 41, href: '/brands/honda' }];
 
 export const classes = [
-  { value: 'Naked', label: 'Naked', count: 5 },
-  { value: 'Sport', label: 'Sport', count: 1 },
-  { value: 'Adventure', label: 'Adventure', count: 4 },
-  { value: 'Cruiser', label: 'Cruiser', count: 1 },
-  { value: 'Scooter', label: 'Scooter', count: 0 },
+  { value: 'Adventure', label: 'Adventure', count: 3 },
+  { value: 'Adventure scooter', label: 'Adventure scooter', count: 3 },
+  { value: 'Naked', label: 'Naked', count: 4 },
+  { value: 'Scooter', label: 'Scooter', count: 7 },
+  { value: 'Supersport', label: 'Supersport', count: 2 },
 ];
 
 export const sortOptions = [

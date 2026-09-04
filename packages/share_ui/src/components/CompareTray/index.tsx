@@ -2,14 +2,15 @@ import { Button } from '../Button';
 import { IconButton } from '../IconButton';
 import { CloseIcon } from '../../icons';
 import { cx } from '../../utils/cx';
-import { formatPrice } from '../../utils/format';
+import { displayPrice } from '../../utils/format';
+import type { PriceLike } from '../../utils/format';
 import styles from './styles.module.css';
 
 export interface CompareSlotBike {
   id: number;
   name: string;
   brand: string;
-  priceUsd: number;
+  price: PriceLike | null;
 }
 
 export interface CompareSlotProps {
@@ -33,7 +34,7 @@ export function CompareSlot({ position, bike, onRemove }: CompareSlotProps) {
       <span className={styles.slotBody}>
         <span className={styles.slotName}>{bike.name}</span>
         <span className={styles.slotMeta}>
-          {bike.brand} · {formatPrice(bike.priceUsd)}
+          {bike.brand} · {displayPrice(bike.price, 'Price not published')}
         </span>
       </span>
       <IconButton

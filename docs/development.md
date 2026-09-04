@@ -177,7 +177,8 @@ variable.
 | `npm run test` | Vitest: API routes against a mocked pool, share_ui render tests |
 | `npm run build` | builds share_ui, then the API, then the web bundle |
 | `npm run db:migrate` | applies unapplied files from `apps/api/src/db/migrations/` |
-| `npm run db:seed` | re-imports every brand catalogue; safe to re-run |
+| `npm run db:seed` | re-imports every catalogue; safe to re-run |
+| `npm run db:seed:fresh` | clears every brand and bike, then imports |
 | `npm run storybook` | the design system on :6006 |
 
 Migrations are tracked in a `SchemaMigrations` table, so `db:migrate` only applies
@@ -189,8 +190,12 @@ Reset the database completely:
 ```bash
 docker compose down -v
 docker compose up -d db
-npm run db:migrate && npm run db:seed
+npm run db:migrate && npm run db:seed:fresh
 ```
+
+To reload the catalogue without touching the container, `npm run db:seed:fresh`
+is enough — it clears brands and bikes (specs, markets and prices cascade) and
+re-imports from `apps/api/src/db/seed/`.
 
 Poke at the API directly:
 
@@ -204,40 +209,55 @@ curl "http://localhost:4000/api/v1/search?q=CB"
 
 ## Importing catalogue data
 
-Bikes live in one JSON file per brand under `apps/api/src/db/seed/`, so a
-catalogue can be re-imported without touching SQL. Drop a file in, run
-`npm run db:seed`.
+Catalogue files live in `apps/api/src/db/seed/`, one per brand per market:
+`{ brand, market, models[] }`. The Honda Thailand sheet
+(`honda-thailand.json`, 41 models) is the worked example.
 
-```json
-{
-  "brand": { "name": "Yamaha", "countryCode": "JP", "slug": "yamaha" },
-  "bikes": [
-    {
-      "name": "MT-07",
-      "slug": "yamaha-mt-07",
-      "class": "Naked",
-      "modelYear": 2024,
-      "priceUsd": 8599,
-      "imageUrl": null,
-      "specs": { "displacementCc": 689, "powerHp": 73, "torqueNm": 67 }
-    }
-  ]
-}
+```bash
+npm run db:seed          # import or re-import, keeping existing rows
+npm run db:seed:fresh    # clear every brand and bike first
 ```
 
-- Every field under `specs` is optional. Empty columns render as an em dash, and a
-  spec row no bike has a value for is dropped from the table entirely.
-- The import is idempotent: brands and bikes are matched on `slug` and updated in
-  place, so a fuller import overwrites what is there rather than duplicating it.
-- A `class` that does not exist yet is created. The five standard classes are
-  reference data in `apps/api/src/db/seed.sql`.
-- The file is validated with zod before anything is written — a malformed file
-  fails the run and names the offending field instead of half-importing.
+Field names follow the source sheet: `model`, `model_year`, `category`,
+`markets`, `engine`, `displacement`, `power_hp`, `power_kw`, `power_rpm`,
+`torque_nm`, `torque_rpm`, `bore_stroke_mm`, `compression`, `fuel_system`,
+`transmission`, `clutch`, `final_drive`, `frame`, `susp_f`, `susp_r`, `brake_f`,
+`brake_r`, `tyre_f`, `tyre_r`, `wheelbase_mm`, `seat_height_mm`,
+`ground_clearance_mm`, `weight_kg`, `fuel_l`, `wmtc`, `battery_kwh`, `range_km`,
+`charging`, `variants`, `notes`, `flags`, `source`, `image`, `msrp_thb`,
+`msrp_other`.
 
-Full spec field list: `engine`, `displacementCc`, `powerHp`, `torqueNm`,
-`transmission`, `frontSuspension`, `rearSuspension`, `brakes`, `tyres`,
-`wheelbaseMm`, `kerbWeightKg`, `seatHeightMm`, `fuelTankL`, `riderAids`,
-`display`.
+Everything except `model`, `model_year` and `category` is optional, and unknown
+fields are ignored — a partial sheet imports fine and a fuller one can be
+re-imported over it. Slugs are derived from `brand + model`, so re-importing
+updates in place instead of duplicating.
+
+The brand's country is taken from `brand_country_code` if the file states one,
+otherwise from a small table of manufacturer head offices in `seed.ts`.
+
+### How prices are stored
+
+A published price is kept twice: `PriceText` is the source string shown on the
+site, and `PriceAmount` is a base figure parsed from it for sorting. The parser
+takes the first number after the currency code — taking the lowest would read
+"USD 6,499 (cut USD 1,000 for 2026)" as a $1,000 motorcycle — and declines to
+parse magnitudes like "INR ~2.1 lakh" at all, keeping the text instead. Other
+markets' prices each get a `BikePrices` row.
+
+### Model images
+
+Images are resolved by filename from `apps/web/public/bikes/<slug>.jpg`; the
+catalogue data holds no URLs. To add one, name the file after the slug — run this
+to see the expected names:
+
+```bash
+curl -s "http://localhost:4000/api/v1/bikes?pageSize=60" \
+  | python3 -c "import sys,json;[print(b['slug']+'.jpg') for b in json.load(sys.stdin)['items']]"
+```
+
+A model with no file shows a placeholder rather than a broken image. Credits and
+licences for the images in the repo are in `apps/web/public/bikes/ATTRIBUTION.md`
+— most are CC BY-SA and require attribution wherever they are published.
 
 ## Troubleshooting
 

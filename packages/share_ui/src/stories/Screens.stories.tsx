@@ -21,7 +21,7 @@ import { Text } from '../components/Text';
 import { Toolbar } from '../components/Toolbar';
 import { TopBar } from '../components/TopBar';
 import { WinnerLegend } from '../components/WinnerLegend';
-import { formatPrice } from '../utils/format';
+import { displayPrice } from '../utils/format';
 import { bikes, brands, classes, sortOptions } from './fixtures';
 
 const meta: Meta = {
@@ -76,7 +76,7 @@ function BrowseScreen() {
               id: bike.id,
               name: bike.name,
               brand: bike.brand,
-              priceUsd: bike.priceUsd,
+              price: bike.price,
             }))}
             onRemove={(id) => setSelected((current) => current.filter((bike) => bike.id !== id))}
             onClear={() => setSelected([])}
@@ -148,7 +148,7 @@ function BrowseScreen() {
 }
 
 function BikeDetailScreen() {
-    const bike = bikes[3]!;
+    const bike = bikes[1]!;
     return (
       <Shell>
         <PageContainer as="main">
@@ -157,7 +157,7 @@ function BikeDetailScreen() {
             {bike.brand} {bike.name}
           </Heading>
           <Heading level={2} size="md">
-            {formatPrice(bike.priceUsd)}
+            {displayPrice(bike.price)}
           </Heading>
           <Text size="sm" tone="muted">
             MSRP, before on-road costs
@@ -202,7 +202,7 @@ function BikeDetailScreen() {
 }
 
 function CompareScreen() {
-    const picked = [bikes[3]!, bikes[5]!, bikes[9]!];
+    const picked = [bikes[1]!, bikes[3]!, bikes[4]!];
     return (
       <Shell>
         <PageContainer as="main">
@@ -215,7 +215,7 @@ function CompareScreen() {
               brand: bike.brand,
               class: bike.class,
             }))}
-            winners={{ DisplacementCc: 6, PowerHp: 6, KerbWeightKg: 4, PriceUsd: 10 }}
+            winners={{ DisplacementCc: 2, PowerHp: 2, KerbWeightKg: 5, Price: 2 }}
             groups={[
               {
                 title: 'Engine',
@@ -246,9 +246,9 @@ function CompareScreen() {
                 title: 'Price',
                 rows: [
                   {
-                    field: 'PriceUsd',
+                    field: 'Price',
                     label: 'MSRP',
-                    values: picked.map((bike) => formatPrice(bike.priceUsd)),
+                    values: picked.map((bike) => displayPrice(bike.price)),
                   },
                 ],
               },

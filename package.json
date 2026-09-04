@@ -21,6 +21,7 @@
     "test": "vitest run",
     "db:migrate": "npm run db:migrate --workspace @motor-master/api",
     "db:seed": "npm run db:seed --workspace @motor-master/api",
+    "db:seed:fresh": "npm run db:seed:fresh --workspace @motor-master/api",
     "storybook": "npm run storybook --workspace @motor-master/share_ui"
   },
   "devDependencies": {

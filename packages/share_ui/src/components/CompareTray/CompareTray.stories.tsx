@@ -9,27 +9,37 @@ const meta: Meta<typeof CompareTray> = {
 export default meta;
 type Story = StoryObj<typeof CompareTray>;
 
+const price = (amount: number, text: string) => ({
+  amount,
+  currency: 'THB',
+  text,
+  isApproximate: false,
+});
+
 export const OneBike: Story = {
-  args: { bikes: [{ id: 4, name: 'MT-07', brand: 'Yamaha', priceUsd: 8599 }] },
+  args: {
+    bikes: [{ id: 2, name: 'CBR500R', brand: 'Honda', price: price(235800, 'THB 235,800') }],
+  },
 };
 
 export const TwoBikes: Story = {
   args: {
     bikes: [
-      { id: 4, name: 'MT-07', brand: 'Yamaha', priceUsd: 8599 },
-      { id: 6, name: 'Z900', brand: 'Kawasaki', priceUsd: 9999 },
+      { id: 2, name: 'CBR500R', brand: 'Honda', price: price(235800, 'THB 235,800') },
+      { id: 4, name: 'ADV350', brand: 'Honda', price: price(181900, 'THB 181,900 / 183,900') },
     ],
-    compareHref: '/compare?ids=4,6',
+    compareHref: '/compare?ids=2,4',
   },
 };
 
+/** A model whose Thai price the manufacturer has not published. */
 export const Full: Story = {
   args: {
     bikes: [
-      { id: 4, name: 'MT-07', brand: 'Yamaha', priceUsd: 8599 },
-      { id: 6, name: 'Z900', brand: 'Kawasaki', priceUsd: 9999 },
-      { id: 9, name: 'R 1300 GS', brand: 'BMW', priceUsd: 18895 },
+      { id: 2, name: 'CBR500R', brand: 'Honda', price: price(235800, 'THB 235,800') },
+      { id: 4, name: 'ADV350', brand: 'Honda', price: price(181900, 'THB 181,900 / 183,900') },
+      { id: 3, name: 'CB650R', brand: 'Honda', price: null },
     ],
-    compareHref: '/compare?ids=4,6,9',
+    compareHref: '/compare?ids=2,4,3',
   },
 };

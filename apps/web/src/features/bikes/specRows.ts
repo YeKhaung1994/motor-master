@@ -1,4 +1,4 @@
-import { formatNumber, formatPrice } from '@motor-master/share_ui';
+import { displayPrice, formatNumber } from '@motor-master/share_ui';
 import type { SpecGroup } from '@motor-master/share_ui';
 import type { BikeDetail } from '../../lib/types';
 
@@ -6,6 +6,13 @@ type Read = (bike: BikeDetail) => string | null;
 
 function unit(value: number | null, suffix: string): string | null {
   return value === null ? null : `${formatNumber(value)} ${suffix}`;
+}
+
+/** "94 hp @ 12,000 rpm" reads better than two rows that have to be cross-referenced. */
+function atRpm(value: number | null, suffix: string, rpm: number | null): string | null {
+  if (value === null) return null;
+  const figure = `${formatNumber(value)} ${suffix}`;
+  return rpm === null ? figure : `${figure} @ ${formatNumber(rpm)} rpm`;
 }
 
 interface RowSpec {
@@ -19,75 +26,105 @@ const GROUPS: Array<{ title: string; rows: RowSpec[] }> = [
   {
     title: 'Engine',
     rows: [
-      { field: 'Engine', label: 'Engine', read: (bike) => bike.specs.engine },
+      { field: 'Engine', label: 'Engine', read: (b) => b.specs.engine },
       {
         field: 'DisplacementCc',
         label: 'Displacement',
-        read: (bike) => unit(bike.specs.displacementCc, 'cc'),
+        read: (b) => unit(b.specs.displacementCc, 'cc'),
       },
-      { field: 'PowerHp', label: 'Power', read: (bike) => unit(bike.specs.powerHp, 'hp') },
-      { field: 'TorqueNm', label: 'Torque', read: (bike) => unit(bike.specs.torqueNm, 'Nm') },
-      { field: 'Transmission', label: 'Transmission', read: (bike) => bike.specs.transmission },
+      { field: 'BoreStrokeMm', label: 'Bore x stroke', read: (b) => b.specs.boreStrokeMm },
+      { field: 'Compression', label: 'Compression', read: (b) => b.specs.compression },
+      {
+        field: 'PowerHp',
+        label: 'Power',
+        read: (b) => atRpm(b.specs.powerHp, 'hp', b.specs.powerRpm),
+      },
+      { field: 'PowerKw', label: 'Power (kW)', read: (b) => unit(b.specs.powerKw, 'kW') },
+      {
+        field: 'TorqueNm',
+        label: 'Torque',
+        read: (b) => atRpm(b.specs.torqueNm, 'Nm', b.specs.torqueRpm),
+      },
+      { field: 'FuelSystem', label: 'Fuel system', read: (b) => b.specs.fuelSystem },
     ],
   },
   {
-    title: 'Running gear',
+    title: 'Transmission',
     rows: [
-      {
-        field: 'FrontSuspension',
-        label: 'Front suspension',
-        read: (bike) => bike.specs.frontSuspension,
-      },
-      {
-        field: 'RearSuspension',
-        label: 'Rear suspension',
-        read: (bike) => bike.specs.rearSuspension,
-      },
-      { field: 'Brakes', label: 'Brakes', read: (bike) => bike.specs.brakes },
-      { field: 'Tyres', label: 'Tyres', read: (bike) => bike.specs.tyres },
-      {
-        field: 'WheelbaseMm',
-        label: 'Wheelbase',
-        read: (bike) => unit(bike.specs.wheelbaseMm, 'mm'),
-      },
+      { field: 'Transmission', label: 'Gearbox', read: (b) => b.specs.transmission },
+      { field: 'Clutch', label: 'Clutch', read: (b) => b.specs.clutch },
+      { field: 'FinalDrive', label: 'Final drive', read: (b) => b.specs.finalDrive },
     ],
   },
   {
-    title: 'Weights and capacities',
+    title: 'Chassis',
     rows: [
+      { field: 'Frame', label: 'Frame', read: (b) => b.specs.frame },
+      { field: 'FrontSuspension', label: 'Front suspension', read: (b) => b.specs.frontSuspension },
+      { field: 'RearSuspension', label: 'Rear suspension', read: (b) => b.specs.rearSuspension },
+      { field: 'BrakeFront', label: 'Front brake', read: (b) => b.specs.brakeFront },
+      { field: 'BrakeRear', label: 'Rear brake', read: (b) => b.specs.brakeRear },
+      { field: 'TyreFront', label: 'Front tyre', read: (b) => b.specs.tyreFront },
+      { field: 'TyreRear', label: 'Rear tyre', read: (b) => b.specs.tyreRear },
+    ],
+  },
+  {
+    title: 'Electric drivetrain',
+    rows: [
+      { field: 'BatteryKwh', label: 'Battery', read: (b) => unit(b.specs.batteryKwh, 'kWh') },
+      { field: 'RangeKm', label: 'Range', read: (b) => unit(b.specs.rangeKm, 'km') },
+      { field: 'Charging', label: 'Charging', read: (b) => b.specs.charging },
+    ],
+  },
+  {
+    title: 'Dimensions and weight',
+    rows: [
+      { field: 'KerbWeightKg', label: 'Kerb weight', read: (b) => unit(b.specs.kerbWeightKg, 'kg') },
+      { field: 'SeatHeightMm', label: 'Seat height', read: (b) => unit(b.specs.seatHeightMm, 'mm') },
+      { field: 'WheelbaseMm', label: 'Wheelbase', read: (b) => unit(b.specs.wheelbaseMm, 'mm') },
       {
-        field: 'KerbWeightKg',
-        label: 'Kerb weight',
-        read: (bike) => unit(bike.specs.kerbWeightKg, 'kg'),
+        field: 'GroundClearanceMm',
+        label: 'Ground clearance',
+        read: (b) => unit(b.specs.groundClearanceMm, 'mm'),
       },
-      {
-        field: 'SeatHeightMm',
-        label: 'Seat height',
-        read: (bike) => unit(bike.specs.seatHeightMm, 'mm'),
-      },
-      { field: 'FuelTankL', label: 'Fuel tank', read: (bike) => unit(bike.specs.fuelTankL, 'L') },
+      { field: 'FuelTankL', label: 'Fuel tank', read: (b) => unit(b.specs.fuelTankL, 'L') },
+      { field: 'FuelEconomy', label: 'Fuel economy', read: (b) => b.specs.fuelEconomy },
     ],
   },
   {
     title: 'Equipment',
     rows: [
-      { field: 'RiderAids', label: 'Rider aids', read: (bike) => bike.specs.riderAids },
-      { field: 'Display', label: 'Display', read: (bike) => bike.specs.display },
+      { field: 'RiderAids', label: 'Rider aids', read: (b) => b.specs.riderAids },
+      { field: 'Display', label: 'Display', read: (b) => b.specs.display },
+      { field: 'Variants', label: 'Variants', read: (b) => b.variants },
     ],
   },
   {
-    title: 'Price',
+    title: 'Model and price',
     rows: [
-      { field: 'ModelYear', label: 'Model year', read: (bike) => String(bike.modelYear) },
-      { field: 'PriceUsd', label: 'MSRP', read: (bike) => formatPrice(bike.priceUsd) },
+      { field: 'ModelYear', label: 'Model year', read: (b) => String(b.modelYear) },
+      { field: 'Markets', label: 'Sold in', read: (b) => (b.markets.length ? b.markets.join(', ') : null) },
+      {
+        field: 'Price',
+        label: 'Price',
+        read: (b) => (b.price ? displayPrice(b.price) : null),
+      },
+      {
+        field: 'OtherPrices',
+        label: 'Other markets',
+        read: (b) =>
+          b.otherPrices.length
+            ? b.otherPrices.map((p) => `${p.market}: ${p.text}`).join(' · ')
+            : null,
+      },
     ],
   },
 ];
 
 /**
  * Builds the spec table for one or more bikes. Rows no bike has a value for are
- * dropped, so a catalogue that has only headline figures does not render pages
- * of em dashes.
+ * dropped, so a sheet that only carries headline figures does not render pages
+ * of em dashes — and the electric group disappears entirely for petrol bikes.
  */
 export function buildSpecGroups(bikes: BikeDetail[]): SpecGroup[] {
   return GROUPS.map((group) => ({

@@ -81,14 +81,20 @@ describe('GET /api/v1/bikes', () => {
       items: [
         {
           id: 1,
-          slug: 'yamaha-mt-07',
-          name: 'MT-07',
-          brand: 'Yamaha',
-          class: 'Naked',
-          cc: 689,
-          hp: 73,
-          kg: 184,
-          priceUsd: 8599,
+          slug: 'honda-cbr500r',
+          name: 'CBR500R',
+          brand: 'Honda',
+          class: 'Sport',
+          cc: 471,
+          hp: 47,
+          kg: 192,
+          price: {
+            amount: 235800,
+            currency: 'THB',
+            market: 'TH',
+            text: 'THB 235,800',
+            isApproximate: false,
+          },
           imageUrl: null,
         },
       ],
@@ -124,7 +130,32 @@ describe('GET /api/v1/bikes', () => {
 
     await request(app).get('/api/v1/bikes').query({ sort: 'weight_asc' });
 
-    expect(pool.queries.at(-1)!.sql).toContain('ORDER BY s.KerbWeightKg ASC');
+    expect(pool.queries.at(-1)!.sql).toContain('s.KerbWeightKg ASC');
+  });
+
+  it('sorts rows with no published figure last, in both directions', async () => {
+    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+
+    await request(app).get('/api/v1/bikes').query({ sort: 'price_asc' });
+    // An unpublished price must not masquerade as the cheapest bike.
+    expect(pool.queries.at(-1)!.sql).toContain(
+      'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount ASC',
+    );
+
+    await request(app).get('/api/v1/bikes').query({ sort: 'price_desc' });
+    expect(pool.queries.at(-1)!.sql).toContain(
+      'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount DESC',
+    );
+  });
+
+  it('filters by market through the join table', async () => {
+    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+
+    await request(app).get('/api/v1/bikes').query({ market: 'th' });
+
+    const query = pool.queries.at(-1)!;
+    expect(query.inputs.market).toBe('TH');
+    expect(query.sql).toContain('FROM BikeMarkets m');
   });
 
   it('rejects an unknown sort with 400 and names the field', async () => {
@@ -157,14 +188,15 @@ describe('GET /api/v1/bikes/:slug', () => {
   it('returns the bike with its full spec sheet', async () => {
     usePool([{ match: 'FROM Bikes b', rows: [bikeRow()] }]);
 
-    const response = await request(app).get('/api/v1/bikes/yamaha-mt-07');
+    const response = await request(app).get('/api/v1/bikes/honda-cbr500r');
 
     expect(response.status).toBe(200);
-    expect(response.body.name).toBe('MT-07');
-    expect(response.body.specs.displacementCc).toBe(689);
-    // Columns the brand import has not filled in yet come back as null.
-    expect(response.body.specs.brakes).toBeNull();
-    expect(pool.queries.at(-1)!.inputs.slug).toBe('yamaha-mt-07');
+    expect(response.body.name).toBe('CBR500R');
+    expect(response.body.specs.displacementCc).toBe(471);
+    // Columns the catalogue has not filled in yet come back as null, not zero.
+    expect(response.body.specs.brakeFront).toBeNull();
+    expect(response.body.specs.batteryKwh).toBeNull();
+    expect(pool.queries[0]!.inputs.slug).toBe('honda-cbr500r');
   });
 
   it('returns 404 with a plain message when nothing matches', async () => {
@@ -179,18 +211,18 @@ describe('GET /api/v1/bikes/:slug', () => {
 
 describe('GET /api/v1/compare', () => {
   const rows = [
-    bikeRow({ BikeId: 4, Name: 'MT-07', PriceUsd: 8599, PowerHp: 73, KerbWeightKg: 184 }),
+    bikeRow({ BikeId: 4, Name: 'CBR500R', PriceAmount: 235800, PowerHp: 47, KerbWeightKg: 192 }),
     bikeRow({
       BikeId: 6,
-      Slug: 'kawasaki-z900',
-      Name: 'Z900',
-      BrandName: 'Kawasaki',
-      PriceUsd: 9999,
-      DisplacementCc: 948,
-      PowerHp: 125,
-      TorqueNm: 98,
-      KerbWeightKg: 212,
-      FuelTankL: 17,
+      Slug: 'honda-cb650r',
+      Name: 'CB650R',
+      PriceAmount: 339000,
+      PriceText: 'THB 339,000',
+      DisplacementCc: 649,
+      PowerHp: 94,
+      TorqueNm: 63,
+      KerbWeightKg: 208,
+      FuelTankL: 15.4,
     }),
   ];
 
@@ -205,9 +237,9 @@ describe('GET /api/v1/compare', () => {
       DisplacementCc: 6,
       PowerHp: 6,
       TorqueNm: 6,
-      FuelTankL: 6,
+      FuelTankL: 4,
       KerbWeightKg: 4,
-      PriceUsd: 4,
+      Price: 4,
     });
   });
 

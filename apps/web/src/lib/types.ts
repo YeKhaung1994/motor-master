@@ -3,9 +3,33 @@
 export interface Brand {
   id: number;
   name: string;
-  countryCode: string;
+  countryCode: string | null;
   slug: string;
   modelCount: number;
+}
+
+export interface BikeClass {
+  name: string;
+  modelCount: number;
+}
+
+/**
+ * `text` is the manufacturer's own wording and is what gets shown; `amount` is
+ * the base figure parsed from it, used only for sorting and filtering.
+ */
+export interface Price {
+  amount: number | null;
+  currency: string | null;
+  market: string | null;
+  text: string | null;
+  isApproximate: boolean;
+}
+
+export interface MarketPrice {
+  market: string;
+  currency: string | null;
+  amount: number | null;
+  text: string;
 }
 
 export interface BikeCardDto {
@@ -14,27 +38,43 @@ export interface BikeCardDto {
   name: string;
   brand: string;
   class: string;
-  cc: number;
-  hp: number;
-  kg: number;
-  priceUsd: number;
+  cc: number | null;
+  hp: number | null;
+  kg: number | null;
+  price: Price | null;
   imageUrl: string | null;
 }
 
 export interface BikeSpecs {
   engine: string | null;
   displacementCc: number | null;
+  boreStrokeMm: string | null;
+  compression: string | null;
   powerHp: number | null;
+  powerKw: number | null;
+  powerRpm: number | null;
   torqueNm: number | null;
+  torqueRpm: number | null;
+  fuelSystem: string | null;
   transmission: string | null;
+  clutch: string | null;
+  finalDrive: string | null;
+  frame: string | null;
   frontSuspension: string | null;
   rearSuspension: string | null;
-  brakes: string | null;
-  tyres: string | null;
+  brakeFront: string | null;
+  brakeRear: string | null;
+  tyreFront: string | null;
+  tyreRear: string | null;
   wheelbaseMm: number | null;
-  kerbWeightKg: number | null;
   seatHeightMm: number | null;
+  groundClearanceMm: number | null;
+  kerbWeightKg: number | null;
   fuelTankL: number | null;
+  fuelEconomy: string | null;
+  batteryKwh: number | null;
+  rangeKm: number | null;
+  charging: string | null;
   riderAids: string | null;
   display: string | null;
 }
@@ -47,8 +87,14 @@ export interface BikeDetail {
   brandSlug: string;
   class: string;
   modelYear: number;
-  priceUsd: number;
+  price: Price | null;
   imageUrl: string | null;
+  markets: string[];
+  otherPrices: MarketPrice[];
+  variants: string | null;
+  notes: string | null;
+  flags: string | null;
+  sourceUrl: string | null;
   specs: BikeSpecs;
 }
 
@@ -76,6 +122,7 @@ export type SortKey = 'price_asc' | 'price_desc' | 'power_desc' | 'weight_asc';
 export interface BikeFilters {
   brand?: string;
   class?: string[];
+  market?: string;
   ccMin?: number;
   ccMax?: number;
   priceMin?: number;

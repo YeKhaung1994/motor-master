@@ -19,10 +19,10 @@ import {
 import { useBikes } from '../features/bikes/hooks';
 import { SORT_OPTIONS, useBikeFilters } from '../features/bikes/useBikeFilters';
 import { useBrands } from '../features/brands/hooks';
+import { useClasses } from '../features/bikes/classesApi';
+import { bikeImageSrc } from '../lib/images';
 import { MAX_COMPARE, useCompare } from '../features/compare/useCompare';
 import type { BikeCardDto } from '../lib/types';
-
-const CLASS_OPTIONS = ['Naked', 'Sport', 'Adventure', 'Cruiser', 'Scooter'];
 
 export function BrowsePage() {
   const { slug: brandSlug } = useParams<{ slug: string }>();
@@ -32,6 +32,7 @@ export function BrowsePage() {
     useBikeFilters(brandSlug);
 
   const brandsQuery = useBrands();
+  const classesQuery = useClasses();
   const bikesQuery = useBikes(filters);
 
   const toggleCompare = useCompare((state) => state.toggle);
@@ -52,6 +53,8 @@ export function BrowsePage() {
   );
 
   const heading = brand ? `${brand.name} bikes` : 'All bikes';
+  // Filter in whatever currency the catalogue quotes, rather than assuming dollars.
+  const priceCurrency = items.find((bike) => bike.price?.currency)?.price?.currency ?? '';
 
   function onCompareQuickPicks() {
     const ids = quick.filter(Boolean);
@@ -105,7 +108,11 @@ export function BrowsePage() {
             />
             <FilterGroup
               title="Class"
-              options={CLASS_OPTIONS.map((name) => ({ value: name, label: name }))}
+              options={(classesQuery.data ?? []).map((entry) => ({
+                value: entry.name,
+                label: entry.name,
+                count: entry.modelCount,
+              }))}
               selected={classes}
               onChange={toggleClass}
             />
@@ -119,7 +126,7 @@ export function BrowsePage() {
             />
             <RangeFilter
               title="Price"
-              suffix="$"
+              suffix={priceCurrency}
               minValue={filters.priceMin?.toString() ?? ''}
               maxValue={filters.priceMax?.toString() ?? ''}
               onMinChange={(value) => setRange('priceMin', value)}
@@ -178,7 +185,7 @@ export function BrowsePage() {
             {items.map((bike: BikeCardDto) => (
               <BikeCard
                 key={bike.id}
-                bike={bike}
+                bike={{ ...bike, imageUrl: bikeImageSrc(bike.slug, bike.imageUrl) }}
                 selected={selectedIds.includes(bike.id)}
                 compareDisabled={isFull}
                 onToggleCompare={() => toggleCompare(bike)}

@@ -31,7 +31,7 @@ export function ComparePage() {
         slug: bike.slug,
         name: bike.name,
         brand: bike.brand,
-        priceUsd: bike.priceUsd,
+        price: bike.price,
       })),
     );
   }, [bikes, replaceAll]);

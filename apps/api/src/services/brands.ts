@@ -4,7 +4,7 @@ import type { BrandDto } from '../types.js';
 interface BrandRow {
   BrandId: number;
   Name: string;
-  CountryCode: string;
+  CountryCode: string | null;
   Slug: string;
   ModelCount: number;
 }
@@ -24,7 +24,7 @@ export async function listBrands(): Promise<BrandDto[]> {
     id: row.BrandId,
     name: row.Name,
     // CHAR(2) comes back space-padded on some collations.
-    countryCode: row.CountryCode.trim(),
+    countryCode: row.CountryCode?.trim() ?? null,
     slug: row.Slug,
     modelCount: row.ModelCount,
   }));

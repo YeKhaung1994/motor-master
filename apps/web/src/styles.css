@@ -77,6 +77,11 @@
   gap: var(--mm-space-4);
 }
 
+/* A badge sizes to its label; in a stretch column it would span the page. */
+.detail-badge {
+  align-self: flex-start;
+}
+
 .detail-actions {
   display: flex;
   flex-wrap: wrap;

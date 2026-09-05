@@ -30,7 +30,8 @@ Open http://localhost:5173. The web dev server proxies `/api` to the API, so no
 CORS setup is needed for local work.
 
 For ports, database credentials, environment variables and troubleshooting, see
-[docs/development.md](docs/development.md).
+[docs/development.md](docs/development.md). For hosting it, see
+[docs/deployment.md](docs/deployment.md).
 
 Check the API on its own:
 

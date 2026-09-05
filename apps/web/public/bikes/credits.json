@@ -36,6 +36,18 @@
     "height": 2800
   },
   {
+    "slug": "bmw-motorrad-f-900-gs-gs-adventure-f-800-gs",
+    "model": "F 900 GS / GS Adventure / F 800 GS",
+    "file": "bmw-motorrad-f-900-gs-gs-adventure-f-800-gs.jpg",
+    "title": "Paris - Salon de la moto 2011 - BMW - F 800 GS Trophy - 001.jpg",
+    "artist": "Thesupermat",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_GS_Trophy_-_001.jpg",
+    "width": 4752,
+    "height": 3168
+  },
+  {
     "slug": "bmw-motorrad-f-900-r-f-900-xr",
     "model": "F 900 R / F 900 XR",
     "file": "bmw-motorrad-f-900-r-f-900-xr.jpg",
@@ -46,6 +58,30 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_F900R_Motosalon_Brno_2026.jpg",
     "width": 1776,
     "height": 1153
+  },
+  {
+    "slug": "bmw-motorrad-g-310-r-g-310-gs",
+    "model": "G 310 R / G 310 GS",
+    "file": "bmw-motorrad-g-310-r-g-310-gs.jpg",
+    "title": "BMW G310 GS 2023-08.jpg",
+    "artist": "Wikisympathisant",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_G310_GS_2023-08.jpg",
+    "width": 5078,
+    "height": 3381
+  },
+  {
+    "slug": "bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s",
+    "model": "R 12 / R 12 nineT / R 12 S / R 12 G/S",
+    "file": "bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s.jpg",
+    "title": "BMW R12 in Moscow 02.jpg",
+    "artist": "Stolbovsky",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_R12_in_Moscow_02.jpg",
+    "width": 5840,
+    "height": 3970
   },
   {
     "slug": "bmw-motorrad-r-1300-gs-gs-adventure",
@@ -154,6 +190,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_Rally_2026.jpg",
     "width": 1152,
     "height": 1420
+  },
+  {
+    "slug": "ducati-multistrada-v4-rs",
+    "model": "Multistrada V4 RS",
+    "file": "ducati-multistrada-v4-rs.jpg",
+    "title": "Ducati Multistrada V4 RS.jpg",
+    "artist": "AVMOTO",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_RS.jpg",
+    "width": 1872,
+    "height": 1536
   },
   {
     "slug": "ducati-multistrada-v4-s",
@@ -456,6 +504,18 @@
     "height": 4000
   },
   {
+    "slug": "harley-davidson-road-glide",
+    "model": "Road Glide",
+    "file": "harley-davidson-road-glide.jpg",
+    "title": "Harley Davidson Road Glide Prague Czech Republic 2021 D.jpg",
+    "artist": "Mojmir Churavy",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Harley_Davidson_Road_Glide_Prague_Czech_Republic_2021_D.jpg",
+    "width": 4608,
+    "height": 3456
+  },
+  {
     "slug": "harley-davidson-street-glide",
     "model": "Street Glide",
     "file": "harley-davidson-street-glide.jpg",
@@ -744,16 +804,28 @@
     "height": 4284
   },
   {
+    "slug": "honda-nc750x",
+    "model": "NC750X",
+    "file": "honda-nc750x.jpg",
+    "title": "Osaka Motor Show 2015 (211) - Honda NC750X (EBL-RC72).jpg",
+    "artist": "Kuha455405",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(211)_-_Honda_NC750X_(EBL-RC72).jpg",
+    "width": 2560,
+    "height": 1920
+  },
+  {
     "slug": "honda-nt1100",
     "model": "NT1100",
     "file": "honda-nt1100.jpg",
-    "title": "2025 Honda NT1100.jpg",
-    "artist": "Chanokchon",
+    "title": "Honda NT1100 2022.jpg",
+    "artist": "CheminduCret",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_NT1100.jpg",
-    "width": 4608,
-    "height": 3456
+    "source": "https://commons.wikimedia.org/wiki/File:Honda_NT1100_2022.jpg",
+    "width": 1920,
+    "height": 1440
   },
   {
     "slug": "honda-nx500",
@@ -1030,6 +1102,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Versys_1000_(1).jpg",
     "width": 3740,
     "height": 2805
+  },
+  {
+    "slug": "kawasaki-vulcan-s",
+    "model": "Vulcan S",
+    "file": "kawasaki-vulcan-s.jpg",
+    "title": "Kawasaki Vulcan S - MRS Oficina - Mondial de l'Automobile de Paris 2018 - 001.jpg",
+    "artist": "Thesupermat",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_S_-_MRS_Oficina_-_Mondial_de_l%27Automobile_de_Paris_2018_-_001.jpg",
+    "width": 5760,
+    "height": 3840
   },
   {
     "slug": "kawasaki-w800-w800-street",
@@ -1416,6 +1500,18 @@
     "height": 1429
   },
   {
+    "slug": "triumph-tiger-1200-gt-pro-rally-pro-explorer",
+    "model": "Tiger 1200 GT Pro / Rally Pro / Explorer",
+    "file": "triumph-tiger-1200-gt-pro-rally-pro-explorer.jpg",
+    "title": "2022 Triumph Speed Triple 1200 RR Bond Edition and 2021 Triumph Tiger 1200 Rally Pro.jpg",
+    "artist": "Vauxford",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2022_Triumph_Speed_Triple_1200_RR_Bond_Edition_and_2021_Triumph_Tiger_1200_Rally_Pro.jpg",
+    "width": 5998,
+    "height": 3999
+  },
+  {
     "slug": "triumph-tiger-900-gt-gt-pro-rally-pro",
     "model": "Tiger 900 GT / GT Pro / Rally Pro",
     "file": "triumph-tiger-900-gt-gt-pro-rally-pro.jpg",
@@ -1500,6 +1596,18 @@
     "height": 1536
   },
   {
+    "slug": "vespa-primavera-125-sprint-125-s-125",
+    "model": "Primavera 125 / Sprint 125 / S 125",
+    "file": "vespa-primavera-125-sprint-125-s-125.jpg",
+    "title": "2017-09-12 (108) Vespa Primavera 125 at Bahnhof St. P\u00f6lten, Austria.jpg",
+    "artist": "GT1976",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2017-09-12_(108)_Vespa_Primavera_125_at_Bahnhof_St._P%C3%B6lten,_Austria.jpg",
+    "width": 4000,
+    "height": 3000
+  },
+  {
     "slug": "vespa-primavera-150-sprint-150-sprint-s-150",
     "model": "Primavera 150 / Sprint 150 / Sprint S 150",
     "file": "vespa-primavera-150-sprint-150-sprint-s-150.jpg",
@@ -1548,6 +1656,18 @@
     "height": 2250
   },
   {
+    "slug": "yamaha-fjr1300a",
+    "model": "FJR1300A",
+    "file": "yamaha-fjr1300a.jpg",
+    "title": "FJR1300A.jpg",
+    "artist": "Syengulalp",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:FJR1300A.jpg",
+    "width": 4000,
+    "height": 3000
+  },
+  {
     "slug": "yamaha-grand-filano-hybrid",
     "model": "Grand Filano Hybrid",
     "file": "yamaha-grand-filano-hybrid.jpg",
@@ -1570,6 +1690,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_Xeon_GT125_(20200706).jpg",
     "width": 3120,
     "height": 2821
+  },
+  {
+    "slug": "yamaha-mt-03",
+    "model": "MT-03",
+    "file": "yamaha-mt-03.jpg",
+    "title": "Moscow, Yamaha MT-03, June 2025 01.jpg",
+    "artist": "Retired electrician",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Moscow,_Yamaha_MT-03,_June_2025_01.jpg",
+    "width": 5184,
+    "height": 3456
   },
   {
     "slug": "yamaha-mt-07-mt-07-y-amt",
@@ -1714,6 +1846,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XSR_900_(2).jpg",
     "width": 4416,
     "height": 3456
+  },
+  {
+    "slug": "yamaha-yzf-r1",
+    "model": "YZF-R1",
+    "file": "yamaha-yzf-r1.jpg",
+    "title": "2015 Yamaha YZF-R1.JPG",
+    "artist": "Rainmaker47",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_YZF-R1.JPG",
+    "width": 3872,
+    "height": 2592
   },
   {
     "slug": "yamaha-yzf-r15-r15m",

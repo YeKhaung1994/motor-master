@@ -7,14 +7,17 @@ to 1920 px wide.
 Most are CC BY-SA, which requires attribution and share-alike terms — keep this
 file with the images, and surface the credit wherever the photo is published.
 
-148 images across 12 brands.
+160 images across 12 brands.
 
 | Model | File | Photographer | Licence | Source |
 |---|---|---|---|---|
 | C 400 X / C 400 GT | `bmw-motorrad-c-400-x-c-400-gt.jpg` | Kaule79 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_C_400_GT_-_Javagr%C3%BCn_metallic.jpg) |
 | CE 04 / CE 02 | `bmw-motorrad-ce-04-ce-02.jpg` | Wikisympathisant | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024-06_BMW_CE_04.jpg) |
 | F 450 GS | `bmw-motorrad-f-450-gs.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_F_450_GS_(1b).jpg) |
+| F 900 GS / GS Adventure / F 800 GS | `bmw-motorrad-f-900-gs-gs-adventure-f-800-gs.jpg` | Thesupermat | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Paris_-_Salon_de_la_moto_2011_-_BMW_-_F_800_GS_Trophy_-_001.jpg) |
 | F 900 R / F 900 XR | `bmw-motorrad-f-900-r-f-900-xr.jpg` | BRNO1991 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_F900R_Motosalon_Brno_2026.jpg) |
+| G 310 R / G 310 GS | `bmw-motorrad-g-310-r-g-310-gs.jpg` | Wikisympathisant | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_G310_GS_2023-08.jpg) |
+| R 12 / R 12 nineT / R 12 S / R 12 G/S | `bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s.jpg` | Stolbovsky | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_R12_in_Moscow_02.jpg) |
 | R 1300 GS / GS Adventure | `bmw-motorrad-r-1300-gs-gs-adventure.jpg` | Franken-Guzzista | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_R1300GS_Adventure_2025.jpg) |
 | R 1300 R / RS / RT | `bmw-motorrad-r-1300-r-rs-rt.jpg` | Franken-Guzzista | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_R1300RS_2025.jpg) |
 | R 18 / Classic / B / Transcontinental / Roctane | `bmw-motorrad-r-18-classic-b-transcontinental-roctane.jpg` | Self-photographed by Bullenwächter | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:BMW_R18_First_Edition_front_left_DSC_0272.jpg) |
@@ -24,6 +27,7 @@ file with the images, and surface the credit wherever the photo is published.
 | Diavel V4 | `ducati-diavel-v4.jpg` | XDVRACE | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Diavel_V4.jpg) |
 | Hypermotard 698 Mono / RVE | `ducati-hypermotard-698-mono-rve.jpg` | Earthshaker13 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Hypermotard_698_Mono_RVE_at_EICMA_2023_-_left_view.jpg) |
 | Multistrada V4 Rally | `ducati-multistrada-v4-rally.jpg` | MotorideSA | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_Rally_2026.jpg) |
+| Multistrada V4 RS | `ducati-multistrada-v4-rs.jpg` | AVMOTO | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_RS.jpg) |
 | Multistrada V4 S | `ducati-multistrada-v4-s.jpg` | Oq10pass | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_S_%2725.jpg) |
 | Panigale V2 (2025+ 890cc) | `ducati-panigale-v2-2025-890cc.jpg` | Terragio67 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_955_Panigale_V2_(IMG_9845).jpg) |
 | Panigale V2 S (2025+ 890cc) | `ducati-panigale-v2-s-2025-890cc.jpg` | Terragio67 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ducati_955_Panigale_V2_(IMG_9845).jpg) |
@@ -49,6 +53,7 @@ file with the images, and surface the credit wherever the photo is published.
 | Low Rider S | `harley-davidson-low-rider-s.jpg` | emperornie | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_Low_Rider_(17149269014).jpg) |
 | Low Rider ST | `harley-davidson-low-rider-st.jpg` | Michael Barera | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_28_(2024_Low_Rider_ST).jpg) |
 | Pan America 1250 Special | `harley-davidson-pan-america-1250-special.jpg` | Michael Barera | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_29_(2023_Pan_America_1250_Special).jpg) |
+| Road Glide | `harley-davidson-road-glide.jpg` | Mojmir Churavy | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley_Davidson_Road_Glide_Prague_Czech_Republic_2021_D.jpg) |
 | Street Glide | `harley-davidson-street-glide.jpg` | Chris Woodrich | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Harley-Davidson_Street_Glide,_Petrolia,_Ontario,_2026-05-17_01.jpg) |
 | ADV160 | `honda-adv160.jpg` | Firzafp | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Honda_ADV160_parked_in_Kopitiam_Ancol_-_Jambi_City,_JA.jpg) |
 | ADV350 | `honda-adv350.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2022_Honda_ADV350.jpg) |
@@ -73,7 +78,8 @@ file with the images, and surface the credit wherever the photo is published.
 | Grom (MSX125) | `honda-grom-msx125.jpg` | big-ashb | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Honda_Grom_125_at_Birmingham_2014.jpg) |
 | Lead 125 | `honda-lead-125.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Honda_Lead_125.jpg) |
 | Monkey 125 | `honda-monkey-125.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2026_Honda_Monkey_125_ABS.jpg) |
-| NT1100 | `honda-nt1100.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2025_Honda_NT1100.jpg) |
+| NC750X | `honda-nc750x.jpg` | Kuha455405 | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Osaka_Motor_Show_2015_(211)_-_Honda_NC750X_(EBL-RC72).jpg) |
+| NT1100 | `honda-nt1100.jpg` | CheminduCret | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Honda_NT1100_2022.jpg) |
 | NX500 | `honda-nx500.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2023_Honda_NX500.jpg) |
 | PCX160 (2026) | `honda-pcx160-2026.jpg` | Dinkun Chen | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:HONDA_PCX_160_China.jpg) |
 | Rebel 1100 | `honda-rebel-1100.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2021_Honda_Rebel_1100_MT.jpg) |
@@ -97,6 +103,7 @@ file with the images, and surface the credit wherever the photo is published.
 | Ninja ZX-4R / SE | `kawasaki-ninja-zx-4r-se.jpg` | Oq10pass | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-4R_SE_%2726_(1).jpg) |
 | Ninja ZX-6R | `kawasaki-ninja-zx-6r.jpg` | Thesupermat | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_ZX-6R_-_2018_-_Mondial_de_l%27Automobile_de_Paris_2018_-_003.jpg) |
 | Versys 1000 SE | `kawasaki-versys-1000-se.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Versys_1000_(1).jpg) |
+| Vulcan S | `kawasaki-vulcan-s.jpg` | Thesupermat | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_S_-_MRS_Oficina_-_Mondial_de_l%27Automobile_de_Paris_2018_-_001.jpg) |
 | W800 / W800 Street | `kawasaki-w800-w800-street.jpg` | Tokumeigakarinoaoshima | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:The_frontview_of_Kawasaki_W800_STREET_mid-year_2019.jpg) |
 | Z500 SE | `kawasaki-z500-se.jpg` | Revvnramen | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z500_(ER500)_2024.jpg) |
 | Z650 | `kawasaki-z650.jpg` | Gamemaster669 | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z650_schwarz_2020.jpg) |
@@ -129,6 +136,7 @@ file with the images, and surface the credit wherever the photo is published.
 | Daytona 660 | `triumph-daytona-660.jpg` | Kidfly182 | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Triumph_Daytona_660.jpg) |
 | Scrambler 400 X / XC | `triumph-scrambler-400-x-xc.jpg` | Rouv1505 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Triumph-Scrambler-400X.jpg) |
 | Speed 400 | `triumph-speed-400.jpg` | Corvettec6r | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Triumph_Speed_400.jpg) |
+| Tiger 1200 GT Pro / Rally Pro / Explorer | `triumph-tiger-1200-gt-pro-rally-pro-explorer.jpg` | Vauxford | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2022_Triumph_Speed_Triple_1200_RR_Bond_Edition_and_2021_Triumph_Tiger_1200_Rally_Pro.jpg) |
 | Tiger 900 GT / GT Pro / Rally Pro | `triumph-tiger-900-gt-gt-pro-rally-pro.jpg` | Vauxford | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2021_Triumph_Tiger_900_GT_LRH.jpg) |
 | Tiger Sport 660 | `triumph-tiger-sport-660.jpg` | Lamb Chop Rides | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tiger_sport_660_22.jpg) |
 | Trident 660 | `triumph-trident-660.jpg` | Scjessey | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Triumph_Trident_660.jpg) |
@@ -136,12 +144,15 @@ file with the images, and surface the credit wherever the photo is published.
 | Elettrica | `vespa-elettrica.jpg` | FDV | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Vespa-Elettrica-Madrid-070219.jpg) |
 | GTS 300 / GTS Super / GTS Super Sport / GTS Super Tech | `vespa-gts-300-gts-super-gts-super-sport-gts-super-tech.jpg` | George E. Koronaios | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Piaggio_Vespa_GTS_300_in_Athens_on_9-8-2023.jpg) |
 | LX 125 / LX 150 | `vespa-lx-125-lx-150.jpg` | Khaosaming | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Piaggio_Vespa_LX125_2006.JPG) |
+| Primavera 125 / Sprint 125 / S 125 | `vespa-primavera-125-sprint-125-s-125.jpg` | GT1976 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2017-09-12_(108)_Vespa_Primavera_125_at_Bahnhof_St._P%C3%B6lten,_Austria.jpg) |
 | Primavera 150 / Sprint 150 / Sprint S 150 | `vespa-primavera-150-sprint-150-sprint-s-150.jpg` | Samihasib | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Vespa_sprint_150.jpg) |
 | Aerox 155 / Aerox SP | `yamaha-aerox-155-aerox-sp.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2026_Yamaha_Aerox_155_SP_ABS.jpg) |
 | FINN | `yamaha-finn.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2026_Yamaha_Finn_115i_Smart_Key_Version.jpg) |
 | Fino 125 | `yamaha-fino-125.jpg` | Fadlullah Baso | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Fino_Yamaha_125_ultrawide.jpg) |
+| FJR1300A | `yamaha-fjr1300a.jpg` | Syengulalp | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:FJR1300A.jpg) |
 | Grand Filano Hybrid | `yamaha-grand-filano-hybrid.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2022_Yamaha_Grand_Filano_Hybrid_Connected_ABS.jpg) |
 | GT125 | `yamaha-gt125.jpg` | オーバードライブ83 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2015_Yamaha_Xeon_GT125_(20200706).jpg) |
+| MT-03 | `yamaha-mt-03.jpg` | Retired electrician | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Moscow,_Yamaha_MT-03,_June_2025_01.jpg) |
 | MT-07 / MT-07 Y-AMT | `yamaha-mt-07-mt-07-y-amt.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2025_Yamaha_MT-07_Y-AMT.jpg) |
 | MT-09 / MT-09 SP / MT-09 Y-AMT | `yamaha-mt-09-mt-09-sp-mt-09-y-amt.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2024_Yamaha_MT-09_Y-AMT.jpg) |
 | MT-15 | `yamaha-mt-15.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2018_Yamaha_MT-15.jpg) |
@@ -154,6 +165,7 @@ file with the images, and surface the credit wherever the photo is published.
 | XSR155 | `yamaha-xsr155.jpg` | Firzafp | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Yamaha_XSR155_parked_near_Masjid_Sultan_-_Singapore.jpg) |
 | XSR700 | `yamaha-xsr700.jpg` | Zac56105 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Red_Yamaha_XSR700_parked_near_a_bicycle_2018.jpg) |
 | XSR900 | `yamaha-xsr900.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Yamaha_XSR_900_(2).jpg) |
+| YZF-R1 | `yamaha-yzf-r1.jpg` | Rainmaker47 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2015_Yamaha_YZF-R1.JPG) |
 | YZF-R15 / R15M | `yamaha-yzf-r15-r15m.jpg` | Akshayanil919 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Yamaha_R15_V3.0.jpg) |
 | YZF-R1M | `yamaha-yzf-r1m.jpg` | PekePON | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:YAMAHA_YZF-R1M_at_the_Tokyo_Motor_Show_2015.jpg) |
 | YZF-R3 | `yamaha-yzf-r3.jpg` | Kuro202 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:YZF-R3_2019_v3.jpg) |
@@ -162,17 +174,13 @@ file with the images, and surface the credit wherever the photo is published.
 
 ## Models with no image
 
-- BMW Motorrad F 900 GS / GS Adventure / F 800 GS (`bmw-motorrad-f-900-gs-gs-adventure-f-800-gs`)
-- BMW Motorrad G 310 R / G 310 GS (`bmw-motorrad-g-310-r-g-310-gs`)
 - BMW Motorrad M 1000 RR (`bmw-motorrad-m-1000-rr`)
-- BMW Motorrad R 12 / R 12 nineT / R 12 S / R 12 G/S (`bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s`)
 - BMW Motorrad S 1000 R (`bmw-motorrad-s-1000-r`)
 - Ducati Hypermotard 950 RVE / SP (`ducati-hypermotard-950-rve-sp`)
 - Ducati Monster / Monster+ (`ducati-monster-monster`)
 - Ducati Monster 30° Anniversario (`ducati-monster-30-anniversario`)
 - Ducati Monster SP (`ducati-monster-sp`)
 - Ducati Multistrada V2 / V2 S (2025+ 890cc) (`ducati-multistrada-v2-v2-s-2025-890cc`)
-- Ducati Multistrada V4 RS (`ducati-multistrada-v4-rs`)
 - Ducati Scrambler Full Throttle (`ducati-scrambler-full-throttle`)
 - Ducati Scrambler Nightshift (`ducati-scrambler-nightshift`)
 - Ducati Streetfighter V4 SP2 (`ducati-streetfighter-v4-sp2`)
@@ -193,13 +201,11 @@ file with the images, and surface the credit wherever the photo is published.
 - Harley-Davidson Fat Boy 117 (`harley-davidson-fat-boy-117`)
 - Harley-Davidson Nightster / Nightster Special (`harley-davidson-nightster-nightster-special`)
 - Harley-Davidson Pan America 1250 ST (`harley-davidson-pan-america-1250-st`)
-- Harley-Davidson Road Glide (`harley-davidson-road-glide`)
 - Harley-Davidson Road Glide Limited (`harley-davidson-road-glide-limited`)
 - Harley-Davidson Sportster S (`harley-davidson-sportster-s`)
 - Harley-Davidson Street Bob 117 (`harley-davidson-street-bob-117`)
 - Harley-Davidson Street Glide Limited (`harley-davidson-street-glide-limited`)
 - Honda Click 125i (`honda-click-125i`)
-- Honda NC750X (`honda-nc750x`)
 - Honda XR150L (`honda-xr150l`)
 - KTM 1390 Super Duke R / R EVO (`ktm-1390-super-duke-r-r-evo`)
 - KTM 390 Adventure R / X / Enduro R / SMC R (`ktm-390-adventure-r-x-enduro-r-smc-r`)
@@ -216,7 +222,6 @@ file with the images, and surface the credit wherever the photo is published.
 - Kawasaki Ninja H2 SX SE+ (`kawasaki-ninja-h2-sx-se`)
 - Kawasaki Ninja e-1 (`kawasaki-ninja-e-1`)
 - Kawasaki Versys 650 (`kawasaki-versys-650`)
-- Kawasaki Vulcan S (`kawasaki-vulcan-s`)
 - Kawasaki Z1000 (`kawasaki-z1000`)
 - Kawasaki Z400 (`kawasaki-z400`)
 - Royal Enfield Classic 350 (`royal-enfield-classic-350`)
@@ -232,15 +237,10 @@ file with the images, and surface the credit wherever the photo is published.
 - Triumph Speed Twin 900 (`triumph-speed-twin-900`)
 - Triumph Street Triple 765 R / RS (`triumph-street-triple-765-r-rs`)
 - Triumph Thruxton 400 (`triumph-thruxton-400`)
-- Triumph Tiger 1200 GT Pro / Rally Pro / Explorer (`triumph-tiger-1200-gt-pro-rally-pro-explorer`)
-- Vespa Primavera 125 / Sprint 125 / S 125 (`vespa-primavera-125-sprint-125-s-125`)
 - Yamaha Exciter 155 (`yamaha-exciter-155`)
-- Yamaha FJR1300A (`yamaha-fjr1300a`)
 - Yamaha Fazzio Hybrid (`yamaha-fazzio-hybrid`)
-- Yamaha MT-03 (`yamaha-mt-03`)
 - Yamaha QBIX (`yamaha-qbix`)
 - Yamaha WR155R (`yamaha-wr155r`)
-- Yamaha YZF-R1 (`yamaha-yzf-r1`)
 
 Drop a file named `<slug>.jpg` into this folder to fill a gap; the catalogue
 picks it up by filename, and the card falls back to a placeholder until then.

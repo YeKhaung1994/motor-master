@@ -15,6 +15,34 @@ and the catalogue is 227 rows — storage is never the constraint.
 Set `DB_SSL=true` for any of them; managed Postgres requires TLS and a local
 container does not offer it.
 
+### Supabase, scripted
+
+```bash
+npm run db:setup:supabase -- 'postgresql://postgres.<ref>:<password>@<host>:5432/postgres'
+```
+
+Take the string from **Project Settings → Database → Connection string → URI**.
+The script checks the connection, applies the schema, imports the catalogues,
+verifies the row counts, and prints the environment variables the API and web
+hosts need. It is safe to re-run — migrations are tracked and the import matches
+on slug, so nothing duplicates. `FRESH=1` clears the catalogue first.
+
+Two Supabase specifics it handles for you:
+
+- **Port 6543 is the transaction pooler** and cannot apply schema changes. Paste
+  that string and the script uses the session connection on 5432 for setup while
+  still handing back the pooler as the runtime `DATABASE_URL`, which is the right
+  way round: pooling suits an API making many short-lived connections.
+- **Supabase gives you a database rather than letting you create one.** The
+  migrator notices, says so, and carries on instead of failing.
+
+### Connection string or discrete fields
+
+The API accepts either. `DATABASE_URL` wins when set, which is what every managed
+host hands you; the discrete `DB_HOST`/`DB_PORT`/`DB_NAME`/`DB_USER`/`DB_PASSWORD`
+remain for a local container. TLS defaults to on for a remote host and off for
+localhost, and `DB_SSL` overrides that either way.
+
 > The project began on Microsoft SQL Server and was migrated. That mattered for
 > hosting: there is no widely available free managed SQL Server, and the only
 > free route was Azure SQL's serverless offer, which needs a card and stops when

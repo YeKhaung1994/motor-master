@@ -1,5 +1,5 @@
 import pg from 'pg';
-import { config } from '../config.js';
+import { config, describeDatabase } from '../config.js';
 import { logger } from '../logger.js';
 
 const { Pool } = pg;
@@ -13,17 +13,23 @@ pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value) => Number(value));
 // DATE should be a plain calendar day, not a timestamp in the server's zone.
 pg.types.setTypeParser(pg.types.builtins.DATE, (value) => value);
 
-const poolConfig: pg.PoolConfig = {
-  host: config.db.host,
-  port: config.db.port,
-  database: config.db.database,
-  user: config.db.user,
-  password: config.db.password,
+const shared = {
   ssl: config.db.ssl,
   max: 10,
   idleTimeoutMillis: 30_000,
   connectionTimeoutMillis: 15_000,
 };
+
+const poolConfig: pg.PoolConfig = config.db.connectionString
+  ? { connectionString: config.db.connectionString, ...shared }
+  : {
+      host: config.db.host,
+      port: config.db.port,
+      database: config.db.database,
+      user: config.db.user,
+      password: config.db.password,
+      ...shared,
+    };
 
 let pool: pg.Pool | null = null;
 
@@ -32,7 +38,7 @@ export function getPool(): pg.Pool {
   if (!pool) {
     pool = new Pool(poolConfig);
     pool.on('error', (error) => logger.error({ error }, 'connection pool error'));
-    logger.info({ host: config.db.host, database: config.db.database }, 'postgres pool ready');
+    logger.info({ database: describeDatabase() }, 'postgres pool ready');
   }
   return pool;
 }
@@ -44,8 +50,13 @@ export async function closePool(): Promise<void> {
   await current.end();
 }
 
-/** Connects to the maintenance database instead — used by the migrator. */
+/**
+ * Connects to the maintenance database — used by the migrator to create the
+ * application database locally. A managed provider hands you a database and
+ * forbids creating one, so there this is simply the same connection.
+ */
 export function getMaintenancePool(): pg.Pool {
+  if (config.db.connectionString) return new Pool(poolConfig);
   return new Pool({ ...poolConfig, database: 'postgres' });
 }
 

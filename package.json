@@ -23,6 +23,7 @@
     "db:migrate": "npm run db:migrate --workspace @motor-master/api",
     "db:seed": "npm run db:seed --workspace @motor-master/api",
     "db:seed:fresh": "npm run db:seed:fresh --workspace @motor-master/api",
+    "db:setup:supabase": "bash scripts/setup-supabase.sh",
     "images:audit": "node tools/audit-images.cjs",
     "storybook": "npm run storybook --workspace @motor-master/share_ui"
   },

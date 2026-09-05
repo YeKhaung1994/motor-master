@@ -144,6 +144,7 @@ One `.env` at the repo root configures everything; the API also reads an optiona
 
 | Variable | Default | Used for |
 |---|---|---|
+| `DATABASE_URL` | — | full connection string; wins over the fields below |
 | `DB_HOST` | `localhost` | Postgres host |
 | `DB_PORT` | `5432` | host port — also what compose publishes |
 | `DB_NAME` | `motor_master` | created by `db:migrate` if missing |
@@ -169,6 +170,7 @@ variable.
 | `npm run db:migrate` | applies unapplied files from `apps/api/src/db/migrations/` |
 | `npm run db:seed` | re-imports every catalogue; safe to re-run |
 | `npm run db:seed:fresh` | clears every brand and bike, then imports |
+| `npm run db:setup:supabase` | points a Supabase database at the catalogue end to end |
 | `npm run test:e2e` | Playwright browser tests (API stubbed, no database needed) |
 | `npm run storybook` | the design system on :6006 |
 

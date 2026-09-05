@@ -19,6 +19,17 @@ services:
     plan: free
     region: singapore          # nearest to the Supabase project in ap-northeast-1
     healthCheckPath: /api/v1/health
+    autoDeploy: true
+    # Without a filter, any push to main rebuilds every service — a typo in a
+    # README would rebuild the container and the 153 MB static site.
+    buildFilters:
+      paths:
+        - apps/api/**
+        - Dockerfile
+        - package.json
+        - package-lock.json
+        - tsconfig.base.json
+        - render.yaml
     envVars:
       - key: NODE_VERSION
         value: "22"
@@ -37,6 +48,15 @@ services:
     runtime: static
     buildCommand: npm ci && npm run build --workspace @motor-master/web
     staticPublishPath: apps/web/dist
+    autoDeploy: true
+    buildFilters:
+      paths:
+        - apps/web/**
+        - packages/share_ui/**
+        - package.json
+        - package-lock.json
+        - tsconfig.base.json
+        - render.yaml
     envVars:
       - key: NODE_VERSION
         value: "22"

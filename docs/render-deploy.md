@@ -140,8 +140,26 @@ A free cron hitting `/api/v1/health` every ten minutes keeps the API awake and t
 database in use. Render's own Cron Job service can do it, though on the free plan
 that is another service; an external pinger avoids that.
 
-**Deploys are automatic** on push to `main`. Turn that off per service under
-Settings → Build & Deploy if you would rather deploy manually.
+**Deploys are automatic** on push to `main`. Render watches the connected branch
+through a GitHub webhook set up when you first connect the repository — no
+further wiring.
+
+`render.yaml` also carries build filters, so a push only rebuilds what it
+touches:
+
+| You change | Rebuilds |
+|---|---|
+| `apps/api/**`, `Dockerfile` | API |
+| `apps/web/**`, `packages/share_ui/**` | Web |
+| `package.json`, `package-lock.json`, `render.yaml` | both |
+| `docs/**`, `README.md` | nothing |
+
+Without those filters every push rebuilds everything, and the web build ships
+153 MB — a typo fixed in a README would cost a full container build and a
+153 MB upload.
+
+Turn it off per service under Settings → Build & Deploy if you would rather
+deploy by hand.
 
 **Schema changes are not automatic, deliberately.** Nothing runs migrations on
 start-up. When the schema changes, run them yourself against the hosted database

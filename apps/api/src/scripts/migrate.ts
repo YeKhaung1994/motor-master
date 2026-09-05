@@ -7,8 +7,19 @@ import { logger } from '../logger.js';
 
 const migrationsDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'db', 'migrations');
 
-/** Database names come from configuration, never from a request. */
+/**
+ * Creates the application database, for a local server that starts empty.
+ *
+ * A managed provider hands you a database and the connection string names it, so
+ * there is nothing to create — and trying anyway would create a stray, empty
+ * database next to the real one.
+ */
 async function ensureDatabase(): Promise<void> {
+  if (config.db.connectionString) {
+    logger.info('connection string names the database; skipping creation');
+    return;
+  }
+
   const maintenance = getMaintenancePool();
   try {
     const existing = await maintenance.query('SELECT 1 FROM pg_database WHERE datname = $1', [

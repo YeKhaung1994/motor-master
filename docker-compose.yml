@@ -1,33 +1,22 @@
 services:
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: postgres:16-alpine
     container_name: motor-master-db
     environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "MotorMaster!2024"
-      MSSQL_PID: Developer
-      # SQL Server will otherwise size its buffer pool to the whole machine and
-      # get OOM-killed (exit 137) on a Docker VM this size, taking the API with it.
-      MSSQL_MEMORY_LIMIT_MB: "2048"
+      POSTGRES_DB: motor_master
+      POSTGRES_USER: motor_master
+      POSTGRES_PASSWORD: motor_master_dev
     ports:
-      - "${DB_PORT:-1433}:1433"
+      - "${DB_PORT:-5432}:5432"
     volumes:
-      - mssql-data:/var/opt/mssql
-    deploy:
-      resources:
-        limits:
-          memory: 3g
-    restart: unless-stopped
+      - pg-data:/var/lib/postgresql/data
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1",
-        ]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U motor_master -d motor_master"]
+      interval: 5s
       timeout: 5s
       retries: 12
-      start_period: 30s
+      start_period: 10s
+    restart: unless-stopped
 
 volumes:
-  mssql-data:
+  pg-data:

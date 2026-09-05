@@ -7,15 +7,11 @@ import type { FakePool } from './fakePool.js';
 const poolMock = vi.hoisted(() => ({ current: null as unknown }));
 
 // The pool is the only thing standing between the routes and SQL Server.
-vi.mock('../db/pool.js', async () => {
-  const actual = await vi.importActual('mssql');
-  return {
-    getPool: async () => poolMock.current,
-    getMasterPool: async () => poolMock.current,
-    closePool: async () => undefined,
-    sql: (actual as { default: unknown }).default,
-  };
-});
+vi.mock('../db/pool.js', () => ({
+  getPool: () => poolMock.current,
+  getMaintenancePool: () => poolMock.current,
+  closePool: async () => undefined,
+}));
 
 const { createApp } = await import('../app.js');
 const app = createApp();
@@ -56,8 +52,8 @@ describe('GET /api/v1/brands', () => {
   it('returns brands with their model count and a trimmed country code', async () => {
     usePool([
       {
-        match: 'FROM Brands br',
-        rows: [{ BrandId: 4, Name: 'Yamaha', CountryCode: 'JP', Slug: 'yamaha', ModelCount: 2 }],
+        match: 'FROM brands br',
+        rows: [{ brand_id: 4, name: 'Yamaha', country_code: 'JP', slug: 'yamaha', model_count: '2' }],
       },
     ]);
 
@@ -72,7 +68,7 @@ describe('GET /api/v1/brands', () => {
 
 describe('GET /api/v1/bikes', () => {
   it('returns a page of bike cards', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [bikeRow({ Total: 1 })] }]);
+    usePool([{ match: 'FROM bikes b', rows: [bikeRow({ total: '1' })] }]);
 
     const response = await request(app).get('/api/v1/bikes');
 
@@ -108,7 +104,7 @@ describe('GET /api/v1/bikes', () => {
   });
 
   it('passes every filter as a bound parameter, never as SQL text', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+    usePool([{ match: 'FROM bikes b', rows: [] }]);
 
     await request(app)
       .get('/api/v1/bikes')
@@ -116,49 +112,41 @@ describe('GET /api/v1/bikes', () => {
 
     const query = pool.queries.at(-1);
     expect(query).toBeDefined();
-    expect(query!.inputs).toMatchObject({
-      brand: 'yamaha',
-      class0: 'Naked',
-      class1: 'Sport',
-      ccMin: 400,
-      ccMax: 700,
-      priceMin: 5000,
-    });
-    expect(query!.sql).toContain('c.Name IN (@class0, @class1)');
+    // Everything the caller supplied is a bound value, not text in the SQL.
+    expect(query!.values).toEqual(
+      expect.arrayContaining(['yamaha', ['Naked', 'Sport'], 400, 700, 5000]),
+    );
+    expect(query!.sql).toContain('c.name = ANY(');
     expect(query!.sql).not.toContain('Naked');
   });
 
   it('maps each sort key onto a fixed ORDER BY clause', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+    usePool([{ match: 'FROM bikes b', rows: [] }]);
 
     await request(app).get('/api/v1/bikes').query({ sort: 'weight_asc' });
 
-    expect(pool.queries.at(-1)!.sql).toContain('s.KerbWeightKg ASC');
+    expect(pool.queries.at(-1)!.sql).toContain('s.kerb_weight_kg ASC NULLS LAST');
   });
 
   it('sorts rows with no published figure last, in both directions', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+    usePool([{ match: 'FROM bikes b', rows: [] }]);
 
     await request(app).get('/api/v1/bikes').query({ sort: 'price_asc' });
     // An unpublished price must not masquerade as the cheapest bike.
-    expect(pool.queries.at(-1)!.sql).toContain(
-      'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount ASC',
-    );
+    expect(pool.queries.at(-1)!.sql).toContain('b.price_amount ASC NULLS LAST');
 
     await request(app).get('/api/v1/bikes').query({ sort: 'price_desc' });
-    expect(pool.queries.at(-1)!.sql).toContain(
-      'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount DESC',
-    );
+    expect(pool.queries.at(-1)!.sql).toContain('b.price_amount DESC NULLS LAST');
   });
 
   it('filters by market through the join table', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+    usePool([{ match: 'FROM bikes b', rows: [] }]);
 
     await request(app).get('/api/v1/bikes').query({ market: 'th' });
 
     const query = pool.queries.at(-1)!;
-    expect(query.inputs.market).toBe('TH');
-    expect(query.sql).toContain('FROM BikeMarkets m');
+    expect(query.values).toContain('TH');
+    expect(query.sql).toContain('FROM bike_markets m');
   });
 
   it('rejects an unknown sort with 400 and names the field', async () => {
@@ -189,7 +177,7 @@ describe('GET /api/v1/bikes', () => {
 
 describe('GET /api/v1/bikes/:slug', () => {
   it('returns the bike with its full spec sheet', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [bikeRow()] }]);
+    usePool([{ match: 'FROM bikes b', rows: [bikeRow()] }]);
 
     const response = await request(app).get('/api/v1/bikes/honda-cbr500r');
 
@@ -199,11 +187,11 @@ describe('GET /api/v1/bikes/:slug', () => {
     // Columns the catalogue has not filled in yet come back as null, not zero.
     expect(response.body.specs.brakeFront).toBeNull();
     expect(response.body.specs.batteryKwh).toBeNull();
-    expect(pool.queries[0]!.inputs.slug).toBe('honda-cbr500r');
+    expect(pool.queries[0]!.values).toContain('honda-cbr500r');
   });
 
   it('returns 404 with a plain message when nothing matches', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+    usePool([{ match: 'FROM bikes b', rows: [] }]);
 
     const response = await request(app).get('/api/v1/bikes/does-not-exist');
 
@@ -214,23 +202,23 @@ describe('GET /api/v1/bikes/:slug', () => {
 
 describe('GET /api/v1/compare', () => {
   const rows = [
-    bikeRow({ BikeId: 4, Name: 'CBR500R', PriceAmount: 235800, PowerHp: 47, KerbWeightKg: 192 }),
+    bikeRow({ bike_id: 4, name: 'CBR500R', price_amount: 235800, power_hp: 47, kerb_weight_kg: 192 }),
     bikeRow({
-      BikeId: 6,
-      Slug: 'honda-cb650r',
-      Name: 'CB650R',
-      PriceAmount: 339000,
-      PriceText: 'THB 339,000',
-      DisplacementCc: 649,
-      PowerHp: 94,
-      TorqueNm: 63,
-      KerbWeightKg: 208,
-      FuelTankL: 15.4,
+      bike_id: 6,
+      slug: 'honda-cb650r',
+      name: 'CB650R',
+      price_amount: 339000,
+      price_text: 'THB 339,000',
+      displacement_cc: 649,
+      power_hp: 94,
+      torque_nm: 63,
+      kerb_weight_kg: 208,
+      fuel_tank_l: 15.4,
     }),
   ];
 
   it('returns the bikes in the order the ids were given, with winners', async () => {
-    usePool([{ match: 'FROM Bikes b', rows }]);
+    usePool([{ match: 'FROM bikes b', rows }]);
 
     const response = await request(app).get('/api/v1/compare').query({ ids: '6,4' });
 
@@ -270,11 +258,11 @@ describe('GET /api/v1/compare', () => {
 
 describe('GET /api/v1/search', () => {
   it('escapes LIKE metacharacters in the search term', async () => {
-    usePool([{ match: 'FROM Bikes b', rows: [] }]);
+    usePool([{ match: 'FROM bikes b', rows: [] }]);
 
     await request(app).get('/api/v1/search').query({ q: '100%' });
 
-    expect(pool.queries.at(-1)!.inputs.term).toBe('%100[%]%');
+    expect(pool.queries.at(-1)!.values[0]).toBe('%100\\%%');
   });
 
   it('needs a search term', async () => {

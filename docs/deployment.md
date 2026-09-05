@@ -6,50 +6,19 @@ web bundle. Two of the three are easy and free. The database is the decision.
 > Free-tier terms change often. Treat the specifics below as a starting point and
 > check the current limits before committing.
 
-## The one real obstacle: SQL Server
+## The database
 
-The build targets Microsoft SQL Server, and there is no widely available free
-managed SQL Server. That leaves two routes.
+The API runs on PostgreSQL, so every free Postgres tier is open to it:
+**Neon** (serverless, autosuspends when idle) or **Supabase**. No card required,
+and the catalogue is 227 rows — storage is never the constraint.
 
-### Route A — stay on SQL Server (no code changes)
+Set `DB_SSL=true` for any of them; managed Postgres requires TLS and a local
+container does not offer it.
 
-**Azure SQL Database**, free offer: roughly 100,000 vCore-seconds of compute and
-32 GB storage per month, on a serverless tier that auto-pauses when idle. The
-`mssql` driver connects unchanged; the catalogue is 227 rows, so storage is a
-non-issue.
-
-What it costs you:
-- An Azure account with a card on file, even for the free offer.
-- Auto-pause means the first query after idle waits for a resume — seconds, not
-  milliseconds. The pool already retries rather than caching a failed connection,
-  so this recovers on its own.
-- Once the monthly compute allowance is gone the database stops until the next
-  month unless you enable paid overage.
-
-### Route B — port to Postgres (recommended)
-
-Free Postgres is genuinely free and plentiful: **Neon** (serverless, autosuspend)
-or **Supabase**. No card, no monthly compute cliff.
-
-The port is small but real. The SQL that is SQL Server-specific:
-
-| Construct | Uses | Postgres equivalent |
-|---|---|---|
-| `MERGE ... WHEN MATCHED` | 4 | `INSERT ... ON CONFLICT (slug) DO UPDATE` |
-| `INT IDENTITY` | 3 | `GENERATED ALWAYS AS IDENTITY` or `serial` |
-| `SYSUTCDATETIME()` | 2 | `now() at time zone 'utc'` |
-| `DBCC CHECKIDENT ... RESEED` | 2 | `ALTER SEQUENCE ... RESTART` |
-| `OFFSET @offset ROWS FETCH NEXT` | 1 | `LIMIT ... OFFSET ...` |
-| `SELECT TOP (8)` | 1 | `LIMIT 8` |
-| `COUNT(*) OVER ()` | 1 | identical, no change |
-
-Plus the driver: `pool.request().input(name, type, value).query(...)` becomes
-`pool.query(text, values)` with `$1` placeholders. Every query is already
-parameterised, so this is mechanical — the shape is the same, only the binding
-syntax changes. Budget half a day, most of it in `seed.ts`.
-
-The win is a database that never sleeps on a schedule you cannot control, and no
-card on file.
+> The project began on Microsoft SQL Server and was migrated. That mattered for
+> hosting: there is no widely available free managed SQL Server, and the only
+> free route was Azure SQL's serverless offer, which needs a card and stops when
+> its monthly compute allowance runs out.
 
 ## API hosting
 
@@ -71,9 +40,8 @@ Health check:   /api/v1/health
 Environment variables:
 
 ```
-DB_SERVER, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
-DB_ENCRYPT=true
-DB_TRUST_CERT=false          # a managed database presents a real certificate
+DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+DB_SSL=true                   # managed Postgres requires TLS
 PORT                          # supplied by the platform
 WEB_ORIGIN=https://<your-web-host>   # exact origin, no trailing slash
 LOG_LEVEL=info

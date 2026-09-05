@@ -1,4 +1,3 @@
-import sql from 'mssql';
 import { getPool } from '../db/pool.js';
 import { NotFoundError } from '../middleware/errorHandler.js';
 import type { BikeDetailDto, BikeListDto, MarketPriceDto, SearchHitDto } from '../types.js';
@@ -20,100 +19,77 @@ export interface ListBikesOptions {
 
 /**
  * Fixed clauses chosen by key — the sort value never reaches SQL as text.
- * Rows with no published figure sort last in every direction: an unpublished
- * price is not the cheapest bike in the catalogue.
+ * NULLS LAST because an unpublished price is not the cheapest bike in the
+ * catalogue; Postgres would otherwise sort nulls first on DESC.
  */
 const ORDER_BY: Record<ListBikesOptions['sort'], string> = {
-  price_asc: 'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount ASC, b.Name ASC',
-  price_desc: 'CASE WHEN b.PriceAmount IS NULL THEN 1 ELSE 0 END, b.PriceAmount DESC, b.Name ASC',
-  power_desc: 'CASE WHEN s.PowerHp IS NULL THEN 1 ELSE 0 END, s.PowerHp DESC, b.Name ASC',
-  weight_asc: 'CASE WHEN s.KerbWeightKg IS NULL THEN 1 ELSE 0 END, s.KerbWeightKg ASC, b.Name ASC',
+  price_asc: 'b.price_amount ASC NULLS LAST, b.name ASC',
+  price_desc: 'b.price_amount DESC NULLS LAST, b.name ASC',
+  power_desc: 's.power_hp DESC NULLS LAST, b.name ASC',
+  weight_asc: 's.kerb_weight_kg ASC NULLS LAST, b.name ASC',
 };
 
 export async function listBikes(options: ListBikesOptions): Promise<BikeListDto> {
-  const pool = await getPool();
-  const request = pool.request();
+  const pool = getPool();
+  const params: unknown[] = [];
   const where: string[] = [];
+  const p = (value: unknown) => `$${params.push(value)}`;
 
-  if (options.brand) {
-    request.input('brand', sql.NVarChar(80), options.brand);
-    where.push('br.Slug = @brand');
-  }
+  if (options.brand) where.push(`br.slug = ${p(options.brand)}`);
 
   if (options.class && options.class.length > 0) {
-    // One parameter per class keeps the IN list parameterised.
-    const params = options.class.map((className, index) => {
-      const name = `class${index}`;
-      request.input(name, sql.NVarChar(40), className);
-      return `@${name}`;
-    });
-    where.push(`c.Name IN (${params.join(', ')})`);
+    // One array parameter rather than an IN list built from user input.
+    where.push(`c.name = ANY(${p(options.class)}::text[])`);
   }
 
   if (options.market) {
-    request.input('market', sql.NVarChar(8), options.market.toUpperCase());
-    where.push('EXISTS (SELECT 1 FROM BikeMarkets m WHERE m.BikeId = b.BikeId AND m.MarketCode = @market)');
+    where.push(
+      `EXISTS (SELECT 1 FROM bike_markets m
+               WHERE m.bike_id = b.bike_id AND m.market_code = ${p(options.market.toUpperCase())})`,
+    );
   }
 
-  if (options.ccMin !== undefined) {
-    request.input('ccMin', sql.Decimal(7, 1), options.ccMin);
-    where.push('s.DisplacementCc >= @ccMin');
-  }
-
-  if (options.ccMax !== undefined) {
-    request.input('ccMax', sql.Decimal(7, 1), options.ccMax);
-    where.push('s.DisplacementCc <= @ccMax');
-  }
-
-  if (options.priceMin !== undefined) {
-    request.input('priceMin', sql.Decimal(12, 2), options.priceMin);
-    where.push('b.PriceAmount >= @priceMin');
-  }
-
-  if (options.priceMax !== undefined) {
-    request.input('priceMax', sql.Decimal(12, 2), options.priceMax);
-    where.push('b.PriceAmount <= @priceMax');
-  }
+  if (options.ccMin !== undefined) where.push(`s.displacement_cc >= ${p(options.ccMin)}`);
+  if (options.ccMax !== undefined) where.push(`s.displacement_cc <= ${p(options.ccMax)}`);
+  if (options.priceMin !== undefined) where.push(`b.price_amount >= ${p(options.priceMin)}`);
+  if (options.priceMax !== undefined) where.push(`b.price_amount <= ${p(options.priceMax)}`);
 
   const whereClause = where.length > 0 ? `WHERE ${where.join(' AND ')}` : '';
-  const offset = (options.page - 1) * options.pageSize;
+  const limit = p(options.pageSize);
+  const offset = p((options.page - 1) * options.pageSize);
 
-  request.input('offset', sql.Int, offset);
-  request.input('pageSize', sql.Int, options.pageSize);
-
-  const result = await request.query<BikeRow & { Total: number }>(`
-    SELECT ${BIKE_COLUMNS},
-           COUNT(*) OVER () AS Total
-    ${BIKE_JOINS}
-    ${whereClause}
-    ORDER BY ${ORDER_BY[options.sort]}
-    OFFSET @offset ROWS FETCH NEXT @pageSize ROWS ONLY
-  `);
-
-  const rows = result.recordset;
+  const result = await pool.query<BikeRow & { total: string }>(
+    `SELECT ${BIKE_COLUMNS},
+            COUNT(*) OVER () AS total
+     ${BIKE_JOINS}
+     ${whereClause}
+     ORDER BY ${ORDER_BY[options.sort]}
+     LIMIT ${limit} OFFSET ${offset}`,
+    params,
+  );
 
   return {
-    items: rows.map(toBikeCard),
-    total: rows[0]?.Total ?? 0,
+    items: result.rows.map(toBikeCard),
+    total: Number(result.rows[0]?.total ?? 0),
     page: options.page,
     pageSize: options.pageSize,
   };
 }
 
 interface MarketRow {
-  BikeId: number;
-  MarketCode: string;
+  bike_id: number;
+  market_code: string;
 }
 
 interface PriceRow {
-  BikeId: number;
-  MarketCode: string;
-  Currency: string | null;
-  Amount: number | string | null;
-  RawText: string;
+  bike_id: number;
+  market_code: string;
+  currency: string | null;
+  amount: number | string | null;
+  raw_text: string;
 }
 
-/** Markets and other-market prices for a set of bikes, in one round trip each. */
+/** Markets and other-market prices for a set of bikes, one round trip each. */
 async function loadRelations(bikeIds: number[]): Promise<{
   markets: Map<number, string[]>;
   prices: Map<number, MarketPriceDto[]>;
@@ -122,86 +98,66 @@ async function loadRelations(bikeIds: number[]): Promise<{
   const prices = new Map<number, MarketPriceDto[]>();
   if (bikeIds.length === 0) return { markets, prices };
 
-  const pool = await getPool();
-  const request = pool.request();
-  const params = bikeIds.map((id, index) => {
-    const name = `rid${index}`;
-    request.input(name, sql.Int, id);
-    return `@${name}`;
-  });
-  const inList = params.join(', ');
+  const pool = getPool();
+  const [marketRows, priceRows] = await Promise.all([
+    pool.query<MarketRow>(
+      'SELECT bike_id, market_code FROM bike_markets WHERE bike_id = ANY($1::int[]) ORDER BY market_code',
+      [bikeIds],
+    ),
+    pool.query<PriceRow>(
+      `SELECT bike_id, market_code, currency, amount, raw_text
+       FROM bike_prices WHERE bike_id = ANY($1::int[]) ORDER BY market_code`,
+      [bikeIds],
+    ),
+  ]);
 
-  const result = await request.query(`
-    SELECT BikeId, MarketCode FROM BikeMarkets WHERE BikeId IN (${inList}) ORDER BY MarketCode;
-    SELECT BikeId, MarketCode, Currency, Amount, RawText FROM BikePrices WHERE BikeId IN (${inList}) ORDER BY MarketCode;
-  `);
-
-  const [marketRows = [], priceRows = []] = result.recordsets as unknown as [
-    MarketRow[],
-    PriceRow[],
-  ];
-
-  for (const row of marketRows) {
-    const list = markets.get(row.BikeId) ?? [];
-    list.push(row.MarketCode.trim());
-    markets.set(row.BikeId, list);
+  for (const row of marketRows.rows) {
+    const list = markets.get(row.bike_id) ?? [];
+    list.push(row.market_code.trim());
+    markets.set(row.bike_id, list);
   }
 
-  for (const row of priceRows) {
-    const list = prices.get(row.BikeId) ?? [];
-    const amount = row.Amount === null ? null : Number(row.Amount);
+  for (const row of priceRows.rows) {
+    const list = prices.get(row.bike_id) ?? [];
+    const amount = row.amount === null ? null : Number(row.amount);
     list.push({
-      market: row.MarketCode.trim(),
-      currency: row.Currency?.trim() ?? null,
+      market: row.market_code.trim(),
+      currency: row.currency?.trim() ?? null,
       amount: amount !== null && Number.isFinite(amount) ? amount : null,
-      text: row.RawText,
+      text: row.raw_text,
     });
-    prices.set(row.BikeId, list);
+    prices.set(row.bike_id, list);
   }
 
   return { markets, prices };
 }
 
 export async function getBikeBySlug(slug: string): Promise<BikeDetailDto> {
-  const pool = await getPool();
-  const result = await pool
-    .request()
-    .input('slug', sql.NVarChar(140), slug)
-    .query<BikeRow>(`
-      SELECT ${BIKE_COLUMNS}
-      ${BIKE_JOINS}
-      WHERE b.Slug = @slug
-    `);
+  const pool = getPool();
+  const result = await pool.query<BikeRow>(
+    `SELECT ${BIKE_COLUMNS} ${BIKE_JOINS} WHERE b.slug = $1`,
+    [slug],
+  );
 
-  const row = result.recordset[0];
+  const row = result.rows[0];
   if (!row) throw new NotFoundError('Bike not found');
 
-  const { markets, prices } = await loadRelations([row.BikeId]);
-  return toBikeDetail(row, markets.get(row.BikeId) ?? [], prices.get(row.BikeId) ?? []);
+  const { markets, prices } = await loadRelations([row.bike_id]);
+  return toBikeDetail(row, markets.get(row.bike_id) ?? [], prices.get(row.bike_id) ?? []);
 }
 
 export async function getBikesByIds(ids: number[]): Promise<BikeDetailDto[]> {
-  const pool = await getPool();
-  const request = pool.request();
+  const pool = getPool();
+  const result = await pool.query<BikeRow>(
+    `SELECT ${BIKE_COLUMNS} ${BIKE_JOINS} WHERE b.bike_id = ANY($1::int[])`,
+    [ids],
+  );
 
-  const params = ids.map((id, index) => {
-    const name = `id${index}`;
-    request.input(name, sql.Int, id);
-    return `@${name}`;
-  });
-
-  const result = await request.query<BikeRow>(`
-    SELECT ${BIKE_COLUMNS}
-    ${BIKE_JOINS}
-    WHERE b.BikeId IN (${params.join(', ')})
-  `);
-
-  const { markets, prices } = await loadRelations(result.recordset.map((row) => row.BikeId));
-
+  const { markets, prices } = await loadRelations(result.rows.map((row) => row.bike_id));
   const byId = new Map(
-    result.recordset.map((row) => [
-      row.BikeId,
-      toBikeDetail(row, markets.get(row.BikeId) ?? [], prices.get(row.BikeId) ?? []),
+    result.rows.map((row) => [
+      row.bike_id,
+      toBikeDetail(row, markets.get(row.bike_id) ?? [], prices.get(row.bike_id) ?? []),
     ]),
   );
 
@@ -210,23 +166,23 @@ export async function getBikesByIds(ids: number[]): Promise<BikeDetailDto[]> {
 }
 
 export async function searchBikes(query: string): Promise<SearchHitDto[]> {
-  const pool = await getPool();
-  const result = await pool
-    .request()
-    // LIKE pattern metacharacters are escaped so a search for `100%` is literal.
-    .input('term', sql.NVarChar(200), `%${query.replace(/([%_[])/g, '[$1]')}%`)
-    .query<{ BikeId: number; Name: string; BrandName: string; Slug: string }>(`
-      SELECT TOP (8) b.BikeId, b.Name, br.Name AS BrandName, b.Slug
-      FROM Bikes b
-      INNER JOIN Brands br ON br.BrandId = b.BrandId
-      WHERE b.Name LIKE @term ESCAPE '[' OR br.Name LIKE @term ESCAPE '['
-      ORDER BY br.Name, b.Name
-    `);
+  const pool = getPool();
+  // ILIKE metacharacters are escaped so a search for `100%` stays literal.
+  const term = `%${query.replace(/([%_\\])/g, '\\$1')}%`;
+  const result = await pool.query<{ bike_id: number; name: string; brand_name: string; slug: string }>(
+    `SELECT b.bike_id, b.name, br.name AS brand_name, b.slug
+     FROM bikes b
+     INNER JOIN brands br ON br.brand_id = b.brand_id
+     WHERE b.name ILIKE $1 ESCAPE '\\' OR br.name ILIKE $1 ESCAPE '\\'
+     ORDER BY br.name, b.name
+     LIMIT 8`,
+    [term],
+  );
 
-  return result.recordset.map((row) => ({
-    id: row.BikeId,
-    name: row.Name,
-    brand: row.BrandName,
-    slug: row.Slug,
+  return result.rows.map((row) => ({
+    id: row.bike_id,
+    name: row.name,
+    brand: row.brand_name,
+    slug: row.slug,
   }));
 }

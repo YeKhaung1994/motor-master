@@ -3,8 +3,7 @@ import { logger } from '../logger.js';
 
 export async function checkDatabase(): Promise<'up' | 'down'> {
   try {
-    const pool = await getPool();
-    await pool.request().query('SELECT 1 AS ok');
+    await getPool().query('SELECT 1');
     return 'up';
   } catch (error) {
     logger.warn({ error }, 'database health check failed');

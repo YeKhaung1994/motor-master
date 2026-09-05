@@ -25,12 +25,16 @@ export const config = {
   webOrigin: process.env.WEB_ORIGIN ?? 'http://localhost:5173',
   logLevel: process.env.LOG_LEVEL ?? 'info',
   db: {
-    server: process.env.DB_SERVER ?? 'localhost',
-    port: Number(process.env.DB_PORT ?? 1433),
+    host: process.env.DB_HOST ?? 'localhost',
+    port: Number(process.env.DB_PORT ?? 5432),
     database: process.env.DB_NAME ?? 'motor_master',
     user: required('DB_USER'),
     password: required('DB_PASSWORD'),
-    encrypt: bool('DB_ENCRYPT', true),
-    trustServerCertificate: bool('DB_TRUST_CERT', true),
+    /**
+     * Managed Postgres requires TLS; a local container has no certificate.
+     * `rejectUnauthorized: false` is the usual setting for providers that
+     * present a certificate signed by their own authority.
+     */
+    ssl: bool('DB_SSL', false) ? { rejectUnauthorized: false } : false,
   },
 } as const;

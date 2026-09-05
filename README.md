@@ -5,13 +5,13 @@ engine size and price, open a full spec sheet, or put up to three bikes side by 
 and see which one wins each row.
 
 - `apps/web` — React 18 + Vite + React Router + TanStack Query
-- `apps/api` — Node 20 + Express + TypeScript over Microsoft SQL Server (`mssql`)
+- `apps/api` — Node 20 + Express + TypeScript over PostgreSQL (`pg`)
 - `packages/share_ui` — the design system, and the only place UI is drawn
 
 ## Prerequisites
 
 - Node 20 or newer (developed on Node 22)
-- Docker, for the local SQL Server container
+- Docker, for the local PostgreSQL container
 
 ## Getting started
 
@@ -19,7 +19,7 @@ and see which one wins each row.
 npm install
 cp .env.example .env
 
-docker compose up -d db      # SQL Server 2022, waits until healthy
+docker compose up -d db      # PostgreSQL 16, waits until healthy
 npm run db:migrate           # creates the database and applies db/migrations/*.sql
 npm run db:seed              # imports every catalogue in apps/api/src/db/seed/*.json
                              # (use db:seed:fresh to clear the catalogue first)
@@ -41,11 +41,11 @@ curl "http://localhost:4000/api/v1/bikes?sort=power_desc&pageSize=3"
 curl "http://localhost:4000/api/v1/compare?ids=4,6"
 ```
 
-### If port 1433 is already in use
+### If port 5432 is already in use
 
-Another SQL Server may already own the default port. Set `DB_PORT` in `.env` to a
-free port (for example `14330`) before `docker compose up -d db` — the compose file
-publishes `${DB_PORT:-1433}` on the host and the API reads the same variable.
+Another Postgres may already own the default port. Set `DB_PORT` in `.env` to a
+free port before `docker compose up -d db` — the compose file publishes
+`${DB_PORT:-5432}` on the host and the API reads the same variable.
 
 ## The one rule: share_ui only
 

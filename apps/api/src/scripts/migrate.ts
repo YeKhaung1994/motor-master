@@ -2,52 +2,50 @@ import { readFile, readdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { config } from '../config.js';
-import { getMasterPool, getPool, sql, closePool } from '../db/pool.js';
+import { closePool, getMaintenancePool, getPool } from '../db/pool.js';
 import { logger } from '../logger.js';
 
 const migrationsDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'db', 'migrations');
 
-/** Database and table names come from disk, never from a request. */
+/** Database names come from configuration, never from a request. */
 async function ensureDatabase(): Promise<void> {
-  const master = await getMasterPool();
+  const maintenance = getMaintenancePool();
   try {
-    const existing = await master
-      .request()
-      .input('name', sql.NVarChar(128), config.db.database)
-      .query('SELECT 1 FROM sys.databases WHERE name = @name');
-
-    if (existing.recordset.length === 0) {
-      // CREATE DATABASE cannot be parameterised; the name is validated first.
+    const existing = await maintenance.query('SELECT 1 FROM pg_database WHERE datname = $1', [
+      config.db.database,
+    ]);
+    if (existing.rowCount === 0) {
       if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(config.db.database)) {
         throw new Error(`Unsafe database name: ${config.db.database}`);
       }
-      await master.request().batch(`CREATE DATABASE [${config.db.database}]`);
+      // CREATE DATABASE cannot be parameterised; the name is validated first.
+      await maintenance.query(`CREATE DATABASE "${config.db.database}"`);
       logger.info({ database: config.db.database }, 'created database');
     }
+  } catch (error) {
+    // A managed provider hands you a database and forbids creating one. That is
+    // fine — the migrations below will tell us soon enough if it is missing.
+    logger.warn({ error }, 'could not verify the database exists; continuing');
   } finally {
-    await master.close();
+    await maintenance.end();
   }
-}
-
-async function ensureMigrationsTable(pool: sql.ConnectionPool): Promise<void> {
-  await pool.request().batch(`
-    IF OBJECT_ID('dbo.SchemaMigrations', 'U') IS NULL
-      CREATE TABLE SchemaMigrations (
-        Name      NVARCHAR(200) PRIMARY KEY,
-        AppliedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
-      );
-  `);
 }
 
 async function run(): Promise<void> {
   await ensureDatabase();
-  const pool = await getPool();
-  await ensureMigrationsTable(pool);
+  const pool = getPool();
 
-  const applied = await pool.request().query<{ Name: string }>('SELECT Name FROM SchemaMigrations');
-  const done = new Set(applied.recordset.map((row) => row.Name));
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS schema_migrations (
+      name       varchar(200) PRIMARY KEY,
+      applied_at timestamptz NOT NULL DEFAULT now()
+    )
+  `);
 
-  const files = (await readdir(migrationsDir)).filter((file) => file.endsWith('.sql')).sort();
+  const applied = await pool.query<{ name: string }>('SELECT name FROM schema_migrations');
+  const done = new Set(applied.rows.map((row) => row.name));
+
+  const files = (await readdir(migrationsDir)).filter((f) => f.endsWith('.sql')).sort();
 
   for (const file of files) {
     if (done.has(file)) {
@@ -56,28 +54,20 @@ async function run(): Promise<void> {
     }
 
     const script = await readFile(join(migrationsDir, file), 'utf8');
-    const transaction = new sql.Transaction(pool);
-    await transaction.begin();
+    const client = await pool.connect();
     try {
-      // GO is a client batch separator, not T-SQL — split on it ourselves.
-      const batches = script
-        .split(/^\s*GO\s*$/gim)
-        .map((batch) => batch.trim())
-        .filter(Boolean);
-
-      for (const batch of batches) {
-        await new sql.Request(transaction).batch(batch);
-      }
-
-      await new sql.Request(transaction)
-        .input('name', sql.NVarChar(200), file)
-        .query('INSERT INTO SchemaMigrations (Name) VALUES (@name)');
-
-      await transaction.commit();
+      // Postgres runs DDL transactionally, so a failed migration leaves nothing
+      // half-applied.
+      await client.query('BEGIN');
+      await client.query(script);
+      await client.query('INSERT INTO schema_migrations (name) VALUES ($1)', [file]);
+      await client.query('COMMIT');
       logger.info({ migration: file }, 'applied');
     } catch (error) {
-      await transaction.rollback();
+      await client.query('ROLLBACK');
       throw error;
+    } finally {
+      client.release();
     }
   }
 

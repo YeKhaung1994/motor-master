@@ -2,7 +2,8 @@ import { readFile, readdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import { getPool, sql, closePool } from '../db/pool.js';
+import type { Pool } from 'pg';
+import { closePool, getPool } from '../db/pool.js';
 import { parsePriceText, slugify } from '../db/priceText.js';
 import { logger } from '../logger.js';
 
@@ -119,68 +120,52 @@ const BRAND_COUNTRY: Record<string, string> = {
 /** `msrp_thb` names its own market and currency; other prices are keyed by market. */
 const PRICE_FIELD_MARKET = 'TH';
 
-async function clearCatalogue(pool: sql.ConnectionPool): Promise<void> {
-  // BikeMarkets, BikePrices and BikeSpecs cascade from Bikes.
-  await pool.request().batch(`
-    DELETE FROM Bikes;
-    DELETE FROM Brands;
-    DBCC CHECKIDENT ('Bikes', RESEED, 0) WITH NO_INFOMSGS;
-    DBCC CHECKIDENT ('Brands', RESEED, 0) WITH NO_INFOMSGS;
-  `);
+async function clearCatalogue(pool: Pool): Promise<void> {
+  // bike_specs, bike_markets and bike_prices cascade from bikes.
+  await pool.query('TRUNCATE bikes, brands RESTART IDENTITY CASCADE');
   logger.warn('cleared every brand and bike before importing');
 }
 
-async function seedClasses(pool: sql.ConnectionPool): Promise<void> {
+async function seedClasses(pool: Pool): Promise<void> {
   const script = await readFile(join(dbDir, 'seed.sql'), 'utf8');
-  await pool.request().batch(script);
+  await pool.query(script);
 }
 
-async function upsertBrand(pool: sql.ConnectionPool, catalogue: Catalogue): Promise<number> {
+async function upsertBrand(pool: Pool, catalogue: Catalogue): Promise<number> {
   const name = catalogue.brand;
   const slug = slugify(name);
   const countryCode =
     catalogue.brand_country_code?.toUpperCase() ?? BRAND_COUNTRY[name.toLowerCase()] ?? null;
 
-  const result = await pool
-    .request()
-    .input('name', sql.NVarChar(80), name)
-    .input('countryCode', sql.Char(2), countryCode)
-    .input('slug', sql.NVarChar(80), slug)
-    .query<{ BrandId: number }>(`
-      MERGE Brands AS target
-      USING (SELECT @slug AS Slug) AS source
-        ON target.Slug = source.Slug
-      WHEN MATCHED THEN
-        UPDATE SET Name = @name, CountryCode = @countryCode
-      WHEN NOT MATCHED THEN
-        INSERT (Name, CountryCode, Slug) VALUES (@name, @countryCode, @slug);
+  const result = await pool.query<{ brand_id: number }>(
+    `INSERT INTO brands (name, country_code, slug)
+     VALUES ($1, $2, $3)
+     ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, country_code = EXCLUDED.country_code
+     RETURNING brand_id`,
+    [name, countryCode, slug],
+  );
 
-      SELECT BrandId FROM Brands WHERE Slug = @slug;
-    `);
-
-  const row = result.recordset[0];
-  if (!row) throw new Error(`Could not resolve BrandId for ${slug}`);
-  return row.BrandId;
+  const row = result.rows[0];
+  if (!row) throw new Error(`Could not resolve brand_id for ${slug}`);
+  return row.brand_id;
 }
 
-async function resolveClassId(pool: sql.ConnectionPool, name: string): Promise<number> {
-  const result = await pool
-    .request()
-    .input('name', sql.NVarChar(40), name)
-    .query<{ ClassId: number }>(`
-      IF NOT EXISTS (SELECT 1 FROM BikeClasses WHERE Name = @name)
-        INSERT INTO BikeClasses (Name) VALUES (@name);
-
-      SELECT ClassId FROM BikeClasses WHERE Name = @name;
-    `);
-
-  const row = result.recordset[0];
-  if (!row) throw new Error(`Could not resolve ClassId for ${name}`);
-  return row.ClassId;
+async function resolveClassId(pool: Pool, name: string): Promise<number> {
+  // DO NOTHING skips the RETURNING row, so read it back either way.
+  await pool.query('INSERT INTO bike_classes (name) VALUES ($1) ON CONFLICT (name) DO NOTHING', [
+    name,
+  ]);
+  const result = await pool.query<{ class_id: number }>(
+    'SELECT class_id FROM bike_classes WHERE name = $1',
+    [name],
+  );
+  const row = result.rows[0];
+  if (!row) throw new Error(`Could not resolve class_id for ${name}`);
+  return row.class_id;
 }
 
 async function upsertBike(
-  pool: sql.ConnectionPool,
+  pool: Pool,
   model: Model,
   brandName: string,
   brandId: number,
@@ -190,175 +175,112 @@ async function upsertBike(
   const slug = slugify(brandName, model.model);
   const price = parsePriceText(model.msrp_thb);
 
-  const result = await pool
-    .request()
-    .input('brandId', sql.Int, brandId)
-    .input('classId', sql.Int, classId)
-    .input('name', sql.NVarChar(120), model.model)
-    .input('slug', sql.NVarChar(140), slug)
-    .input('modelYear', sql.SmallInt, model.model_year)
-    .input('priceAmount', sql.Decimal(12, 2), price?.amount ?? null)
-    .input('priceCurrency', sql.Char(3), price?.currency ?? null)
-    .input('priceMarket', sql.NVarChar(8), price ? PRICE_FIELD_MARKET : null)
-    .input('priceText', sql.NVarChar(200), price?.text ?? null)
-    .input('priceApprox', sql.Bit, price?.isApproximate ?? false)
-    .input('imageUrl', sql.NVarChar(400), model.image ?? model.image_url ?? null)
-    .input('variants', sql.NVarChar(300), model.variants?.join(', ') ?? null)
-    .input('notes', sql.NVarChar(400), model.notes ?? null)
-    .input('flags', sql.NVarChar(400), model.flags ?? null)
-    .input('sourceUrl', sql.NVarChar(400), model.source ?? null)
-    .input('priceSourceUrl', sql.NVarChar(400), model.price_source ?? null)
-    .input('generatedAt', sql.Date, generatedAt)
-    .query<{ BikeId: number }>(`
-      MERGE Bikes AS target
-      USING (SELECT @slug AS Slug) AS source
-        ON target.Slug = source.Slug
-      WHEN MATCHED THEN
-        UPDATE SET BrandId = @brandId, ClassId = @classId, Name = @name,
-                   ModelYear = @modelYear, PriceAmount = @priceAmount,
-                   PriceCurrency = @priceCurrency, PriceMarket = @priceMarket,
-                   PriceText = @priceText, PriceIsApproximate = @priceApprox,
-                   ImageUrl = @imageUrl, Variants = @variants, Notes = @notes,
-                   Flags = @flags, SourceUrl = @sourceUrl, PriceSourceUrl = @priceSourceUrl,
-                   DataGeneratedAt = @generatedAt
-      WHEN NOT MATCHED THEN
-        INSERT (BrandId, ClassId, Name, Slug, ModelYear, PriceAmount, PriceCurrency,
-                PriceMarket, PriceText, PriceIsApproximate, ImageUrl, Variants,
-                Notes, Flags, SourceUrl, PriceSourceUrl, DataGeneratedAt)
-        VALUES (@brandId, @classId, @name, @slug, @modelYear, @priceAmount, @priceCurrency,
-                @priceMarket, @priceText, @priceApprox, @imageUrl, @variants,
-                @notes, @flags, @sourceUrl, @priceSourceUrl, @generatedAt);
+  const result = await pool.query<{ bike_id: number }>(
+    `INSERT INTO bikes (brand_id, class_id, name, slug, model_year, price_amount,
+                        price_currency, price_market, price_text, price_is_approximate,
+                        image_url, variants, notes, flags, source_url, price_source_url,
+                        data_generated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+     ON CONFLICT (slug) DO UPDATE SET
+       brand_id = EXCLUDED.brand_id, class_id = EXCLUDED.class_id, name = EXCLUDED.name,
+       model_year = EXCLUDED.model_year, price_amount = EXCLUDED.price_amount,
+       price_currency = EXCLUDED.price_currency, price_market = EXCLUDED.price_market,
+       price_text = EXCLUDED.price_text, price_is_approximate = EXCLUDED.price_is_approximate,
+       image_url = EXCLUDED.image_url, variants = EXCLUDED.variants, notes = EXCLUDED.notes,
+       flags = EXCLUDED.flags, source_url = EXCLUDED.source_url,
+       price_source_url = EXCLUDED.price_source_url,
+       data_generated_at = EXCLUDED.data_generated_at
+     RETURNING bike_id`,
+    [
+      brandId, classId, model.model, slug, model.model_year,
+      price?.amount ?? null, price?.currency ?? null, price ? PRICE_FIELD_MARKET : null,
+      price?.text ?? null, price?.isApproximate ?? false,
+      model.image ?? model.image_url ?? null, model.variants?.join(', ') ?? null,
+      model.notes ?? null, model.flags ?? null, model.source ?? null,
+      model.price_source ?? null, generatedAt,
+    ],
+  );
 
-      SELECT BikeId FROM Bikes WHERE Slug = @slug;
-    `);
-
-  const row = result.recordset[0];
-  if (!row) throw new Error(`Could not resolve BikeId for ${slug}`);
-  return row.BikeId;
+  const row = result.rows[0];
+  if (!row) throw new Error(`Could not resolve bike_id for ${slug}`);
+  return row.bike_id;
 }
 
-async function upsertSpecs(pool: sql.ConnectionPool, bikeId: number, model: Model): Promise<void> {
-  await pool
-    .request()
-    .input('bikeId', sql.Int, bikeId)
-    .input('engine', sql.NVarChar(200), model.engine ?? null)
-    .input('displacementCc', sql.Decimal(7, 1), model.displacement ?? null)
-    .input('boreStrokeMm', sql.NVarChar(40), model.bore_stroke_mm ?? null)
-    .input('compression', sql.NVarChar(20), model.compression ?? null)
-    .input('powerHp', sql.Decimal(6, 1), model.power_hp ?? null)
-    .input('powerKw', sql.Decimal(6, 1), model.power_kw ?? null)
-    .input('powerRpm', sql.Int, model.power_rpm ?? null)
-    .input('torqueNm', sql.Decimal(6, 1), model.torque_nm ?? null)
-    .input('torqueRpm', sql.Int, model.torque_rpm ?? null)
-    .input('fuelSystem', sql.NVarChar(120), model.fuel_system ?? null)
-    .input('transmission', sql.NVarChar(120), model.transmission ?? null)
-    .input('clutch', sql.NVarChar(120), model.clutch ?? null)
-    .input('finalDrive', sql.NVarChar(40), model.final_drive ?? null)
-    .input('frame', sql.NVarChar(120), model.frame ?? null)
-    .input('frontSuspension', sql.NVarChar(200), model.susp_f ?? null)
-    .input('rearSuspension', sql.NVarChar(200), model.susp_r ?? null)
-    .input('brakeFront', sql.NVarChar(200), model.brake_f ?? null)
-    .input('brakeRear', sql.NVarChar(200), model.brake_r ?? null)
-    .input('tyreFront', sql.NVarChar(60), model.tyre_f ?? null)
-    .input('tyreRear', sql.NVarChar(60), model.tyre_r ?? null)
-    .input('wheelbaseMm', sql.Int, model.wheelbase_mm ?? null)
-    .input('seatHeightMm', sql.Int, model.seat_height_mm ?? null)
-    .input('groundClearanceMm', sql.Int, model.ground_clearance_mm ?? null)
-    .input('kerbWeightKg', sql.Decimal(6, 1), model.weight_kg ?? null)
-    .input('fuelTankL', sql.Decimal(5, 1), model.fuel_l ?? null)
-    .input('fuelEconomy', sql.NVarChar(40), model.wmtc ?? null)
-    .input('batteryKwh', sql.Decimal(6, 2), model.battery_kwh ?? null)
-    .input('rangeKm', sql.Int, model.range_km ?? null)
-    .input('charging', sql.NVarChar(200), model.charging ?? null)
-    .input('riderAids', sql.NVarChar(200), model.rider_aids ?? null)
-    .input('display', sql.NVarChar(80), model.display ?? null)
-    .query(`
-      MERGE BikeSpecs AS target
-      USING (SELECT @bikeId AS BikeId) AS source
-        ON target.BikeId = source.BikeId
-      WHEN MATCHED THEN
-        UPDATE SET Engine = @engine, DisplacementCc = @displacementCc,
-                   BoreStrokeMm = @boreStrokeMm, Compression = @compression,
-                   PowerHp = @powerHp, PowerKw = @powerKw, PowerRpm = @powerRpm,
-                   TorqueNm = @torqueNm, TorqueRpm = @torqueRpm,
-                   FuelSystem = @fuelSystem, Transmission = @transmission,
-                   Clutch = @clutch, FinalDrive = @finalDrive, Frame = @frame,
-                   FrontSuspension = @frontSuspension, RearSuspension = @rearSuspension,
-                   BrakeFront = @brakeFront, BrakeRear = @brakeRear,
-                   TyreFront = @tyreFront, TyreRear = @tyreRear,
-                   WheelbaseMm = @wheelbaseMm, SeatHeightMm = @seatHeightMm,
-                   GroundClearanceMm = @groundClearanceMm, KerbWeightKg = @kerbWeightKg,
-                   FuelTankL = @fuelTankL, FuelEconomy = @fuelEconomy,
-                   BatteryKwh = @batteryKwh, RangeKm = @rangeKm, Charging = @charging,
-                   RiderAids = @riderAids, Display = @display
-      WHEN NOT MATCHED THEN
-        INSERT (BikeId, Engine, DisplacementCc, BoreStrokeMm, Compression, PowerHp,
-                PowerKw, PowerRpm, TorqueNm, TorqueRpm, FuelSystem, Transmission,
-                Clutch, FinalDrive, Frame, FrontSuspension, RearSuspension,
-                BrakeFront, BrakeRear, TyreFront, TyreRear, WheelbaseMm,
-                SeatHeightMm, GroundClearanceMm, KerbWeightKg, FuelTankL,
-                FuelEconomy, BatteryKwh, RangeKm, Charging, RiderAids, Display)
-        VALUES (@bikeId, @engine, @displacementCc, @boreStrokeMm, @compression, @powerHp,
-                @powerKw, @powerRpm, @torqueNm, @torqueRpm, @fuelSystem, @transmission,
-                @clutch, @finalDrive, @frame, @frontSuspension, @rearSuspension,
-                @brakeFront, @brakeRear, @tyreFront, @tyreRear, @wheelbaseMm,
-                @seatHeightMm, @groundClearanceMm, @kerbWeightKg, @fuelTankL,
-                @fuelEconomy, @batteryKwh, @rangeKm, @charging, @riderAids, @display);
-    `);
+async function upsertSpecs(pool: Pool, bikeId: number, model: Model): Promise<void> {
+  await pool.query(
+    `INSERT INTO bike_specs (bike_id, engine, displacement_cc, bore_stroke_mm, compression,
+        power_hp, power_kw, power_rpm, torque_nm, torque_rpm, fuel_system, transmission,
+        clutch, final_drive, frame, front_suspension, rear_suspension, brake_front,
+        brake_rear, tyre_front, tyre_rear, wheelbase_mm, seat_height_mm,
+        ground_clearance_mm, kerb_weight_kg, fuel_tank_l, fuel_economy, battery_kwh,
+        range_km, charging, rider_aids, display)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
+             $21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32)
+     ON CONFLICT (bike_id) DO UPDATE SET
+       engine = EXCLUDED.engine, displacement_cc = EXCLUDED.displacement_cc,
+       bore_stroke_mm = EXCLUDED.bore_stroke_mm, compression = EXCLUDED.compression,
+       power_hp = EXCLUDED.power_hp, power_kw = EXCLUDED.power_kw,
+       power_rpm = EXCLUDED.power_rpm, torque_nm = EXCLUDED.torque_nm,
+       torque_rpm = EXCLUDED.torque_rpm, fuel_system = EXCLUDED.fuel_system,
+       transmission = EXCLUDED.transmission, clutch = EXCLUDED.clutch,
+       final_drive = EXCLUDED.final_drive, frame = EXCLUDED.frame,
+       front_suspension = EXCLUDED.front_suspension, rear_suspension = EXCLUDED.rear_suspension,
+       brake_front = EXCLUDED.brake_front, brake_rear = EXCLUDED.brake_rear,
+       tyre_front = EXCLUDED.tyre_front, tyre_rear = EXCLUDED.tyre_rear,
+       wheelbase_mm = EXCLUDED.wheelbase_mm, seat_height_mm = EXCLUDED.seat_height_mm,
+       ground_clearance_mm = EXCLUDED.ground_clearance_mm,
+       kerb_weight_kg = EXCLUDED.kerb_weight_kg, fuel_tank_l = EXCLUDED.fuel_tank_l,
+       fuel_economy = EXCLUDED.fuel_economy, battery_kwh = EXCLUDED.battery_kwh,
+       range_km = EXCLUDED.range_km, charging = EXCLUDED.charging,
+       rider_aids = EXCLUDED.rider_aids, display = EXCLUDED.display`,
+    [
+      bikeId, model.engine ?? null, model.displacement ?? null, model.bore_stroke_mm ?? null,
+      model.compression ?? null, model.power_hp ?? null, model.power_kw ?? null,
+      model.power_rpm ?? null, model.torque_nm ?? null, model.torque_rpm ?? null,
+      model.fuel_system ?? null, model.transmission ?? null, model.clutch ?? null,
+      model.final_drive ?? null, model.frame ?? null, model.susp_f ?? null,
+      model.susp_r ?? null, model.brake_f ?? null, model.brake_r ?? null,
+      model.tyre_f ?? null, model.tyre_r ?? null, model.wheelbase_mm ?? null,
+      model.seat_height_mm ?? null, model.ground_clearance_mm ?? null,
+      model.weight_kg ?? null, model.fuel_l ?? null, model.wmtc ?? null,
+      model.battery_kwh ?? null, model.range_km ?? null, model.charging ?? null,
+      model.rider_aids ?? null, model.display ?? null,
+    ],
+  );
 }
 
-async function replaceMarkets(
-  pool: sql.ConnectionPool,
-  bikeId: number,
-  markets: string[],
-): Promise<void> {
-  await pool
-    .request()
-    .input('bikeId', sql.Int, bikeId)
-    .query('DELETE FROM BikeMarkets WHERE BikeId = @bikeId');
-
-  for (const market of new Set(markets)) {
-    await pool
-      .request()
-      .input('bikeId', sql.Int, bikeId)
-      .input('marketCode', sql.NVarChar(8), market.toUpperCase())
-      .query('INSERT INTO BikeMarkets (BikeId, MarketCode) VALUES (@bikeId, @marketCode)');
-  }
+async function replaceMarkets(pool: Pool, bikeId: number, markets: string[]): Promise<void> {
+  await pool.query('DELETE FROM bike_markets WHERE bike_id = $1', [bikeId]);
+  const codes = [...new Set(markets.map((m) => m.toUpperCase()))];
+  if (codes.length === 0) return;
+  await pool.query(
+    'INSERT INTO bike_markets (bike_id, market_code) SELECT $1, unnest($2::text[])',
+    [bikeId, codes],
+  );
 }
 
 async function replaceOtherPrices(
-  pool: sql.ConnectionPool,
+  pool: Pool,
   bikeId: number,
   prices: Record<string, string> | null | undefined,
 ): Promise<void> {
-  await pool
-    .request()
-    .input('bikeId', sql.Int, bikeId)
-    .query('DELETE FROM BikePrices WHERE BikeId = @bikeId');
-
+  await pool.query('DELETE FROM bike_prices WHERE bike_id = $1', [bikeId]);
   if (!prices) return;
 
   for (const [market, raw] of Object.entries(prices)) {
     const parsed = parsePriceText(raw);
     if (!parsed) continue;
-
-    await pool
-      .request()
-      .input('bikeId', sql.Int, bikeId)
-      .input('marketCode', sql.NVarChar(8), market.toUpperCase())
-      .input('currency', sql.Char(3), parsed.currency)
-      .input('amount', sql.Decimal(12, 2), parsed.amount)
-      .input('rawText', sql.NVarChar(200), parsed.text)
-      .query(`
-        INSERT INTO BikePrices (BikeId, MarketCode, Currency, Amount, RawText)
-        VALUES (@bikeId, @marketCode, @currency, @amount, @rawText)
-      `);
+    await pool.query(
+      `INSERT INTO bike_prices (bike_id, market_code, currency, amount, raw_text)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [bikeId, market.toUpperCase(), parsed.currency, parsed.amount, parsed.text],
+    );
   }
 }
 
 async function run(): Promise<void> {
   const fresh = process.argv.includes('--fresh');
-  const pool = await getPool();
+  const pool = getPool();
 
   if (fresh) await clearCatalogue(pool);
   await seedClasses(pool);
@@ -386,12 +308,7 @@ async function run(): Promise<void> {
     for (const model of catalogue.models) {
       const classId = await resolveClassId(pool, model.category);
       const bikeId = await upsertBike(
-        pool,
-        model,
-        catalogue.brand,
-        brandId,
-        classId,
-        catalogue.generated ?? null,
+        pool, model, catalogue.brand, brandId, classId, catalogue.generated ?? null,
       );
       await upsertSpecs(pool, bikeId, model);
       await replaceMarkets(pool, bikeId, model.markets ?? []);

@@ -19,12 +19,11 @@ and the fixes for the problems you are most likely to hit.
 |---|---|---|
 | Node | 20+ | developed on 22.22 |
 | npm | 10+ | workspaces are used, so install from the repo root only |
-| Docker | any current | runs SQL Server 2022 |
-| sqlcmd | optional | only for querying the database by hand |
+| Docker | any current | runs PostgreSQL 16 |
+| psql | optional | only for querying the database by hand |
 
-On Apple Silicon the SQL Server image is `linux/amd64` and runs under emulation.
-It works, but it is slower to start and uses more memory than a native image —
-see [Troubleshooting](#troubleshooting).
+Postgres runs natively on Apple Silicon, so there is no emulation and no memory
+tuning to think about.
 
 ## First-time setup
 
@@ -32,7 +31,7 @@ see [Troubleshooting](#troubleshooting).
 npm install                  # from the repo root — it installs all three workspaces
 cp .env.example .env
 
-docker compose up -d db      # SQL Server 2022; wait for "healthy"
+docker compose up -d db      # PostgreSQL 16; wait for "healthy"
 npm run db:migrate           # creates the motor_master database, applies migrations
 npm run db:seed              # imports apps/api/src/db/seed/*.json
 ```
@@ -71,13 +70,12 @@ npm run storybook            # the design system, on :6006
 |---|---|---|---|
 | 5173 | web (Vite dev server) | `npm run dev` | the app — open this one |
 | 4000 | API (Express) | `npm run dev` | `/api/v1`; also reachable through the web proxy |
-| 14330 | SQL Server (host side) | `docker compose up -d db` | maps to 1433 inside the container |
+| 5432 | PostgreSQL (host side) | `docker compose up -d db` | maps to 5432 inside the container |
 | 6006 | Storybook | `npm run storybook` | not started by `npm run dev` |
 
 `DB_PORT` in `.env` controls the host database port: compose publishes
-`${DB_PORT:-1433}:1433`, and the API connects to the same value. This checkout uses
-**14330** because port 1433 was already taken by another SQL Server container on
-this machine. A fresh clone with the shipped `.env.example` uses 1433.
+`${DB_PORT:-5432}:5432`, and the API connects to the same value. Change it if
+another Postgres already owns 5432 on your machine.
 
 Change the port in `.env`, then recreate the container so the new mapping applies:
 
@@ -88,7 +86,7 @@ docker compose up -d --force-recreate db
 See what is listening right now:
 
 ```bash
-lsof -nP -iTCP -sTCP:LISTEN | grep -E ':(4000|5173|6006|1433|14330) '
+lsof -nP -iTCP -sTCP:LISTEN | grep -E ':(4000|5173|6006|5432) '
 docker compose ps
 curl -s http://localhost:4000/api/v1/health     # {"ok":true,"db":"up"}
 ```
@@ -109,37 +107,30 @@ setup. Do not reuse it anywhere real.
 | Field | Value |
 |---|---|
 | Host | `localhost` |
-| Port | `14330` (host) → `1433` inside the container |
-| User | `sa` |
-| Password | `MotorMaster!2024` |
+| Port | `5432` |
+| User | `motor_master` |
+| Password | `motor_master_dev` |
 | Database | `motor_master` |
-| Encrypt | on |
-| Trust server certificate | on — the container uses a self-signed cert |
+| TLS | off locally (`DB_SSL=false`); required by managed providers |
 
-**From your machine:**
-
-```bash
-sqlcmd -S localhost,14330 -U sa -P 'MotorMaster!2024' -C -d motor_master
-```
-
-`-C` (trust the server certificate) is required. Without it sqlcmd fails on the
-self-signed certificate chain.
-
-**From inside the container** — the port is 1433 there, not 14330:
+**From inside the container** (no local client needed):
 
 ```bash
-docker exec -it motor-master-db /opt/mssql-tools18/bin/sqlcmd \
-  -S localhost -U sa -P 'MotorMaster!2024' -C -d motor_master
+docker exec -it motor-master-db psql -U motor_master -d motor_master
 ```
 
-**GUI clients** (Azure Data Studio, DBeaver, TablePlus): server `localhost,14330`,
-SQL Login authentication, and tick **Trust server certificate**.
+**From your machine**, with `psql` installed:
 
-Changing the password means changing it in three places that must agree:
-`MSSQL_SA_PASSWORD` in `docker-compose.yml`, `DB_PASSWORD` in `.env`, and
-`.env.example` for the next person. Note that SA's password is set when the data
-volume is first initialised — editing compose afterwards has no effect on an
-existing volume. To genuinely reset it you have to drop the data:
+```bash
+psql "postgresql://motor_master:motor_master_dev@localhost:5432/motor_master"
+```
+
+**GUI clients** (TablePlus, DBeaver, pgAdmin): host `localhost`, port `5432`,
+user and database `motor_master`, no TLS.
+
+Changing the password means changing `POSTGRES_PASSWORD` in `docker-compose.yml`
+and `DB_PASSWORD` in `.env` together. Postgres sets the password when the data
+volume is first initialised, so an existing volume keeps the old one:
 
 ```bash
 docker compose down -v && docker compose up -d db
@@ -153,13 +144,12 @@ One `.env` at the repo root configures everything; the API also reads an optiona
 
 | Variable | Default | Used for |
 |---|---|---|
-| `DB_SERVER` | `localhost` | SQL Server host |
-| `DB_PORT` | `1433` | host port — also what compose publishes |
+| `DB_HOST` | `localhost` | Postgres host |
+| `DB_PORT` | `5432` | host port — also what compose publishes |
 | `DB_NAME` | `motor_master` | created by `db:migrate` if missing |
-| `DB_USER` | `sa` | required; the API refuses to start without it |
+| `DB_USER` | `motor_master` | required; the API refuses to start without it |
 | `DB_PASSWORD` | — | required |
-| `DB_ENCRYPT` | `true` | TLS to SQL Server |
-| `DB_TRUST_CERT` | `true` | accept the container's self-signed cert |
+| `DB_SSL` | `false` | TLS; `true` for managed Postgres |
 | `PORT` | `4000` | API port |
 | `WEB_ORIGIN` | `http://localhost:5173` | the CORS allow-list entry |
 | `LOG_LEVEL` | `info` | pino level |
@@ -293,23 +283,22 @@ against what is actually on disk after any bulk image run.
 
 ## Troubleshooting
 
-**`Bind for 0.0.0.0:1433 failed: port is already allocated`**
-Another SQL Server owns the port. Either stop it (`docker stop <name>`) or set a
+**`Bind for 0.0.0.0:5432 failed: port is already allocated`**
+Another Postgres owns the port. Either stop it (`docker stop <name>`) or set a
 free `DB_PORT` in `.env` and `docker compose up -d --force-recreate db`.
 
-**Container exits with code 137**
-The kernel killed it — almost always memory. Two SQL Server instances at once will
-do it on a default Docker VM. Stop the one you are not using, or raise the memory
-limit in Docker Desktop → Settings → Resources.
+**Container exits unexpectedly**
+Check `docker compose logs db`. Postgres is far lighter than the SQL Server image
+this replaced, which was routinely killed for memory on a default Docker VM.
 
 **`db:migrate` fails to connect**
 The container reports healthy well after it reports running. Check
 `docker compose ps` for `healthy`, and confirm `DB_PORT` in `.env` matches the host
 port in `docker compose ps`.
 
-**Certificate chain errors from sqlcmd or a GUI client**
-Pass `-C`, or tick "Trust server certificate". The container's certificate is
-self-signed.
+**TLS errors against a managed provider**
+Set `DB_SSL=true`. Neon, Supabase and RDS all require it; a local container does
+not offer it at all.
 
 **`Missing required environment variable DB_USER`**
 There is no `.env`. Run `cp .env.example .env`.

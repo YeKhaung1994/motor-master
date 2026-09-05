@@ -1,55 +1,52 @@
-import sql from 'mssql';
+import pg from 'pg';
 import { config } from '../config.js';
 import { logger } from '../logger.js';
 
-const poolConfig: sql.config = {
-  server: config.db.server,
+const { Pool } = pg;
+
+/**
+ * Postgres returns NUMERIC as a string to avoid silent precision loss. Every
+ * numeric column here is a spec figure or a price that comfortably fits a
+ * double, and the DTOs promise numbers, so parse them at the driver.
+ */
+pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value) => Number(value));
+// DATE should be a plain calendar day, not a timestamp in the server's zone.
+pg.types.setTypeParser(pg.types.builtins.DATE, (value) => value);
+
+const poolConfig: pg.PoolConfig = {
+  host: config.db.host,
   port: config.db.port,
   database: config.db.database,
   user: config.db.user,
   password: config.db.password,
-  options: {
-    encrypt: config.db.encrypt,
-    trustServerCertificate: config.db.trustServerCertificate,
-  },
-  pool: { max: 10, min: 0, idleTimeoutMillis: 30_000 },
-  requestTimeout: 15_000,
+  ssl: config.db.ssl,
+  max: 10,
+  idleTimeoutMillis: 30_000,
+  connectionTimeoutMillis: 15_000,
 };
 
-let poolPromise: Promise<sql.ConnectionPool> | null = null;
+let pool: pg.Pool | null = null;
 
-/** One pool per process — mssql pools are safe to share and expensive to make. */
-export function getPool(): Promise<sql.ConnectionPool> {
-  if (!poolPromise) {
-    poolPromise = new sql.ConnectionPool(poolConfig)
-      .connect()
-      .then((pool) => {
-        logger.info(
-          { server: config.db.server, database: config.db.database },
-          'connected to SQL Server',
-        );
-        pool.on('error', (error) => logger.error({ error }, 'connection pool error'));
-        return pool;
-      })
-      .catch((error) => {
-        // Let the next call retry rather than caching a rejected promise forever.
-        poolPromise = null;
-        throw error;
-      });
+/** One pool per process — pools are safe to share and expensive to make. */
+export function getPool(): pg.Pool {
+  if (!pool) {
+    pool = new Pool(poolConfig);
+    pool.on('error', (error) => logger.error({ error }, 'connection pool error'));
+    logger.info({ host: config.db.host, database: config.db.database }, 'postgres pool ready');
   }
-  return poolPromise;
+  return pool;
 }
 
 export async function closePool(): Promise<void> {
-  if (!poolPromise) return;
-  const pool = await poolPromise;
-  poolPromise = null;
-  await pool.close();
+  if (!pool) return;
+  const current = pool;
+  pool = null;
+  await current.end();
 }
 
-/** Connects to `master` instead of the app database — used by the migrator. */
-export async function getMasterPool(): Promise<sql.ConnectionPool> {
-  return new sql.ConnectionPool({ ...poolConfig, database: 'master' }).connect();
+/** Connects to the maintenance database instead — used by the migrator. */
+export function getMaintenancePool(): pg.Pool {
+  return new Pool({ ...poolConfig, database: 'postgres' });
 }
 
-export { sql };
+export type { Pool, QueryResult } from 'pg';

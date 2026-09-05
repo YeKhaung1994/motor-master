@@ -13,13 +13,11 @@ services:
   # ---------------------------------------------------------------- API
   - type: web
     name: motor-master-api
-    runtime: node
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .           # npm workspaces resolve from the repository root
     plan: free
     region: singapore          # nearest to the Supabase project in ap-northeast-1
-    # npm workspaces resolve from the repository root, so build from there —
-    # building inside apps/api alone will not install what it needs.
-    buildCommand: npm ci && npm run build --workspace @motor-master/api
-    startCommand: node apps/api/dist/server.js
     healthCheckPath: /api/v1/health
     envVars:
       - key: NODE_VERSION

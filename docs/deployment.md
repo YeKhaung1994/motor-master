@@ -135,7 +135,25 @@ The published bundle is about 153 MB, nearly all of it the 166 model photographs
 That is within Render's static hosting, but it makes every deploy slow. WebP at
 around 1200 px would bring it under 20 MB.
 
-Set by hand, the settings are:
+### The API ships as a container
+
+`render.yaml` sets the API to Render's **Docker** runtime, building the
+`Dockerfile` at the repository root. Creating the service by hand: choose
+**Docker** as the language, leave the Dockerfile path as `./Dockerfile` and the
+context as `.`.
+
+The image is 58 MB and carries only the API — no web bundle, no photographs —
+and runs as the non-root `node` user. It has been run under Render's conditions
+and verified: it binds the injected `PORT`, serves all 227 models from Supabase,
+returns `Access-Control-Allow-Origin` only for `WEB_ORIGIN`, and shuts down
+cleanly on `SIGTERM` (exit 0), which is the signal Render sends on every deploy.
+
+The build context is the repository root because npm workspaces resolve from
+there; `.dockerignore` keeps `apps/web/public/bikes` out, so the 153 MB of
+photography never enters the image.
+
+Prefer a plain Node service instead? Swap `runtime: docker` for `runtime: node`
+and use:
 
 ```
 Build command:  npm ci && npm run build --workspace @motor-master/api
@@ -144,8 +162,23 @@ Health check:   /api/v1/health
 Node version:   22
 ```
 
-The build runs from the repository root — npm workspaces resolve from there, and
-building inside `apps/api` alone will not install what it needs.
+Either way the build runs from the repository root — building inside `apps/api`
+alone will not install what it needs.
+
+### Running migrations against the hosted database
+
+Not from the container, and not on start-up: schema changes should be a decision
+rather than a side effect of a deploy. Run them from your machine with
+`DATABASE_URL` pointing at the hosted database:
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+The image does carry the migrations and catalogue files, so a one-off job on the
+host can run them too if you would rather not have production credentials
+locally.
 
 ### Environment variables
 

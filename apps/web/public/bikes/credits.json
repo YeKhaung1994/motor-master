@@ -1,5 +1,17 @@
 [
   {
+    "slug": "bmw-motorrad-c-400-x-c-400-gt",
+    "model": "C 400 X / C 400 GT",
+    "file": "bmw-motorrad-c-400-x-c-400-gt.jpg",
+    "title": "BMW C 400 GT - Javagr\u00fcn metallic.jpg",
+    "artist": "Kaule79",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_C_400_GT_-_Javagr%C3%BCn_metallic.jpg",
+    "width": 3018,
+    "height": 2484
+  },
+  {
     "slug": "bmw-motorrad-ce-04-ce-02",
     "model": "CE 04 / CE 02",
     "file": "bmw-motorrad-ce-04-ce-02.jpg",
@@ -24,6 +36,18 @@
     "height": 2800
   },
   {
+    "slug": "bmw-motorrad-f-900-gs-gs-adventure-f-800-gs",
+    "model": "F 900 GS / GS Adventure / F 800 GS",
+    "file": "bmw-motorrad-f-900-gs-gs-adventure-f-800-gs.jpg",
+    "title": "BMW F900R Motosalon Brno 2026.jpg",
+    "artist": "BRNO1991",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_F900R_Motosalon_Brno_2026.jpg",
+    "width": 1776,
+    "height": 1153
+  },
+  {
     "slug": "bmw-motorrad-f-900-r-f-900-xr",
     "model": "F 900 R / F 900 XR",
     "file": "bmw-motorrad-f-900-r-f-900-xr.jpg",
@@ -36,18 +60,6 @@
     "height": 1153
   },
   {
-    "slug": "bmw-motorrad-g-310-r-g-310-gs",
-    "model": "G 310 R / G 310 GS",
-    "file": "bmw-motorrad-g-310-r-g-310-gs.jpg",
-    "title": "BMW G motorcycle in Athens on June 25, 2023.jpg",
-    "artist": "George E. Koronaios",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:BMW_G_motorcycle_in_Athens_on_June_25,_2023.jpg",
-    "width": 6000,
-    "height": 4000
-  },
-  {
     "slug": "bmw-motorrad-m-1000-rr",
     "model": "M 1000 RR",
     "file": "bmw-motorrad-m-1000-rr.jpg",
@@ -58,6 +70,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:2022-05_BMW_M_Motorrad_S1000RR.jpg",
     "width": 5184,
     "height": 3456
+  },
+  {
+    "slug": "bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s",
+    "model": "R 12 / R 12 nineT / R 12 S / R 12 G/S",
+    "file": "bmw-motorrad-r-12-r-12-ninet-r-12-s-r-12-g-s.jpg",
+    "title": "BMW R1200GS in Munich.jpg",
+    "artist": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_R1200GS_in_Munich.jpg",
+    "width": 3621,
+    "height": 2618
   },
   {
     "slug": "bmw-motorrad-r-1300-gs-gs-adventure",
@@ -82,6 +106,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_R1300RS_2025.jpg",
     "width": 4032,
     "height": 3024
+  },
+  {
+    "slug": "bmw-motorrad-r-18-classic-b-transcontinental-roctane",
+    "model": "R 18 / Classic / B / Transcontinental / Roctane",
+    "file": "bmw-motorrad-r-18-classic-b-transcontinental-roctane.jpg",
+    "title": "BMW R18 First Edition front left DSC 0272.jpg",
+    "artist": "Self-photographed by Bullenw\u00e4chter",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BMW_R18_First_Edition_front_left_DSC_0272.jpg",
+    "width": 4258,
+    "height": 3712
   },
   {
     "slug": "bmw-motorrad-s-1000-r",
@@ -118,6 +154,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:BMW_S_1000_XR,_li._Seite_(2024-05-04_Sp).JPG",
     "width": 4503,
     "height": 3003
+  },
+  {
+    "slug": "ducati-desertx-discovery-rally",
+    "model": "DesertX / Discovery / Rally",
+    "file": "ducati-desertx-discovery-rally.jpg",
+    "title": "Ducati DesertX in Barcelona (edited).jpg",
+    "artist": "Original: Artem Lepesin / Derivative work: Danyele",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ducati_DesertX_in_Barcelona_(edited).jpg",
+    "width": 2775,
+    "height": 2475
   },
   {
     "slug": "ducati-diavel-v4",
@@ -504,28 +552,16 @@
     "height": 4000
   },
   {
-    "slug": "harley-davidson-road-glide",
-    "model": "Road Glide",
-    "file": "harley-davidson-road-glide.jpg",
-    "title": "Harley-Davidson Museum May 2024 20 (1998 FLTRI Road Glide--OHV V-Twin).jpg",
-    "artist": "Michael Barera",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_20_(1998_FLTRI_Road_Glide--OHV_V-Twin).jpg",
-    "width": 6000,
-    "height": 4000
-  },
-  {
     "slug": "harley-davidson-sportster-s",
     "model": "Sportster S",
     "file": "harley-davidson-sportster-s.jpg",
-    "title": "Harley-Davidson Museum May 2024 05 (Challenge and Opportunity--1957 XL Sportster--OHV V-Twin).jpg",
-    "artist": "Michael Barera",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_05_(Challenge_and_Opportunity--1957_XL_Sportster--OHV_V-Twin).jpg",
-    "width": 6000,
-    "height": 4000
+    "title": "Flickr - ronsaunders47 - HARLEY-DAVIDSON XR1200 SPORTSTER. 2010..jpg",
+    "artist": "Ronald Saunders from Warrington, UK",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Flickr_-_ronsaunders47_-_HARLEY-DAVIDSON_XR1200_SPORTSTER._2010..jpg",
+    "width": 2688,
+    "height": 1796
   },
   {
     "slug": "harley-davidson-street-glide",
@@ -1236,18 +1272,6 @@
     "height": 3168
   },
   {
-    "slug": "kawasaki-z400",
-    "model": "Z400",
-    "file": "kawasaki-z400.jpg",
-    "title": "Kawasaki Z 400 (1978).jpg",
-    "artist": "Palauenc05",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Z_400_(1978).jpg",
-    "width": 3731,
-    "height": 2391
-  },
-  {
     "slug": "kawasaki-z500-se",
     "model": "Z500 SE",
     "file": "kawasaki-z500-se.jpg",
@@ -1320,6 +1344,18 @@
     "height": 2736
   },
   {
+    "slug": "ktm-250-duke-200-duke-125-duke",
+    "model": "250 Duke / 200 Duke / 125 Duke",
+    "file": "ktm-250-duke-200-duke-125-duke.jpg",
+    "title": "Motocicleta KTM 200 Duke de la Comisar\u00eda de Ruiz de Montoya (Polic\u00eda de Misiones) en un control vial en la intersecci\u00f3n de la Ruta 223 y Ruta 7, en jurisdicci\u00f3n de Comisar\u00eda de Ruiz de Montoya.jpg",
+    "artist": "Horacio Cambeiro",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Motocicleta_KTM_200_Duke_de_la_Comisar%C3%ADa_de_Ruiz_de_Montoya_(Polic%C3%ADa_de_Misiones)_en_un_control_vial_en_la_intersecci%C3%B3n_de_la_Ruta_223_y_Ruta_7,_en_jurisdicci%C3%B3n_de_Comisar%C3%ADa_de_Ruiz_de_Montoya.jpg",
+    "width": 4032,
+    "height": 2268
+  },
+  {
     "slug": "ktm-390-duke",
     "model": "390 Duke",
     "file": "ktm-390-duke.jpg",
@@ -1354,18 +1390,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:KTM_890_Adventure.jpg",
     "width": 3021,
     "height": 2265
-  },
-  {
-    "slug": "ktm-990-duke-990-duke-r",
-    "model": "990 Duke / 990 Duke R",
-    "file": "ktm-990-duke-990-duke-r.jpg",
-    "title": "2009 KTM Super Duke at the 2009 Seattle International Motorcycle Show 1.jpg",
-    "artist": "Dbratland",
-    "license": "CC BY 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:2009_KTM_Super_Duke_at_the_2009_Seattle_International_Motorcycle_Show_1.jpg",
-    "width": 2765,
-    "height": 2225
   },
   {
     "slug": "ktm-rc-390",
@@ -1632,6 +1656,18 @@
     "height": 4000
   },
   {
+    "slug": "triumph-bonneville-t120-t100",
+    "model": "Bonneville T120 / T100",
+    "file": "triumph-bonneville-t120-t100.jpg",
+    "title": "Triumph Bonneville IMG 2733.jpg",
+    "artist": "Rama",
+    "license": "CC BY-SA 2.0 fr",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/fr/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Triumph_Bonneville_IMG_2733.jpg",
+    "width": 2736,
+    "height": 2736
+  },
+  {
     "slug": "triumph-daytona-660",
     "model": "Daytona 660",
     "file": "triumph-daytona-660.jpg",
@@ -1680,28 +1716,16 @@
     "height": 1429
   },
   {
-    "slug": "triumph-speed-twin-1200-rs",
-    "model": "Speed Twin 1200 / RS",
-    "file": "triumph-speed-twin-1200-rs.jpg",
-    "title": "1968 Triumph Herald 1200 - 02.jpg",
-    "artist": "Oleg Yunakov",
+    "slug": "triumph-tiger-900-gt-gt-pro-rally-pro",
+    "model": "Tiger 900 GT / GT Pro / Rally Pro",
+    "file": "triumph-tiger-900-gt-gt-pro-rally-pro.jpg",
+    "title": "2021 Triumph Tiger 900 GT LRH.jpg",
+    "artist": "Vauxford",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1968_Triumph_Herald_1200_-_02.jpg",
-    "width": 5712,
-    "height": 4284
-  },
-  {
-    "slug": "triumph-tiger-1200-gt-pro-rally-pro-explorer",
-    "model": "Tiger 1200 GT Pro / Rally Pro / Explorer",
-    "file": "triumph-tiger-1200-gt-pro-rally-pro-explorer.jpg",
-    "title": "1968 Triumph Herald 1200 - 02.jpg",
-    "artist": "Oleg Yunakov",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1968_Triumph_Herald_1200_-_02.jpg",
-    "width": 5712,
-    "height": 4284
+    "source": "https://commons.wikimedia.org/wiki/File:2021_Triumph_Tiger_900_GT_LRH.jpg",
+    "width": 2699,
+    "height": 3344
   },
   {
     "slug": "triumph-tiger-sport-660",
@@ -1731,11 +1755,11 @@
     "slug": "vespa-946-dragon-10-anniversario",
     "model": "946 (Dragon / 10\u00b0 Anniversario)",
     "file": "vespa-946-dragon-10-anniversario.jpg",
-    "title": "Vespa 946 Lenkstange.jpg",
+    "title": "Vespa 946 schraeg.jpg",
     "artist": "DJ Wolf, vespaforum.de",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Vespa_946_Lenkstange.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Vespa_946_schraeg.jpg",
     "width": 4752,
     "height": 3168
   },
@@ -1750,6 +1774,54 @@
     "source": "https://commons.wikimedia.org/wiki/File:Vespa-Elettrica-Madrid-070219.jpg",
     "width": 4032,
     "height": 3024
+  },
+  {
+    "slug": "vespa-gts-300-gts-super-gts-super-sport-gts-super-tech",
+    "model": "GTS 300 / GTS Super / GTS Super Sport / GTS Super Tech",
+    "file": "vespa-gts-300-gts-super-gts-super-sport-gts-super-tech.jpg",
+    "title": "Piaggio Vespa GTS 300 in Athens on 9-8-2023.jpg",
+    "artist": "George E. Koronaios",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Piaggio_Vespa_GTS_300_in_Athens_on_9-8-2023.jpg",
+    "width": 6000,
+    "height": 4000
+  },
+  {
+    "slug": "vespa-lx-125-lx-150",
+    "model": "LX 125 / LX 150",
+    "file": "vespa-lx-125-lx-150.jpg",
+    "title": "Piaggio Vespa LX125 2006.JPG",
+    "artist": "Khaosaming",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Piaggio_Vespa_LX125_2006.JPG",
+    "width": 2048,
+    "height": 1536
+  },
+  {
+    "slug": "vespa-primavera-125-sprint-125-s-125",
+    "model": "Primavera 125 / Sprint 125 / S 125",
+    "file": "vespa-primavera-125-sprint-125-s-125.jpg",
+    "title": "Piaggio Vespa Sprint 125.jpg",
+    "artist": "\u5b87\u5f18 \u66fe",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Piaggio_Vespa_Sprint_125.jpg",
+    "width": 6000,
+    "height": 4000
+  },
+  {
+    "slug": "vespa-primavera-150-sprint-150-sprint-s-150",
+    "model": "Primavera 150 / Sprint 150 / Sprint S 150",
+    "file": "vespa-primavera-150-sprint-150-sprint-s-150.jpg",
+    "title": "Vespa sprint 150.jpg",
+    "artist": "Samihasib",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Vespa_sprint_150.jpg",
+    "width": 2592,
+    "height": 1944
   },
   {
     "slug": "yamaha-aerox-155-aerox-sp",
@@ -1990,6 +2062,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF_R-1-Team_Yamalube_Folch_Endurance_(1).jpg",
     "width": 4079,
     "height": 2784
+  },
+  {
+    "slug": "yamaha-yzf-r15-r15m",
+    "model": "YZF-R15 / R15M",
+    "file": "yamaha-yzf-r15-r15m.jpg",
+    "title": "Yamaha R15 V3.0.jpg",
+    "artist": "Akshayanil919",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_R15_V3.0.jpg",
+    "width": 5873,
+    "height": 3915
   },
   {
     "slug": "yamaha-yzf-r1m",

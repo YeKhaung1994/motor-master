@@ -70,33 +70,63 @@ localhost, and `DB_SSL` overrides that either way.
 
 ## API hosting
 
-The API is a plain Node server. It reads `PORT` from the environment and listens
-on all interfaces, so it drops onto any platform-as-a-service unchanged.
+The API is a long-lived Node process with a connection pool, so it wants a
+container or a persistent service — not a function platform, where each
+invocation risks its own pool and the database's connection limit disappears
+fast.
 
-**Render** free web service is the simplest fit: connect the repo, set the build
-and start commands, add environment variables. It sleeps after ~15 minutes idle
-and cold-starts on the next request, which for a spec catalogue is acceptable.
-**Koyeb** and **Fly.io** are alternatives; Fly's free allowance is now trial
-credit rather than a standing tier.
+Two files in the repository make this concrete: `render.yaml` (a Render
+blueprint) and a `Dockerfile` for anywhere that takes a container. Both are
+tested — the image builds to 58 MB and serves the catalogue from Supabase.
+
+### What actually free means, in September 2026
+
+| Host | Free shape | Catch |
+|---|---|---|
+| **Render** | 750 instance-hours/month, 512 MB | Sleeps after ~15 min idle; cold start is tens of seconds |
+| **Koyeb** | One small web service | Similar sleep behaviour |
+| **Fly.io** | Trial credit, not a standing free tier | Card required; small always-on VMs may fit a low monthly credit |
+| **Railway** | Trial credit only | Becomes paid once spent |
+| **Oracle Cloud** | Always-free ARM VMs, genuinely always on | You run and patch the server yourself |
+
+**Render is the recommendation** for this project: it takes the blueprint as-is,
+understands npm workspaces, and the sleep behaviour is acceptable for a spec
+catalogue. Import the repo as a Blueprint and it reads `render.yaml`.
+
+Set by hand, the settings are:
 
 ```
 Build command:  npm ci && npm run build --workspace @motor-master/api
 Start command:  node apps/api/dist/server.js
 Health check:   /api/v1/health
+Node version:   22
 ```
 
-Environment variables:
+The build runs from the repository root — npm workspaces resolve from there, and
+building inside `apps/api` alone will not install what it needs.
+
+### Environment variables
 
 ```
-DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
-DB_SSL=true                   # managed Postgres requires TLS
-PORT                          # supplied by the platform
+DATABASE_URL=postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres
+DB_SSL=true
 WEB_ORIGIN=https://<your-web-host>   # exact origin, no trailing slash
 LOG_LEVEL=info
 ```
 
-`DB_USER` and `DB_PASSWORD` are required — the API refuses to start without them
-rather than failing later at the first query.
+Use **port 6543**, the transaction pooler, not the 5432 session port that `.env`
+uses locally. A host that sleeps and restarts opens and drops connections
+constantly, which is exactly what pooling is for. Migrations still need 5432, but
+those you run from your own machine.
+
+`PORT` is supplied by the platform; the API reads it and binds all interfaces.
+
+### Cold starts compound
+
+A sleeping API in front of a Supabase project that pauses after 7 days of
+inactivity means the first visitor waits for both to wake. Pinging
+`/api/v1/health` on a schedule keeps the API warm and the database in use — a
+free cron service is enough.
 
 ## Web hosting
 

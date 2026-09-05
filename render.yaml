@@ -1,0 +1,27 @@
+# Render blueprint. Import the repository at render.com/blueprints, or copy these
+# settings into a web service by hand.
+#
+# The free instance sleeps after ~15 minutes idle and cold-starts on the next
+# request. For a spec catalogue that is a fair trade; if it is not, the smallest
+# paid instance stays warm.
+services:
+  - type: web
+    name: motor-master-api
+    runtime: node
+    plan: free
+    region: singapore          # nearest to the Supabase project in ap-northeast-1
+    # npm workspaces: install and build from the repository root.
+    buildCommand: npm ci && npm run build --workspace @motor-master/api
+    startCommand: node apps/api/dist/server.js
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        sync: false            # set in the dashboard; use the transaction pooler (:6543)
+      - key: DB_SSL
+        value: "true"
+      - key: WEB_ORIGIN
+        sync: false            # the deployed web origin, exactly, no trailing slash
+      - key: LOG_LEVEL
+        value: info

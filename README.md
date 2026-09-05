@@ -31,7 +31,8 @@ CORS setup is needed for local work.
 
 For ports, database credentials, environment variables and troubleshooting, see
 [docs/development.md](docs/development.md). For hosting it, see
-[docs/deployment.md](docs/deployment.md).
+[docs/deployment.md](docs/deployment.md), and for a Render walkthrough,
+[docs/render-deploy.md](docs/render-deploy.md).
 
 Check the API on its own:
 

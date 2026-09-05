@@ -93,6 +93,48 @@ tested — the image builds to 58 MB and serves the catalogue from Supabase.
 understands npm workspaces, and the sleep behaviour is acceptable for a spec
 catalogue. Import the repo as a Blueprint and it reads `render.yaml`.
 
+### Which service type
+
+Render offers several and only two apply:
+
+| Type | Use it for | Here |
+|---|---|---|
+| **Web Service** | a process serving public HTTP | **the API** |
+| **Static Site** | prebuilt files on a CDN | **the web app** |
+| Private Service | internal traffic, no public URL | no — the browser calls the API directly |
+| Background Worker | no inbound HTTP at all | no |
+| Cron Job | scheduled commands | optional, to ping `/api/v1/health` |
+| Postgres | Render's own database | no — the database is Supabase |
+
+A Blueprint creates both at once. Creating them by hand means making a **Web
+Service** and a **Static Site** separately, with the settings below.
+
+### Order matters, because each needs the other's URL
+
+1. Create the **Web Service** first. Leave `WEB_ORIGIN` unset for now.
+2. Note its URL, e.g. `https://motor-master-api.onrender.com`.
+3. Create the **Static Site** with
+   `VITE_API_URL=https://motor-master-api.onrender.com/api/v1`.
+4. Note its URL and set `WEB_ORIGIN` to it on the Web Service, then redeploy.
+
+`VITE_API_URL` is baked in at build time, so changing it later needs a rebuild,
+not a restart.
+
+### Static Site settings
+
+```
+Build command:      npm ci && npm run build --workspace @motor-master/web
+Publish directory:  apps/web/dist
+```
+
+Add a **Rewrite** rule of `/*` → `/index.html` (the blueprint does this under
+`routes`). The app owns `/brands/:slug`, `/bikes/:slug`, `/compare` and
+`/credits`; without the rewrite, opening one directly returns Render's 404.
+
+The published bundle is about 153 MB, nearly all of it the 166 model photographs.
+That is within Render's static hosting, but it makes every deploy slow. WebP at
+around 1200 px would bring it under 20 MB.
+
 Set by hand, the settings are:
 
 ```

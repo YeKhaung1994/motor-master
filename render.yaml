@@ -1,16 +1,23 @@
-# Render blueprint. Import the repository at render.com/blueprints, or copy these
-# settings into a web service by hand.
+# Render blueprint: two services.
 #
-# The free instance sleeps after ~15 minutes idle and cold-starts on the next
-# request. For a spec catalogue that is a fair trade; if it is not, the smallest
-# paid instance stays warm.
+#   motor-master-api  — Web Service   (the Node API; needs a public URL)
+#   motor-master-web  — Static Site   (the built Vite bundle)
+#
+# Import the repository at render.com → New → Blueprint and Render reads this.
+# Creating them by hand instead? The settings below are the ones to copy.
+#
+# Not a Private Service: that has no public URL and is for service-to-service
+# traffic. The browser calls this API directly, so it must be public.
+
 services:
+  # ---------------------------------------------------------------- API
   - type: web
     name: motor-master-api
     runtime: node
     plan: free
     region: singapore          # nearest to the Supabase project in ap-northeast-1
-    # npm workspaces: install and build from the repository root.
+    # npm workspaces resolve from the repository root, so build from there —
+    # building inside apps/api alone will not install what it needs.
     buildCommand: npm ci && npm run build --workspace @motor-master/api
     startCommand: node apps/api/dist/server.js
     healthCheckPath: /api/v1/health
@@ -18,10 +25,30 @@ services:
       - key: NODE_VERSION
         value: "22"
       - key: DATABASE_URL
-        sync: false            # set in the dashboard; use the transaction pooler (:6543)
+        sync: false            # set in the dashboard; transaction pooler (:6543)
       - key: DB_SSL
         value: "true"
       - key: WEB_ORIGIN
-        sync: false            # the deployed web origin, exactly, no trailing slash
+        sync: false            # the static site's URL, exactly, no trailing slash
       - key: LOG_LEVEL
         value: info
+
+  # ---------------------------------------------------------------- Web
+  - type: web
+    name: motor-master-web
+    runtime: static
+    buildCommand: npm ci && npm run build --workspace @motor-master/web
+    staticPublishPath: apps/web/dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Baked in at build time, so changing it means rebuilding.
+      - key: VITE_API_URL
+        sync: false            # https://motor-master-api.onrender.com/api/v1
+    routes:
+      # The app owns /brands/:slug, /bikes/:slug, /compare and /credits. Without
+      # this rewrite, opening one of those directly returns Render's 404 instead
+      # of the app.
+      - type: rewrite
+        source: /*
+        destination: /index.html

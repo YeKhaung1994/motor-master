@@ -156,18 +156,6 @@
     "height": 1420
   },
   {
-    "slug": "ducati-multistrada-v4-rs",
-    "model": "Multistrada V4 RS",
-    "file": "ducati-multistrada-v4-rs.jpg",
-    "title": "Ducati Multistrada V4 S '25.jpg",
-    "artist": "Oq10pass",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "source": "https://commons.wikimedia.org/wiki/File:Ducati_Multistrada_V4_S_%2725.jpg",
-    "width": 4032,
-    "height": 2268
-  },
-  {
     "slug": "ducati-multistrada-v4-s",
     "model": "Multistrada V4 S",
     "file": "ducati-multistrada-v4-s.jpg",
@@ -468,18 +456,6 @@
     "height": 4000
   },
   {
-    "slug": "harley-davidson-pan-america-1250-st",
-    "model": "Pan America 1250 ST",
-    "file": "harley-davidson-pan-america-1250-st.jpg",
-    "title": "Harley-Davidson Museum May 2024 29 (2023 Pan America 1250 Special).jpg",
-    "artist": "Michael Barera",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Harley-Davidson_Museum_May_2024_29_(2023_Pan_America_1250_Special).jpg",
-    "width": 6000,
-    "height": 4000
-  },
-  {
     "slug": "harley-davidson-street-glide",
     "model": "Street Glide",
     "file": "harley-davidson-street-glide.jpg",
@@ -768,26 +744,14 @@
     "height": 4284
   },
   {
-    "slug": "honda-nc750x",
-    "model": "NC750X",
-    "file": "honda-nc750x.jpg",
-    "title": "Honda NC750X (VA22 PWL) - 25 May 2026.jpg",
-    "artist": "Aethonatic",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_NC750X_(VA22_PWL)_-_25_May_2026.jpg",
-    "width": 4913,
-    "height": 3279
-  },
-  {
     "slug": "honda-nt1100",
     "model": "NT1100",
     "file": "honda-nt1100.jpg",
-    "title": "Honda NT 1100 (2).jpg",
-    "artist": "Cjp24",
+    "title": "2025 Honda NT1100.jpg",
+    "artist": "Chanokchon",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_NT_1100_(2).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_Honda_NT1100.jpg",
     "width": 4608,
     "height": 3456
   },
@@ -960,30 +924,6 @@
     "height": 3456
   },
   {
-    "slug": "honda-xr150l",
-    "model": "XR150L",
-    "file": "honda-xr150l.jpg",
-    "title": "Honda XR 150L Police Motorcycle PNP.jpg",
-    "artist": "Philippine National Police PIO",
-    "license": "Public domain",
-    "licenseUrl": null,
-    "source": "https://commons.wikimedia.org/wiki/File:Honda_XR_150L_Police_Motorcycle_PNP.jpg",
-    "width": 1800,
-    "height": 1200
-  },
-  {
-    "slug": "kawasaki-klr650-adventure",
-    "model": "KLR650 / Adventure",
-    "file": "kawasaki-klr650-adventure.jpg",
-    "title": "Man Returning on Kawasaki KLR 650 - Las Vegas Ride for Kids 2019.jpg",
-    "artist": "Noah Wulf",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Man_Returning_on_Kawasaki_KLR_650_-_Las_Vegas_Ride_for_Kids_2019.jpg",
-    "width": 4272,
-    "height": 2848
-  },
-  {
     "slug": "kawasaki-kx250",
     "model": "KX250",
     "file": "kawasaki-kx250.jpg",
@@ -994,18 +934,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_KX_250.jpg",
     "width": 3500,
     "height": 2625
-  },
-  {
-    "slug": "kawasaki-meguro-k3",
-    "model": "Meguro K3",
-    "file": "kawasaki-meguro-k3.jpg",
-    "title": "Kawasaki Meguro K3 '25 (3).jpg",
-    "artist": "Oq10pass",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Meguro_K3_%2725_(3).jpg",
-    "width": 4032,
-    "height": 3024
   },
   {
     "slug": "kawasaki-ninja-500-se",
@@ -1104,30 +1032,6 @@
     "height": 2805
   },
   {
-    "slug": "kawasaki-versys-650",
-    "model": "Versys 650",
-    "file": "kawasaki-versys-650.jpg",
-    "title": "Kawasaki Versys 650 Rapid Intervention Motorcycle (RIM) in Malaysia National Day Parade Day Ipoh 2026.jpg",
-    "artist": "Tugasan am",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Versys_650_Rapid_Intervention_Motorcycle_(RIM)_in_Malaysia_National_Day_Parade_Day_Ipoh_2026.jpg",
-    "width": 4080,
-    "height": 3072
-  },
-  {
-    "slug": "kawasaki-vulcan-s",
-    "model": "Vulcan S",
-    "file": "kawasaki-vulcan-s.jpg",
-    "title": "Kawasaki Vulcan in Athens on 10-15-2023.jpg",
-    "artist": "George E. Koronaios",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_in_Athens_on_10-15-2023.jpg",
-    "width": 6001,
-    "height": 4000
-  },
-  {
     "slug": "kawasaki-w800-w800-street",
     "model": "W800 / W800 Street",
     "file": "kawasaki-w800-w800-street.jpg",
@@ -1138,18 +1042,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:The_frontview_of_Kawasaki_W800_STREET_mid-year_2019.jpg",
     "width": 2528,
     "height": 1876
-  },
-  {
-    "slug": "kawasaki-z1000",
-    "model": "Z1000",
-    "file": "kawasaki-z1000.jpg",
-    "title": "Kawasaki Z1000 (10760244823).jpg",
-    "artist": "Decio \"desmodex\"",
-    "license": "CC BY-SA 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Z1000_(10760244823).jpg",
-    "width": 4752,
-    "height": 3168
   },
   {
     "slug": "kawasaki-z500-se",
@@ -1284,18 +1176,6 @@
     "height": 3547
   },
   {
-    "slug": "royal-enfield-classic-350",
-    "model": "Classic 350",
-    "file": "royal-enfield-classic-350.jpg",
-    "title": "Royal Enfield Classic 350 - Gran Via - Madrid 01.jpg",
-    "artist": "Javier Perez Montes",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_350_-_Gran_Via_-_Madrid_01.jpg",
-    "width": 7360,
-    "height": 4912
-  },
-  {
     "slug": "royal-enfield-continental-gt-650",
     "model": "Continental GT 650",
     "file": "royal-enfield-continental-gt-650.jpg",
@@ -1356,18 +1236,6 @@
     "height": 4000
   },
   {
-    "slug": "royal-enfield-meteor-350",
-    "model": "Meteor 350",
-    "file": "royal-enfield-meteor-350.jpg",
-    "title": "The All New Royal Enfield Meteor 350.jpg",
-    "artist": "Alok",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:The_All_New_Royal_Enfield_Meteor_350.jpg",
-    "width": 4000,
-    "height": 3000
-  },
-  {
     "slug": "royal-enfield-shotgun-650",
     "model": "Shotgun 650",
     "file": "royal-enfield-shotgun-650.jpg",
@@ -1390,18 +1258,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(02).jpg",
     "width": 6000,
     "height": 4000
-  },
-  {
-    "slug": "suzuki-burgman-400",
-    "model": "Burgman 400",
-    "file": "suzuki-burgman-400.jpg",
-    "title": "Burgman 400 2008.jpg",
-    "artist": "Pigdogx",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Burgman_400_2008.jpg",
-    "width": 5312,
-    "height": 2988
   },
   {
     "slug": "suzuki-burgman-street-125",
@@ -1536,18 +1392,6 @@
     "height": 2072
   },
   {
-    "slug": "triumph-scrambler-1200-x-xe",
-    "model": "Scrambler 1200 X / XE",
-    "file": "triumph-scrambler-1200-x-xe.jpg",
-    "title": "1994 Triumph Speed Triple, 2019 Triumph Scrambler 1200 XE and Triumph TE-1 prototype.jpg",
-    "artist": "Vauxford",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:1994_Triumph_Speed_Triple,_2019_Triumph_Scrambler_1200_XE_and_Triumph_TE-1_prototype.jpg",
-    "width": 5838,
-    "height": 3892
-  },
-  {
     "slug": "triumph-scrambler-400-x-xc",
     "model": "Scrambler 400 X / XC",
     "file": "triumph-scrambler-400-x-xc.jpg",
@@ -1656,18 +1500,6 @@
     "height": 1536
   },
   {
-    "slug": "vespa-primavera-125-sprint-125-s-125",
-    "model": "Primavera 125 / Sprint 125 / S 125",
-    "file": "vespa-primavera-125-sprint-125-s-125.jpg",
-    "title": "Piaggio Vespa Sprint 125.jpg",
-    "artist": "\u5b87\u5f18 \u66fe",
-    "license": "CC BY-SA 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Piaggio_Vespa_Sprint_125.jpg",
-    "width": 6000,
-    "height": 4000
-  },
-  {
     "slug": "vespa-primavera-150-sprint-150-sprint-s-150",
     "model": "Primavera 150 / Sprint 150 / Sprint S 150",
     "file": "vespa-primavera-150-sprint-150-sprint-s-150.jpg",
@@ -1716,18 +1548,6 @@
     "height": 2250
   },
   {
-    "slug": "yamaha-fjr1300a",
-    "model": "FJR1300A",
-    "file": "yamaha-fjr1300a.jpg",
-    "title": "Yamaha FJR 1300AE (MSP16).jpg",
-    "artist": "Jakub \"Flyz1\" Maciejewski",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_FJR_1300AE_(MSP16).jpg",
-    "width": 5456,
-    "height": 3632
-  },
-  {
     "slug": "yamaha-grand-filano-hybrid",
     "model": "Grand Filano Hybrid",
     "file": "yamaha-grand-filano-hybrid.jpg",
@@ -1750,18 +1570,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:2015_Yamaha_Xeon_GT125_(20200706).jpg",
     "width": 3120,
     "height": 2821
-  },
-  {
-    "slug": "yamaha-mt-03",
-    "model": "MT-03",
-    "file": "yamaha-mt-03.jpg",
-    "title": "JGSDF Police Motorcycle (YAMAHA MT-03, 11-0476) nameplate at Camp Uji September 14, 2024.jpg",
-    "artist": "Hunini",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:JGSDF_Police_Motorcycle_(YAMAHA_MT-03,_11-0476)_nameplate_at_Camp_Uji_September_14,_2024.jpg",
-    "width": 5408,
-    "height": 3600
   },
   {
     "slug": "yamaha-mt-07-mt-07-y-amt",
@@ -1906,18 +1714,6 @@
     "source": "https://commons.wikimedia.org/wiki/File:Yamaha_XSR_900_(2).jpg",
     "width": 4416,
     "height": 3456
-  },
-  {
-    "slug": "yamaha-yzf-r1",
-    "model": "YZF-R1",
-    "file": "yamaha-yzf-r1.jpg",
-    "title": "Yamaha YZF R-1-Team Yamalube Folch Endurance (1).jpg",
-    "artist": "Alberto-g-rovi",
-    "license": "CC BY 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Yamaha_YZF_R-1-Team_Yamalube_Folch_Endurance_(1).jpg",
-    "width": 4079,
-    "height": 2784
   },
   {
     "slug": "yamaha-yzf-r15-r15m",

@@ -7,7 +7,7 @@ to 1920 px wide.
 Most are CC BY-SA, which requires attribution and share-alike terms — keep this
 file with the images, and surface the credit wherever the photo is published.
 
-160 images across 12 brands.
+166 images across 12 brands.
 
 | Model | File | Photographer | Licence | Source |
 |---|---|---|---|---|
@@ -94,7 +94,9 @@ file with the images, and surface the credit wherever the photo is published.
 | Wave 125i | `honda-wave-125i.jpg` | Khaosaming | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Honda_Wave_125i_2012_Trat_Thailand.JPG) |
 | X-ADV | `honda-x-adv.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2025_Honda_X-ADV_750.jpg) |
 | XL750 Transalp | `honda-xl750-transalp.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2023_Honda_XL750_Transalp.jpg) |
+| KLR650 / Adventure | `kawasaki-klr650-adventure.jpg` | Carsamar | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2009_black_Kawasaki_KLR_650.jpg) |
 | KX250 | `kawasaki-kx250.jpg` | halseike | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_KX_250.jpg) |
+| Ninja 400 / SE | `kawasaki-ninja-400-se.jpg` | サフィル | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_400_KRT_SlantView.jpg) |
 | Ninja 500 SE | `kawasaki-ninja-500-se.jpg` | Kidfly182 | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_500.jpg) |
 | Ninja 650 | `kawasaki-ninja-650.jpg` | サフィル | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_650_SlantView.jpg) |
 | Ninja H2 | `kawasaki-ninja-h2.jpg` | Daniel Hartwig from San Mateo, CA, USA | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:2015_Kawasaki_Ninja_H2_(17568166468).jpg) |
@@ -105,6 +107,7 @@ file with the images, and surface the credit wherever the photo is published.
 | Versys 1000 SE | `kawasaki-versys-1000-se.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Versys_1000_(1).jpg) |
 | Vulcan S | `kawasaki-vulcan-s.jpg` | Thesupermat | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Vulcan_S_-_MRS_Oficina_-_Mondial_de_l%27Automobile_de_Paris_2018_-_001.jpg) |
 | W800 / W800 Street | `kawasaki-w800-w800-street.jpg` | Tokumeigakarinoaoshima | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:The_frontview_of_Kawasaki_W800_STREET_mid-year_2019.jpg) |
+| Z1000 | `kawasaki-z1000.jpg` | Decio "desmodex" | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z1000_(10760270423).jpg) |
 | Z500 SE | `kawasaki-z500-se.jpg` | Revvnramen | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z500_(ER500)_2024.jpg) |
 | Z650 | `kawasaki-z650.jpg` | Gamemaster669 | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z650_schwarz_2020.jpg) |
 | Z650RS | `kawasaki-z650rs.jpg` | MotorideSA | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kawasaki_Z650RS.jpg) |
@@ -114,6 +117,7 @@ file with the images, and surface the credit wherever the photo is published.
 | 390 Duke | `ktm-390-duke.jpg` | LoiR | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_390_Duke.jpg) |
 | 790 Duke | `ktm-790-duke.jpg` | Cjp24 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_790_Duke_(3).jpg) |
 | 890 Adventure R / 890 SMT | `ktm-890-adventure-r-890-smt.jpg` | Siechfred | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_890_Adventure.jpg) |
+| RC 390 | `ktm-rc-390.jpg` | Andrew Pons | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:KTM_RC390_Photo-1449426468159-d96dbf08f19f_2015.jpg) |
 | Bear 650 | `royal-enfield-bear-650.jpg` | XDVRACE | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bear_650_2026.jpg) |
 | Bullet 350 | `royal-enfield-bullet-350.jpg` | kishjar? from Moscow, Russia | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_Enfield_Bullet_350_(54832566003).jpg) |
 | Continental GT 650 | `royal-enfield-continental-gt-650.jpg` | Kiranpawar3210 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_Enfield_Continental_GT_650.jpg) |
@@ -121,8 +125,10 @@ file with the images, and surface the credit wherever the photo is published.
 | Himalayan 450 | `royal-enfield-himalayan-450.jpg` | Rouv1505 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal-Enfield-Himalayan-450.jpg) |
 | Hunter 350 | `royal-enfield-hunter-350.jpg` | Pintu dasaundhi | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Hunter_350_side_view_India_Model.png) |
 | Interceptor 650 | `royal-enfield-interceptor-650.jpg` | Andrzej Otrębski | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Wien_Royal_Enfield_Interceptor_650.jpg) |
+| Meteor 350 | `royal-enfield-meteor-350.jpg` | Jean-Paul Corlin | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_Enfield_m%C3%A9teor_350_%22Classic_350_Signals%22.jpg) |
 | Shotgun 650 | `royal-enfield-shotgun-650.jpg` | axxter99 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_enfield_650_shotgun_Twin,_Cape_Town.jpg) |
 | Super Meteor 650 | `royal-enfield-super-meteor-650.jpg` | iMahesh | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(02).jpg) |
+| Burgman 400 | `suzuki-burgman-400.jpg` | Julian Bond | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_400_black.jpg) |
 | Burgman Street 125 | `suzuki-burgman-street-125.jpg` | VonTheGreater26 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_Street_125.jpg) |
 | DR-Z4S | `suzuki-dr-z4s.jpg` | Chanokchon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:2025_Suzuki_DR-Z4S.jpg) |
 | GSX-8R | `suzuki-gsx-8r.jpg` | PauleMeister | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Suzuki_GSX-8R_mit_Heckumbau.jpg) |
@@ -210,25 +216,19 @@ file with the images, and surface the credit wherever the photo is published.
 - KTM 1390 Super Duke R / R EVO (`ktm-1390-super-duke-r-r-evo`)
 - KTM 390 Adventure R / X / Enduro R / SMC R (`ktm-390-adventure-r-x-enduro-r-smc-r`)
 - KTM 990 Duke / 990 Duke R (`ktm-990-duke-990-duke-r`)
-- KTM RC 390 (`ktm-rc-390`)
 - Kawasaki Eliminator / SE (`kawasaki-eliminator-se`)
-- Kawasaki KLR650 / Adventure (`kawasaki-klr650-adventure`)
 - Kawasaki KLX110R L (`kawasaki-klx110r-l`)
 - Kawasaki KLX140R F (`kawasaki-klx140r-f`)
 - Kawasaki KLX230 / S / SE / SM / Sherpa (`kawasaki-klx230-s-se-sm-sherpa`)
 - Kawasaki KLX230R (`kawasaki-klx230r`)
 - Kawasaki Meguro K3 (`kawasaki-meguro-k3`)
-- Kawasaki Ninja 400 / SE (`kawasaki-ninja-400-se`)
 - Kawasaki Ninja H2 SX SE+ (`kawasaki-ninja-h2-sx-se`)
 - Kawasaki Ninja e-1 (`kawasaki-ninja-e-1`)
 - Kawasaki Versys 650 (`kawasaki-versys-650`)
-- Kawasaki Z1000 (`kawasaki-z1000`)
 - Kawasaki Z400 (`kawasaki-z400`)
 - Royal Enfield Classic 350 (`royal-enfield-classic-350`)
 - Royal Enfield Classic 650 (`royal-enfield-classic-650`)
-- Royal Enfield Meteor 350 (`royal-enfield-meteor-350`)
 - Royal Enfield Scram 411 (`royal-enfield-scram-411`)
-- Suzuki Burgman 400 (`suzuki-burgman-400`)
 - Suzuki Raider J Crossover (`suzuki-raider-j-crossover`)
 - Suzuki V-Strom 1050DE (`suzuki-v-strom-1050de`)
 - Triumph Rocket 3 Storm R / GT (`triumph-rocket-3-storm-r-gt`)

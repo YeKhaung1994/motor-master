@@ -996,6 +996,18 @@
     "height": 3456
   },
   {
+    "slug": "kawasaki-klr650-adventure",
+    "model": "KLR650 / Adventure",
+    "file": "kawasaki-klr650-adventure.jpg",
+    "title": "2009 black Kawasaki KLR 650.jpg",
+    "artist": "Carsamar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2009_black_Kawasaki_KLR_650.jpg",
+    "width": 3056,
+    "height": 1836
+  },
+  {
     "slug": "kawasaki-kx250",
     "model": "KX250",
     "file": "kawasaki-kx250.jpg",
@@ -1006,6 +1018,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_KX_250.jpg",
     "width": 3500,
     "height": 2625
+  },
+  {
+    "slug": "kawasaki-ninja-400-se",
+    "model": "Ninja 400 / SE",
+    "file": "kawasaki-ninja-400-se.jpg",
+    "title": "Kawasaki Ninja 400 KRT SlantView.jpg",
+    "artist": "\u30b5\u30d5\u30a3\u30eb",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Ninja_400_KRT_SlantView.jpg",
+    "width": 5472,
+    "height": 3648
   },
   {
     "slug": "kawasaki-ninja-500-se",
@@ -1128,6 +1152,18 @@
     "height": 1876
   },
   {
+    "slug": "kawasaki-z1000",
+    "model": "Z1000",
+    "file": "kawasaki-z1000.jpg",
+    "title": "Kawasaki Z1000 (10760270423).jpg",
+    "artist": "Decio \"desmodex\"",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kawasaki_Z1000_(10760270423).jpg",
+    "width": 4752,
+    "height": 3168
+  },
+  {
     "slug": "kawasaki-z500-se",
     "model": "Z500 SE",
     "file": "kawasaki-z500-se.jpg",
@@ -1236,6 +1272,18 @@
     "height": 2265
   },
   {
+    "slug": "ktm-rc-390",
+    "model": "RC 390",
+    "file": "ktm-rc-390.jpg",
+    "title": "KTM RC390 Photo-1449426468159-d96dbf08f19f 2015.jpg",
+    "artist": "Andrew Pons",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:KTM_RC390_Photo-1449426468159-d96dbf08f19f_2015.jpg",
+    "width": 4000,
+    "height": 2667
+  },
+  {
     "slug": "royal-enfield-bear-650",
     "model": "Bear 650",
     "file": "royal-enfield-bear-650.jpg",
@@ -1320,6 +1368,18 @@
     "height": 4000
   },
   {
+    "slug": "royal-enfield-meteor-350",
+    "model": "Meteor 350",
+    "file": "royal-enfield-meteor-350.jpg",
+    "title": "Royal Enfield m\u00e9teor 350 \"Classic 350 Signals\".jpg",
+    "artist": "Jean-Paul Corlin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_m%C3%A9teor_350_%22Classic_350_Signals%22.jpg",
+    "width": 2592,
+    "height": 1944
+  },
+  {
     "slug": "royal-enfield-shotgun-650",
     "model": "Shotgun 650",
     "file": "royal-enfield-shotgun-650.jpg",
@@ -1342,6 +1402,18 @@
     "source": "https://commons.wikimedia.org/wiki/File:Royal_Enfield_Super_Meteor_650_(02).jpg",
     "width": 6000,
     "height": 4000
+  },
+  {
+    "slug": "suzuki-burgman-400",
+    "model": "Burgman 400",
+    "file": "suzuki-burgman-400.jpg",
+    "title": "Suzuki Burgman 400 black.jpg",
+    "artist": "Julian Bond",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Suzuki_Burgman_400_black.jpg",
+    "width": 3072,
+    "height": 2304
   },
   {
     "slug": "suzuki-burgman-street-125",

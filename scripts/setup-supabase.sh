@@ -79,6 +79,24 @@ say ""
 say "Database: ${DIM}$(node -e 'const u=new URL(process.env.DATABASE_URL);console.log(`${u.hostname}:${u.port||5432}${u.pathname}`)')${OFF}"
 say ""
 
+# Supabase's direct host (db.<ref>.supabase.co) publishes only an AAAA record.
+# On a network without IPv6 it cannot resolve at all, and the error — ENOTFOUND —
+# reads like a typo rather than the addressing problem it is.
+case "$DB_URL" in
+  *db.*.supabase.co*)
+    if ! curl -s -m 6 -6 -o /dev/null https://ipv6.google.com 2>/dev/null; then
+      warn "This is the direct connection (db.<ref>.supabase.co), which is IPv6-only,"
+      warn "and this machine has no working IPv6 route — it cannot reach it."
+      warn ""
+      warn "Use a pooler string instead, from the same dashboard page:"
+      warn "  Session pooler     aws-0-<region>.pooler.supabase.com:5432   (for this setup)"
+      warn "  Transaction pooler aws-0-<region>.pooler.supabase.com:6543   (for the API at runtime)"
+      warn "Both are reachable over IPv4."
+      die "Direct connection unreachable from this network."
+    fi
+    ;;
+esac
+
 say "1/4  Checking the connection"
 node -e '
 const { Client } = require("pg");

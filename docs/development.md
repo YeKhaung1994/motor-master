@@ -298,6 +298,12 @@ The container reports healthy well after it reports running. Check
 `docker compose ps` for `healthy`, and confirm `DB_PORT` in `.env` matches the host
 port in `docker compose ps`.
 
+**`ENOTFOUND db.<ref>.supabase.co`**
+Supabase's direct connection host is IPv6-only. If your network has no IPv6 route
+it will never resolve, however correct the string is. Use the session pooler
+(`aws-0-<region>.pooler.supabase.com:5432`) for migrations and the transaction
+pooler (`:6543`) for the API — both answer on IPv4.
+
 **TLS errors against a managed provider**
 Set `DB_SSL=true`. Neon, Supabase and RDS all require it; a local container does
 not offer it at all.

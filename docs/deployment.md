@@ -41,7 +41,13 @@ changes: `DATABASE_URL` overrides the `DB_*` fields, so with it set **every loca
 command talks to Supabase rather than the container**, `npm run dev` included.
 Comment the line out to go back to local.
 
-Two Supabase specifics it handles for you:
+Three Supabase specifics it handles for you:
+
+- **The direct connection is IPv6-only.** `db.<ref>.supabase.co` publishes only
+  an AAAA record, so on a network without IPv6 it cannot resolve — and the error,
+  `ENOTFOUND`, reads like a typo rather than an addressing problem. Use a pooler
+  host (`aws-0-<region>.pooler.supabase.com`), which answers on IPv4. The script
+  checks for this and says so.
 
 - **Port 6543 is the transaction pooler** and cannot apply schema changes. Paste
   that string and the script uses the session connection on 5432 for setup while

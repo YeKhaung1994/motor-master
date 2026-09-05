@@ -6,8 +6,12 @@
 #
 #   ./scripts/setup-supabase.sh 'postgresql://postgres.<ref>:<password>@<host>:5432/postgres'
 #
-# Or set DATABASE_URL and run it with no arguments. Safe to re-run: migrations
-# are tracked and the import is matched on slug, so nothing duplicates.
+# With no argument it reads DATABASE_URL from the environment, then from .env,
+# and only prompts if neither has it. After a successful run it offers to write
+# the string into .env so later commands need no argument at all.
+#
+# Safe to re-run: migrations are tracked and the import is matched on slug, so
+# nothing duplicates.
 set -euo pipefail
 
 RED=$'\033[0;31m'; GREEN=$'\033[0;32m'; YELLOW=$'\033[0;33m'; DIM=$'\033[2m'; OFF=$'\033[0m'
@@ -19,7 +23,21 @@ die()  { printf '%s✗%s %s\n' "$RED" "$OFF" "$*" >&2; exit 1; }
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+ENV_FILE="$ROOT/.env"
+
+# Read one variable out of .env without sourcing the file — a stray command in
+# there should not run just because we wanted a connection string.
+read_env() {
+  [ -f "$ENV_FILE" ] || return 0
+  sed -n "s/^[[:space:]]*$1=//p" "$ENV_FILE" | tail -n 1 | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
+}
+
 DB_URL="${1:-${DATABASE_URL:-}}"
+FROM_ENV_FILE=0
+if [ -z "$DB_URL" ]; then
+  DB_URL="$(read_env DATABASE_URL)"
+  [ -n "$DB_URL" ] && FROM_ENV_FILE=1 && ok "Using DATABASE_URL from .env"
+fi
 
 if [ -z "$DB_URL" ]; then
   say "Supabase → Project Settings → Database → Connection string → URI"
@@ -115,6 +133,31 @@ API_HOST_VARS="DATABASE_URL=$RUNTIME_URL
 DB_SSL=true
 WEB_ORIGIN=https://your-web-host
 LOG_LEVEL=info"
+
+# Offer to keep it, so `npm run db:migrate` and friends need no argument.
+if [ "$FROM_ENV_FILE" -eq 0 ] && [ -f "$ENV_FILE" ] && ! grep -q '^[[:space:]]*DATABASE_URL=' "$ENV_FILE"; then
+  say ""
+  if [ -t 0 ]; then
+    read -r -p "Save this connection string to .env? [y/N] " reply
+  else
+    reply="${SAVE_TO_ENV:-n}"
+  fi
+  case "$reply" in
+    [yY]*)
+      # dotenv lets a later assignment win, so this overrides the DB_* fields
+      # above it. Only claim TLS when the host actually offers it.
+      case "$RUNTIME_URL" in
+        *localhost*|*127.0.0.1*) SAVE_SSL=false ;;
+        *) SAVE_SSL=true ;;
+      esac
+      printf '\n# Added by scripts/setup-supabase.sh. Overrides the DB_* fields above.\nDATABASE_URL=%s\nDB_SSL=%s\n' "$RUNTIME_URL" "$SAVE_SSL" >> "$ENV_FILE"
+      ok "Written to .env — it is git-ignored, so the string stays on this machine"
+      warn "Every local command now uses this database, not the container."
+      warn "Comment the line out to go back to the local container."
+      ;;
+    *) say "${DIM}Not saved. Pass the string again, or add DATABASE_URL to .env yourself.${OFF}" ;;
+  esac
+fi
 
 say ""
 say "${GREEN}Done.${OFF} Set these on the API host:"

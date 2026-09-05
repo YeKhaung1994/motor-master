@@ -144,7 +144,7 @@ One `.env` at the repo root configures everything; the API also reads an optiona
 
 | Variable | Default | Used for |
 |---|---|---|
-| `DATABASE_URL` | — | full connection string; wins over the fields below |
+| `DATABASE_URL` | — | full connection string; wins over the fields below, so setting it points every command at that database |
 | `DB_HOST` | `localhost` | Postgres host |
 | `DB_PORT` | `5432` | host port — also what compose publishes |
 | `DB_NAME` | `motor_master` | created by `db:migrate` if missing |

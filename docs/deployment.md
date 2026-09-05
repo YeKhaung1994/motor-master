@@ -27,6 +27,20 @@ verifies the row counts, and prints the environment variables the API and web
 hosts need. It is safe to re-run — migrations are tracked and the import matches
 on slug, so nothing duplicates. `FRESH=1` clears the catalogue first.
 
+Afterwards it offers to write the string into `.env`, so later commands need no
+argument:
+
+```bash
+npm run db:setup:supabase     # reads DATABASE_URL from .env
+npm run db:migrate            # so do these
+npm run db:seed
+```
+
+`.env` is git-ignored, so the string stays on your machine. Be aware of what it
+changes: `DATABASE_URL` overrides the `DB_*` fields, so with it set **every local
+command talks to Supabase rather than the container**, `npm run dev` included.
+Comment the line out to go back to local.
+
 Two Supabase specifics it handles for you:
 
 - **Port 6543 is the transaction pooler** and cannot apply schema changes. Paste

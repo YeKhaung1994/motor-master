@@ -42,6 +42,28 @@ Check the container is ready before migrating:
 docker compose ps            # STATUS should read "healthy", not "starting"
 ```
 
+## Two ways to run the database
+
+**A hosted database (what this checkout uses).** With `DATABASE_URL` set in
+`.env`, every command talks to it and the local container is not needed at all:
+
+```bash
+docker compose stop db     # nothing local is listening
+npm run dev                # the API connects to the hosted database
+```
+
+Comment `DATABASE_URL` out to fall back to the `DB_*` fields and the container.
+
+**The local container.** Cheaper to reset, works offline, and does not spend a
+free tier's quota:
+
+```bash
+docker compose start db    # or `up -d db` the first time
+```
+
+Either way `npm run db:migrate` and `npm run db:seed` act on whichever database
+is configured, so check which one before running a fresh import.
+
 ## Running the app
 
 ```bash
